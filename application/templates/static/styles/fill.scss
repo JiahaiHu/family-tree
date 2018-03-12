@@ -1,0 +1,93 @@
+@import "base";
+label{
+  color: #a0a0a0;
+}
+
+.project{
+	position: relative;
+}
+.trash {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-top: 15px;
+	margin-right: 25px;
+	color: #a0a0a0;
+}
+
+
+.modifyContainer{
+  width: 768px;
+  margin-top: 20px;
+  @extend %staticCen;
+}
+
+[member-list]{
+  display: inline-block;
+}
+
+#suggestion{
+  display: inline-block;
+  @include marginY(12px);
+  &:before{
+    content: '*';
+    color: red;
+  }
+  strong{
+    font-weight: bold;
+  }
+}
+
+[avatar2]{
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  background-color: #ddd;
+  @extend %staticCen;
+  margin-bottom: 24px;
+
+  text-align: center;
+}
+
+.property{
+  font-size: 14px;
+  color: #3f51b5;
+  font-weight: bold;
+
+  margin-bottom: 20px;
+}
+
+.fill-block{
+  background-color: #fff;
+  box-shadow: 2px 2px 3px #dddddd;
+  margin-bottom: 24px;
+  padding: 24px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .input-item{
+    margin-bottom: 15px;
+
+    input {
+      display: block;
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid #9f9f9f;
+    }
+  }
+}
+
+#status{
+  height: 18px;
+  background-color: transparent;
+  border: none;
+  color: #333;
+}
+
+[project2] {
+     border-bottom: 1px solid #9f9f9f;
+     margin-bottom: 24px;
+}

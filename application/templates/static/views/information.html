@@ -1,0 +1,67 @@
+<!--<link href="../../static/styles/modify.css" rel="stylesheet">-->
+<style>
+.fullScreenContainer{
+  white-space: nowrap;
+  overflow: auto;
+  background-color: #f5f5f5;
+}
+.modifyContainer{
+  width: 768px;
+  @extend %staticCen;
+}
+.block{
+  background-color: #fff;
+  padding: 15px;
+}
+.shadowAddBtn{
+  top: 215px;
+  font-size: 30px !important;
+}
+</style>
+<div class="fullScreenContainer">
+  <div alert=""></div>
+  <div id="bg"></div>
+  <div class="container">
+    <a class="shadowAddBtn iconfont" href="/#/detail"
+			 style="font-size:30px" title="返回个人资料页">&#xe612;</a>
+    <div class="modifyContainer">
+      <section id="head">
+        <h1>个人资料修改</h1>
+      </section>
+      <section class="block hero" modify-hero thedata="data"></section>
+
+      <div class="marginY20 information">
+        <section id="info" class="fill-block block">
+          <div basic-set-panel  personal="data.personalSettings" disabled="basicDisabled"></div>
+          <div class="btn-container-1" ng-show="basicDisabled">
+            <button class="shadowBtn" ng-click="editInfo()">编辑</button>
+          </div>
+          <div class="btn-container-2" ng-show="!basicDisabled">
+            <button class="shadowBtn" ng-click="func.saveBasic()">保存</button>
+            <button class="shadowBtn" ng-click="infoCancel()">取消</button>
+          </div>
+        </section>
+        <section id="mentor" class="fill-block block">
+          <div relation-set-panel relation="data.relation" disabled="relationDisabled">
+          </div>
+          <div class="btn-container-1" ng-show="relationDisabled">
+            <button class="shadowBtn" ng-click="editRelation()">编辑</button>
+          </div>
+          <div class="btn-container-2" ng-show="!relationDisabled">
+            <button class="shadowBtn" ng-click="func.saveRelation()">保存</button>
+            <button class="shadowBtn" ng-click="relationCancel()">取消</button>
+          </div>
+        </section>
+      </div>
+
+      <!--
+      <h2>项目经历</h2>
+      <section class="marginY20 block" ng-show="data.project.projects.length==0"></section>
+      <section class="project marginY20 block" ng-repeat="project in data.project.projects"
+               project="project" index="``$index``" data="data" func="func">
+      </section>
+      -->
+    </div>
+  </div>
+  <div modal="modal"></div>
+</div>

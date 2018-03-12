@@ -1,0 +1,99 @@
+{% extends "layout/admin_base.html" %}
+
+{% block navbar %}
+<li><a href="/admin/manage/group">组</a></li>
+<li class="active"><a href="#">邀请码 <span class="sr-only">(current)</span></a></li>
+<li><a href="/admin/summary">报表</a></li>
+{% end %}
+
+{% block content %}
+<div class="container">
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      生成邀请码
+      <input class="form-control" id="inv-code-needs-input" placeholder="邀请码数量">
+      &nbsp;&nbsp;&nbsp;
+      <button class="btn btn-success" id="gen-btn" onclick="InvCodeGen()">Generate</button>
+    </div>
+    <div class="panel-body" id="inv-code-output">
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      邀请码列表
+      <select id="inv-code-type-select" class="form-control">
+        <option>all</option>
+        <option>used</option>
+        <option>unused</option>
+        <option>sent</option>
+        <option>unsent</option>
+      </select>
+    </div>
+    <!-- Table -->
+    <table class="table" id="member-table">
+      <tbody id="t-body">
+      <tr>
+        <th>id</th>
+        <th>邀请码</th>
+        <th>是否使用(is_used)</th>
+        <th>是否发送(is_sent)</th>
+        <th>创建时间</th>
+        <th>操作</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>asdf1234</td>
+        <td>false</td>
+        <td>false</td>
+        <td>2016-09-30 10:00:00</td>
+        <td>
+          <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default" title="发送到指定邮箱">发送</button>
+            <button type="button" class="btn btn-danger" title="删除该邀请码，已使用的不能删除">删除</button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div id="inv-code-send-panel" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">发送邀请码</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">邀请码</label>
+            <div class="col-sm-9">
+              <p class="form-control-static" id="inv-code-to-sent">w123456</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" class="form-control" id="inv-code-email-addr" placeholder="指定发送地址">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" id="panel-btn-send-inv-code">确定</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% end %}
+
+{% block scripts %}
+<script src="/static/scripts/inv_code.js"></script>
+{% end %}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn" ng-app="app">
+	<script src="./static/scripts/rem.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="keywords" content="联创团队, FamilyTree, UniqueStudio, 华中科技大学">
+		<meta name="description" content="华中科技大学联创团队 FamilyTree">
+		<title>UniqueTree</title>
+		<link rel="stylesheet" type="text/css" href="./static/styles/cssreset-min.css">
+	</head>
+	<body ng-controller="IndexController">
+		<div  class="filter-mask" ng-class="{show:maskShow}">
+			<header>
+				<a id="logo" href="#/">
+					<img src="./static/images/ic_logo.png">
+				</a>
+				<nav id="nav">
+					<suggestion-input id="navInput" ng-model="ll" placeholder="搜索团队成员" ng-show="auth"></suggestion-input>
+				</nav>
+				<a class="my me" href="#/me" title="个人主页" ng-hide="me||!auth"></a>
+				<a class="my logout" href="javascript: void 0" title="登出" ng-show="me&&auth" ng-click="logout()"></a>
+			</header>
+			<div class="filter-mask-dark"  ng-show="maskShow"></div>
+			<div ng-view></div>
+
+			<footer>
+			</footer>
+		</div>
+		<div class="trans-cen-con">
+			<div login-panel="" id="login-panel" forget="switchToForget" maskshow="maskShow"
+																																ng-init="show=false" ng-hide="!show" switch="switchToRegister" show="show"></div>
+		</div>
+		<div class="trans-cen-con">
+			<div register-panel="" id="register-panel" class="table-center-obj" maskshow="maskShow"
+																																			 ng-init="registerShow=false" ng-hide="!registerShow" switch="switchToLogin" show="registerShow"></div>
+		</div>
+		<div class="trans-cen-con">
+			<div forget-pwd-panel="" id="forget-pwd-panel" class="table-center-obj"
+																									ng-init="forgetShow=false" ng-hide="!forgetShow" show="forgetShow" maskshow="maskShow"></div>
+		</div>
+	</body>
+	<script>
+	(function() {
+		var op = function() {
+			var ngViewElement = document.querySelector("[ng-view]");
+			var height = window.innerHeight - 60;
+			ngViewElement.style.height = height + 'px';
+		}
+		op();
+		window.addEventListener("resize", op);
+	})();
+	</script>
+	<script src="./static/scripts/pre.js"></script>
+	<script src="./static/scripts/bundle.build.js"></script>
+</html>

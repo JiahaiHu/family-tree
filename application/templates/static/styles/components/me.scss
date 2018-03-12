@@ -1,0 +1,112 @@
+$friendsPanelWidth: 270px;
+$friendsPanelHeight: 307px;
+
+$panelPureWidth: 268px;
+$panelShadowX: $friendsPanelWidth - $panelPureWidth;
+
+
+[projects-panel] {
+  top: 3rem;
+  left: 1rem;
+
+  width: $friendsPanelWidth;
+  height: $friendsPanelHeight;
+
+  //重写 button 样式
+  padding: 0;
+  border: 0;
+  text-align: left;
+  background-color: transparent;
+
+  &>.board{
+    width: $panelPureWidth;
+    height: 20px;
+    background-color: #ffc928;
+
+    border-radius: 3px;
+    box-shadow:
+      ($panelShadowX - 2px) 0 #eca900,
+      ($panelShadowX - 1px) 1px #eca900,
+      $panelShadowX 2px #eca900,
+      $panelShadowX 2.5px #eca900,
+      $panelShadowX 3.5px #eca900;
+  }
+
+  &>.panel-body{
+    width: $panelPureWidth;
+    height: 283px;
+    margin-top: 8px;
+
+    //padding: 10px;
+    box-sizing: border-box;
+
+    background-color: #fff;
+    border-radius: 3px;
+
+    box-shadow:
+      ($panelShadowX - 2px) 0 #eee,
+      ($panelShadowX - 1px) 1px #eee,
+      $panelShadowX 2px #eee,
+      $panelShadowX 2.5px #eee,
+      $panelShadowX 3.5px #eee;
+
+    h4 {
+      height: 44px;
+      line-height: 44px;
+      font-size: 14px;
+      margin-left: 105px;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+    .lists{
+      overflow: auto;
+      height: 239px;
+    }
+    .list {
+      height: 56px;
+      padding: 8px;
+      box-sizing: border-box;
+      img{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 8px;
+        float: left;
+
+        background-color: #ddd;
+      }
+      .detail{
+        float: left;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    .project-name, .project-partner{
+      width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      height: 18px;
+      line-height: 18px;
+
+      font-size: 12px;
+
+      letter-spacing: 0.5px;
+    }
+    .project-partner{
+      margin-top: 2px;
+      word-spacing: 1px;
+    }
+    .project-year{
+      color: #b5b5b5;
+      float: right;
+    }
+  }
+
+  &>.sitting-kid {
+    position: absolute;
+    top: -112px;
+    width: 144px;
+    height: 185px;
+  }
+}

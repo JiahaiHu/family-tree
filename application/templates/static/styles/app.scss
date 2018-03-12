@@ -1,0 +1,240 @@
+@import "components";
+$navBG: #3f51b5;
+$navBD: #3A4AA2;
+$standardWidth: 1366px;
+$containerWidth: 1192px;
+
+body{
+  font-family: "微软雅黑", "Microsoft YaHei", "Microsoft YaHei UI", "Microsoft YaHei Regular", "宋体", Sans-serif;
+  color: #333;
+}
+
+a{
+  text-decoration: none;
+}
+
+img{
+  max-width: 100%;
+}
+
+*{
+  outline: none;
+}
+
+@font-face {
+	font-family: 'iconfont';  /* project id 74598 */
+	src: url('http://at.alicdn.com/t/font_dxpfu8t556d2t9.eot');
+	src: url('http://at.alicdn.com/t/font_dxpfu8t556d2t9.eot?#iefix') format('embedded-opentype'),
+	url('http://at.alicdn.com/t/font_dxpfu8t556d2t9.woff') format('woff'),
+	url('http://at.alicdn.com/t/font_dxpfu8t556d2t9.ttf') format('truetype'),
+	url('http://at.alicdn.com/t/font_dxpfu8t556d2t9.svg#iconfont') format('svg');
+}
+
+.iconfont{
+  font-family:"iconfont";
+  font-size:16px;
+  font-style:normal;
+}
+
+@font-face {
+  font-family: 'aressence';
+  src: url('./fonts/aressence.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+.table-center-table{
+  display: table;
+  &>.table-center-cell{
+    display: table-cell;
+    vertical-align: middle;
+    &.revise{
+      position: relative;
+      top: -5%;
+    }
+    &>.table-center-obj{
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+
+
+li{
+  list-style-type: none;
+}
+
+//导航条
+header{
+  background-color: $navBG;
+  position: relative;
+}
+
+#nav{
+  position: relative;
+  max-width: $containerWidth;
+  box-sizing: border-box;
+  width: 100%;
+  height: 60px;
+  padding-left: 24px;
+  border-bottom: $navBD 1px solid;
+
+  @extend %staticCen;
+}
+
+#navInput{
+  width: 300px;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  @extend %absCenY;
+}
+
+#logo{
+  position: absolute;
+  z-index: 1;
+  display: inline-block;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 8px;
+  margin-left: 25px;
+  &>img{
+    max-height: 100%;
+  }
+}
+
+/*[ng-view] {*/
+	//position: absolute;
+	//width: 100%;
+	//top: 0;
+	//bottom: 0;
+	//z-index: -1;
+/*}*/
+
+//全屏模式时的容器
+.fullScreenContainer{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  margin-top: 60px;
+  overflow: hidden;
+}
+
+.screenContainer{
+  width: 10rem;
+  height: 7.5rem;
+  position: absolute;
+  overflow: hidden;
+  @extend %absCen;
+}
+
+.container{
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $containerWidth;
+}
+
+.memberList{
+  &>li{
+    //display: box;			  /* OLD - Android 4.4- */
+    display: -webkit-box;	  /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;	  /* TWEENER - IE 10 */
+    display: -webkit-flex;	 /* NEW - Chrome */
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+
+
+    &>div{
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+}
+
+.my{
+  position: absolute;
+  right: 0;
+  top: 0;
+	width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 15px;
+  margin-right: 25px;
+
+  color: #fff;
+  font-size: 14px;
+
+	background-size: 30px;
+  &.me{
+    background-image: url("/static/images/ic_user.png");
+  }
+	&.logout {
+    background-image: url("/static/images/ic_user_exit.png");
+	}
+}
+
+@media screen and (max-width:1350px){
+  #navInput{
+    margin-right: 70px;
+  }
+}
+
+.select{
+  @include transition(opacity 0.3s);
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  background-color: white;
+  box-shadow: 2px 2px 3px #eee;
+
+  li{
+    position: relative;
+  }
+  a{
+    display: inline-block;
+    padding: 10px;
+    @extend %full;
+    box-sizing: border-box;
+    color: #333;
+    &:hover{
+      background-color: #eee;
+    }
+  }
+  right: 0;
+}
+
+$transitionTime: 0.5s;
+//出现动画，配合mask一起用
+.show-transition-mask {
+  @include transition(opacity $transitionTime);
+  &.ng-hide{
+    opacity: 0;
+  }
+  &.ng-hide-remove-active{
+    opacity: 1;
+  }
+}
+.show-transition-panel {
+  opacity: 1;
+  @include transition(all $transitionTime);
+  &.ng-hide{
+    opacity: 0;
+    @include transform(translate(0, -50%));
+  }
+}
+
+.hide-delay{
+  &.ng-hide{
+    opacity: 0;
+  }
+  &.ng-hide-add-active{
+    @include transition(opacity 0.1s $transitionTime);
+  }
+}

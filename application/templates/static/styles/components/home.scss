@@ -1,0 +1,142 @@
+@import "../base";
+#plane{
+  -webkit-animation: up-down 0.8s ease-in-out infinite alternate;
+  -o-animation: up-down 0.8s ease-in-out infinite alternate;
+	animation: up-down 0.8s ease-in-out infinite alternate;
+
+	@include transform(translateY(2%));
+}
+
+$origin-feijitou: 39;
+$origin-ren: 402;
+$origin-login: 90;
+$origin-luoxuanjiang: 120;
+
+$ren-percent: 88%;
+$login-percent: $origin-login / $origin-ren * $ren-percent;
+$luoxuanjiang-percent: $origin-luoxuanjiang / $origin-ren * $ren-percent;
+$feijitou-percent: $origin-feijitou / $origin-ren * $ren-percent;
+
+.plane-part{
+  position: absolute;
+}
+
+.ren{
+  width: $ren-percent;
+  top: 16%;
+  left: 2%;
+}
+
+.luoxuanjiang {
+  width: $luoxuanjiang-percent;
+  top: 55%;
+  left: 73%;
+
+  -webkit-animation: rotate 1s linear infinite;
+  -o-animation: rotate 1s linear infinite;
+  animation: rotate 1s linear infinite;
+}
+
+.login {
+  width: $login-percent;
+  left: 32%;
+}
+.login-icon {
+  position: absolute;
+  font-family: "aressence", sans-serif;
+  color: white;
+
+  font-size: 0.2rem;
+  width: 100%;
+  text-align: center;
+  top: 0.167rem;
+	left: 0;
+}
+
+.feijitou {
+  width: $feijitou-percent;
+  top: 69%;
+  left: 83%;
+}
+
+@-webkit-keyframes rotate {
+  from{
+    @include transform(rotate3d(0, 0, 1, 0deg));
+  }
+  to {
+    @include transform(rotate3d(0, 0, 1, 180deg));
+  }
+}
+@-moz-keyframes rotate {
+  from{
+    @include transform(rotate3d(0, 0, 1, 0deg));
+  }
+  to {
+    @include transform(rotate3d(0, 0, 1, 180deg));
+  }
+}
+@-ms-keyframes rotate {
+  from{
+    @include transform(rotate3d(0, 0, 1, 0deg));
+  }
+  to {
+    @include transform(rotate3d(0, 0, 1, 180deg));
+  }
+}
+@-o-keyframes rotate {
+  from{
+    @include transform(rotate3d(0, 0, 1, 0deg));
+  }
+  to {
+    @include transform(rotate3d(0, 0, 1, 180deg));
+  }
+}
+@keyframes rotate {
+  from{
+    @include transform(rotate(0deg));
+  }
+  to {
+    @include transform(rotate(360deg));
+  }
+}
+
+@-webkit-keyframes up-down{
+  0%{
+    @include transform(translate3d(0, 2%, 0));
+  }
+  100%{
+    @include transform(translate3d(0, -2%, 0));
+  }
+}
+@-moz-keyframes up-down{
+  0%{
+    @include transform(translate3d(0, 2%, 0));
+  }
+  100%{
+    @include transform(translate3d(0, -2%, 0));
+  }
+}
+@-o-keyframes up-down{
+  0%{
+    @include transform(translate3d(0, 2%, 0));
+  }
+  100%{
+    @include transform(translate3d(0, -2%, 0));
+  }
+}
+@-ms-keyframes up-down{
+  0%{
+    @include transform(translate3d(0, 2%, 0));
+  }
+  100%{
+    @include transform(translate3d(0, -2%, 0));
+  }
+}
+@keyframes up-down{
+  0%{
+    @include transform(translate3d(0, 2%, 0));
+  }
+  100%{
+    @include transform(translate3d(0, -2%, 0));
+  }
+}

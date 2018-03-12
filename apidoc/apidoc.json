@@ -1,0 +1,11 @@
+{
+  "name": "family tree doc",
+  "version": "0.1.0",
+  "description": "family tree, BETA",
+  "title": "family tree api document",
+  "url": "http://115.159.54.219:8600",
+  "header": {
+    "title": "说明",
+    "filename": "apidoc/header.md"
+  }
+}

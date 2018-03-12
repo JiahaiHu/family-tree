@@ -1,0 +1,71 @@
+@import "base";
+#head{
+  height: 64px;
+  &>h1{
+    display: inline-block;
+    color: white;
+    font-size: 22px;
+    margin-top: 17px;
+  }
+  &>button{
+    float: right;
+    width: 80px;
+    height: 40px;
+    margin-top: 12px;
+    background-color: white;
+    border: none;
+    margin-left: 24px;
+    border-radius: 3px;
+  }
+}
+#bg{
+  background-color: #3f51b5;
+  position: absolute;
+  width: 100%;
+  height: 200px;
+}
+
+#info{
+  margin-right: 20px;
+  width: 374px;
+  float: left;
+}
+
+#mentor{
+  //bfc
+  overflow: hidden;
+  //height: 310px;
+}
+
+.btn-container-1{
+  text-align: center;
+}
+
+.btn-container-2{
+  text-align: center;
+
+  button:first-child{
+    margin-right: 48px;
+  }
+}
+
+.marginY20{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
+#projectName{
+  border: none;
+  border-bottom: 1px solid;
+}
+
+#projectIntro{
+  background-image: url("../images/text-decoration.png");
+  border: none;
+  width: 100%;
+}
+
+label{
+  color: #a0a0a0;
+}
