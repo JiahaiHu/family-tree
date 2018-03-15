@@ -9,12 +9,12 @@ class App extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.circlesContainer}>
-          <CircleWithTag x='450' y='300' r='400' />
-          <CircleWithTag x='650' y='350' r='100' />
-          <CircleWithTag x='250' y='450' r='80' />
+          <CircleWithTag x='50%' y='50%' r='40%' />
+          <CircleWithTag x='70%' y='50%' r='10%' />
+          <CircleWithTag x='30%' y='70%' r='10%' />
         </div>
         <div className={styles.home}></div>
-        <Circles X='300' Y='550' />
+        <Circles X='40%' Y='80%' R='8%' d='20%' r='20%' />
       </div>
     );
   }

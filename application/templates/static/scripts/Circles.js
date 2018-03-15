@@ -3,11 +3,11 @@ import styles from '../styles/index.css';
 
 class Circles extends React.Component {
   static defaultProps = {
-    X: 100,
-    Y: 100,
-    d: 30,
-    R: 100,
-    r: 40,
+    X: '50%',
+    Y: '50%',
+    R: '10%',
+    d: '0%',
+    r: '25%',
     circleNum: 2,
     deg: 0,
   };
@@ -15,31 +15,35 @@ class Circles extends React.Component {
   render() {
     const { X, Y, d, R, r, circleNum, deg } = this.props;
     const rad = Math.PI * deg / 180;
-    const deltaDistance = d / circleNum;
-    const deltaRadius = (R - d - r) / circleNum;
+    const deltaDistance = `calc(${d} / ${circleNum})`;
+    const deltaRadius = `calc((50% - ${d} - ${r}) / ${circleNum})`;
     const circleProps = [];
     for (let i = 0; i < circleNum; i++) {
-      const distance = d - i * deltaDistance;
+      const distance = `calc(${d} - ${i} * ${deltaDistance})`;
       circleProps.push({
-        x: R + distance * Math.cos(rad),
-        y: R - distance * Math.sin(rad),
-        radius: r + i * (deltaDistance + deltaRadius),
+        x: `calc(50% + ${distance} * ${Math.cos(rad)})`,
+        y: `calc(50% - ${distance} * ${Math.sin(rad)})`,  // exist error
+        radius: `calc(${r} + ${i} * (${deltaDistance} + ${deltaRadius}))`,
       });
     }
     const wrapperStyle = {
-      left: `${X-R}px`,
-      top: `${Y-R}px`,
-      width: `${2*R}px`,
-      height: `${2*R}px`
+      left: `calc(${X})`,
+      top: `calc(${Y})`,
+      width: `calc(2 * ${R})`,
+      paddingTop: `calc(2 * ${R})`,
+      marginLeft: `calc(-${R})`,
+      marginTop: `calc(-${R})`,
     };
     return (
         <div className={styles.circle} style={wrapperStyle}>
           { circleProps.map((item, index) => {
             const circleStyle = {
-              left: `${item.x-item.radius}px`,
-              top: `${item.y-item.radius}px`,
-              width: `${2*item.radius}px`,
-              height: `${2*item.radius}px`
+              left: `calc(${item.x})`,
+              top: `calc(${item.y})`,
+              width: `calc(2 * ${item.radius})`,
+              paddingTop: `calc(2 * ${item.radius})`,
+              marginLeft: `calc((-1) * ${item.radius})`,
+              marginTop: `calc((-1) * ${item.radius})`,
             };
             return <div className={styles.circle} style={circleStyle} />
           })}

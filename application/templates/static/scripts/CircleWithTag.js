@@ -8,10 +8,12 @@ class CircleWithTag extends React.Component {
   render() {
     const { x, y, r, deg} = this.props;
     const circleStyle = {
-      top: `${x-r}px`,
-      left: `${x-r}px`,
-      width: `${2*r}px`,
-      height: `${2*r}px`,
+      top: `calc(${y})`,
+      left: `calc(${x})`,
+      width: `calc(2 * ${r})`,
+      paddingTop: `calc(2 * ${r})`,
+      marginLeft: `calc(-${r})`,
+      marginTop: `calc(-${r})`,
     };
     return <div className={styles.circle} style={circleStyle} />;
   }
