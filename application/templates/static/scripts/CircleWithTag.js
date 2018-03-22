@@ -14,8 +14,18 @@ class CircleWithTag extends React.Component {
       paddingTop: `calc(2 * ${r})`,
       marginLeft: `calc(-${r})`,
       marginTop: `calc(-${r})`,
+      border: 'solid 1px rgba(255, 255, 255, .7)',
     };
-    return <div className={styles.circle} style={circleStyle} />;
+    const rad = Math.PI * deg / 180;
+    const tagStyle = {
+      top: `${50 * (1 - Math.sin(rad))}%`,
+      left: `${50 * (1 + Math.cos(rad))}%`,
+    };
+    return (
+      <div className={styles.circle} style={circleStyle}>
+        <div className={styles.tag} style={tagStyle} />
+      </div>
+    );
   }
 }
 

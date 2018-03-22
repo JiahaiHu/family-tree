@@ -2,7 +2,6 @@
   position: absolute;
   background-color: transparent;
   border-radius: 50%;
-  border: solid 1px #000;
 }
 
 .wrapper {
@@ -17,4 +16,30 @@
 
 .home {
   position: absolute;
+}
+
+.gradBgColor {
+  background-image: -webkit-linear-gradient(30deg, #74ead5, #abb6e5);
+}
+
+.tag {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.tag::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 36px;
+  margin-top: -15px;
+  margin-left: -17px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: solid 2px rgba(255, 255, 255, 0.2);
 }

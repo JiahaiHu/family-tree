@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import styles from '../styles/index.css';
 
 class Circles extends React.Component {
@@ -33,9 +34,10 @@ class Circles extends React.Component {
       paddingTop: `calc(2 * ${R})`,
       marginLeft: `calc(-${R})`,
       marginTop: `calc(-${R})`,
+      border: 'none',
     };
     return (
-        <div className={styles.circle} style={wrapperStyle}>
+        <div className={classnames(styles.circle, styles.gradBgColor)} style={wrapperStyle}>
           { circleProps.map((item, index) => {
             const circleStyle = {
               left: `calc(${item.x})`,
@@ -44,6 +46,7 @@ class Circles extends React.Component {
               paddingTop: `calc(2 * ${item.radius})`,
               marginLeft: `calc((-1) * ${item.radius})`,
               marginTop: `calc((-1) * ${item.radius})`,
+              border: 'solid 1px rgba(255, 255, 255, .3)',
             };
             return <div className={styles.circle} style={circleStyle} />
           })}
