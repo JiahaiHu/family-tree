@@ -42,4 +42,29 @@
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.1);
   border: solid 2px rgba(255, 255, 255, 0.2);
+  transform-origin: 22px 20px;
+  animation: rotateReverse 4s linear infinite;
+}
+
+.rotate {
+  -webkit-animation: rotate 4s linear infinite;
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotateReverse {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes rotate {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
 }

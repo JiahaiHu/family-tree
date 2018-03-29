@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '../styles/index.css';
+import classnames from 'classnames';
 
 class CircleWithTag extends React.Component {
   static defaultProps = {
@@ -22,7 +23,7 @@ class CircleWithTag extends React.Component {
       left: `${50 * (1 + Math.cos(rad))}%`,
     };
     return (
-      <div className={styles.circle} style={circleStyle}>
+      <div className={classnames(styles.circle, styles.rotate)} style={circleStyle}>
         <div className={styles.tag} style={tagStyle} />
       </div>
     );
