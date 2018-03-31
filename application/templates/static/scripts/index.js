@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import Circles from './Circles';
 import CircleWithTag from './CircleWithTag';
+import IndexForm from './IndexFrom';
 import styles from '../styles/index.css';
 
 class App extends React.Component {
@@ -15,9 +16,7 @@ class App extends React.Component {
           <CircleWithTag x='65%' y='45%' r='10%' deg='270' />
           <CircleWithTag x='25%' y='65%' r='8%' deg='90' />
         </div>
-        <div className={styles.home}>
-        
-        </div>
+        <IndexForm />
         <Circles X='35%' Y='80%' R='6%' d='10%' r='20%' />
         
       </div>
