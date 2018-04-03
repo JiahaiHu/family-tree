@@ -67,7 +67,7 @@ class IndexFrom extends React.Component {
             <input id={'username'} placeholder={'username'} />
           </label>
           <label htmlFor={'password'}>
-            <input id={'password'} placeholder={'password'} />
+            <input id={'password'} placeholder={'password'} type={'password'} />
           </label>
           <a className={styles.forget} onClick={this.forgetClickHandler}>Forgot password?</a>
         </div>
@@ -82,10 +82,10 @@ class IndexFrom extends React.Component {
             <input id={'username'} placeholder={'username'} />
           </label>
           <label htmlFor={'password'}>
-            <input id={'password'} placeholder={'password'} />
+            <input id={'password'} placeholder={'password'} type={'password'} />
           </label>
           <label htmlFor={'confirm'}>
-            <input id={'confirm'} placeholder={'confirm password'} />
+            <input id={'confirm'} placeholder={'confirm password'} type={'password'} />
           </label>
           <label htmlFor={'invite'}>
             <input id={'invite'} placeholder={'invite code'} />

@@ -102,6 +102,11 @@
   margin-left: -200px;
 }
 
+.formWrapper.forget.enter {
+  height: 200px;
+  margin-top: -190px;
+}
+
 .formWrapper.nav.enter {
   animation: wrapperEnter 1s ease backwards;
 }
@@ -140,6 +145,10 @@
   animation: fadeIn 0.5s ease 50ms backwards;
 }
 
+.forget.enter .formTitle {
+  animation: none;
+}
+
 .register.leave .formTitle {
   animation: fadeOut 0.5s ease 200ms;
 }
@@ -149,7 +158,7 @@
 }
 
 .forget.leave .formTitle {
-  animation: fadeOut 0.5s ease 400ms;
+  animation: none;
 }
 
 .formText {
@@ -161,12 +170,16 @@
   animation: fadeIn 0.5s ease 100ms backwards;
 }
 
+.forget.enter .formText {
+  animation: none;
+}
+
 .leave .formText {
   animation: fadeOut 0.5s ease 100ms;
 }
 
 .forget.leave .formText {
-  animation: fadeOut 0.5s ease 300ms;
+  animation: none;
 }
 
 input {
@@ -254,19 +267,23 @@ a {
 }
 
 .formWrapper.register.leave .loginButton {
-  animation: fadeOut 0.5s ease backwards;
+  animation: fadeOut 0.5s ease;
 }
 
 .formWrapper.forget.leave .loginButton {
-  animation: fadeOut 0.5s ease backwards;
+  animation: fadeOut 0.5s ease;
 }
 
 .enter label:first-child {
   animation: fadeIn 0.5s ease 150ms backwards;
 }
 
+.forget.enter label:first-child {
+  animation: fadeIn 0.5s ease backwards;
+}
+
 .forget.leave label:first-child {
-  animation: fadeOut 0.5s ease 200ms backwards;
+  animation: fadeOut 0.5s ease 300ms backwards;
 }
 
 .enter label:nth-child(2) {
@@ -274,7 +291,7 @@ a {
 }
 
 .forget.leave label:nth-child(2) {
-  animation: fadeOut 0.5s ease 100ms backwards;
+  animation: fadeOut 0.5s ease 200ms backwards;
 }
 
 .enter label:nth-child(3) {
@@ -291,6 +308,10 @@ a {
 
 a.forget {
   animation: fadeIn 0.5s ease 250ms backwards;
+}
+
+.leave a.forget {
+  animation: fadeOut 0.5s ease 100ms;
 }
 
 a.getCode {
@@ -343,7 +364,7 @@ a.getCode {
 }
 
 .enter .resetButton {
-  animation: fadeIn 0.5s ease backwards 150ms;
+  animation: fadeIn 0.5s ease backwards 100ms;
 }
 
 .active {
