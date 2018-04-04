@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/index.css';
 import classnames from 'classnames';
+// import Cookies from 'js-cookie';
 
 class IndexFrom extends React.Component {
   constructor(props) {
@@ -24,28 +25,83 @@ class IndexFrom extends React.Component {
   }
 
   loginClickHandler = () => {
-    if (this.state.pre == 'nav' &&  this.state.next == 'nav') {
+    if (this.state.next == 'nav') {
       this.setState({
         pre: 'nav',
         next: 'login',
         enter: false,
       })
     }
-    else if (this.state.pre == 'nav' && this.state.next == 'login') {
-      //
+    else if (this.state.next == 'login') {  // login
+      // get formData
+      let formData = {};
+      formData.email = document.getElementById('username').value;
+      formData.password = document.getElementById('password').value;
+      console.log(JSON.stringify(formData));
+
+      fetch('/account/login', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.status) {
+          // Cookies.set('Id', data.message.user_id);
+        } else {
+          console.log(data.error);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     }
   }
 
   registerClickHandler = () => {
-    if (this.state.pre == 'nav' &&  this.state.next == 'nav') {
+    if (this.state.next == 'nav') {
       this.setState({
-        pre: this.state.next,
+        pre: 'nav',
         next: 'register',
         enter: false,
       })
     }
-    else if (this.state.pre == 'nav' && this.state.next == 'register') {
-      //
+    else if (this.state.next == 'register') {
+      // confirm password
+      // todo: get formData
+      if(formData.password !== formData.re_password) {
+        // ...
+      }
+      // register
+      fetch('/account/register', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: formData,
+      })
+      .then(res => res.json())
+      .then((data) => {
+        if (data.status) {
+          switch (data.state) {
+            case 0: // success
+              // ...
+              break;
+            case 1:
+              break;
+            case 2:
+              break;
+          }
+        } else {
+          console.log(data.error);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
     }
   }
 
