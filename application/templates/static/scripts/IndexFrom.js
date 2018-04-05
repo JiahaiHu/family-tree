@@ -24,6 +24,14 @@ class IndexFrom extends React.Component {
     }
   }
 
+  transformRequest = (obj) => {
+    let str = [];
+    for (let p in obj) {
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+    }
+    return str.join("&");
+  }
+
   loginClickHandler = () => {
     if (this.state.next == 'nav') {
       this.setState({
@@ -37,14 +45,13 @@ class IndexFrom extends React.Component {
       let formData = {};
       formData.email = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
-      console.log(JSON.stringify(formData));
 
       fetch('/account/login', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify(formData)
+        body: this.transformRequest(formData),
       })
       .then(res => res.json())
       .then((data) => {
