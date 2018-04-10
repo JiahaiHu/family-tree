@@ -55,7 +55,7 @@ class IndexFrom extends React.Component {
       })
       .then(res => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.status) {
           // Cookies.set('Id', data.message.user_id);
         } else {
@@ -63,6 +63,7 @@ class IndexFrom extends React.Component {
         }
       })
       .catch((error) => {
+        alert("服务器错误，请告知管理员!");
         console.log(error);
       })
     }
@@ -77,32 +78,44 @@ class IndexFrom extends React.Component {
       })
     }
     else if (this.state.next == 'register') {
+      let formData = {};
+      formData.email = document.getElementById('email').value;
+      formData.username = document.getElementById('username').value;
+      formData.password = document.getElementById('password').value;
+      formData.re_password = document.getElementById('confirm').value;
+      formData.inv_code = document.getElementById('invite').value;
+
       // confirm password
-      // todo: get formData
       if(formData.password !== formData.re_password) {
-        // ...
+        // error
+        alert("Password confirm failed!");
+        return;
       }
       // register
       fetch('/account/register', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: formData,
+        body: this.transformRequest(formData),
       })
       .then(res => res.json())
       .then((data) => {
         if (data.status) {
           switch (data.state) {
             case 0: // success
-              // ...
+              alert("注册成功，登录中!");
+              // todo: login...
               break;
             case 1:
+              alert("注册邮件已发送, 未收到可再次发送!");
               break;
             case 2:
+              alert("注册邮件发送失败, 点击手动发送!");
               break;
           }
         } else {
+          alert("服务器错误，请告知管理员!");
           console.log(data.error);
         }
       })
@@ -117,6 +130,30 @@ class IndexFrom extends React.Component {
       pre: this.state.next,
       next: 'forget',
       enter: false,
+    })
+  }
+
+  resetClickHandler = () => {
+    let formData = {};
+    formData.email = document.getElementById('email').value;
+    fetch('/account/forgot', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: this.transformRequest(formData),
+    })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status) {
+        alert("邮件已经发送!");        
+      } else {
+        console.log(data.error);
+      }
+    })
+    .catch((error) => {
+      alert("服务器错误，请告知管理员!");
+      console.log(error);
     })
   }
 
