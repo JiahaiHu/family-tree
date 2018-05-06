@@ -1,0 +1,418 @@
+.circle {
+  position: absolute;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
+.wrapper {
+  position: relative;
+  height: 100%;
+}
+
+.circlesContainer {
+  position: relative;
+  height: 100%;
+}
+
+.gradBgColor {
+  background-image: -webkit-linear-gradient(30deg, #74ead5, #abb6e5);
+}
+
+.tag {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+.tag::before {
+  content: '';
+  position: absolute;
+  width: 150px;
+  height: 36px;
+  margin-top: -15px;
+  margin-left: -17px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: solid 2px rgba(255, 255, 255, 0.2);
+  transform-origin: 22px 20px;
+  animation: rotateReverse 4s linear infinite;
+}
+
+.rotate {
+  -webkit-animation: rotate 4s linear infinite;
+  animation: rotate 4s linear infinite;
+}
+
+@keyframes rotateReverse {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes rotate {
+  0%  {
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+
+/*********************form************************/
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.enter {display: block;}  /* for animation */
+
+.center {
+  text-align: center;
+}
+
+.formWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 300px;
+  padding: 90px 90px;
+  margin-top: -240px;
+  margin-left: -190px;
+  border-radius: 5px;
+  background-color: #fff;
+  transition: width 0.5s ease;
+}
+
+.formWrapper.register.enter {
+  width: 220px;
+  height: 360px;
+  margin-top: -260px;
+  margin-left: -200px;
+}
+
+.formWrapper.forget.enter {
+  height: 200px;
+  margin-top: -190px;
+}
+
+.formWrapper.nav.enter {
+  animation: wrapperEnter 1s ease backwards;
+}
+
+.formHeader {
+  padding-bottom: 40px;
+  margin: 0 auto;
+}
+
+.formHeader.center {
+  padding: 0 45px 40px 45px;
+}
+
+.formBar {
+  height: 5px;
+  width: 20px;
+  transition: width 0.5s ease;
+}
+
+.formBar.nav {
+  margin: 0 auto;  
+  width: 110px;
+}
+
+.formWrapper.nav.enter .formBar {
+  animation: fadeIn 0.5s ease backwards;
+}
+
+.formTitle {
+  font-size: 30px;
+  font-weight: 500;
+  color: #626471;
+}
+
+.enter .formTitle {
+  animation: fadeIn 0.5s ease 50ms backwards;
+}
+
+.forget.enter .formTitle {
+  animation: none;
+}
+
+.register.leave .formTitle {
+  animation: fadeOut 0.5s ease 200ms;
+}
+
+.login.leave .formTitle {
+  animation: fadeOut 0.5s ease 200ms;
+}
+
+.forget.leave .formTitle {
+  animation: none;
+}
+
+.formText {
+  color: #c2bfde;
+  font-size: 14px;
+}
+
+.enter .formText {
+  animation: fadeIn 0.5s ease 100ms backwards;
+}
+
+.forget.enter .formText {
+  animation: none;
+}
+
+.leave .formText {
+  animation: fadeOut 0.5s ease 100ms;
+}
+
+.forget.leave .formText {
+  animation: none;
+}
+
+input {
+  width: 120px;
+  height: 14px;
+  padding: 8px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  line-height: 14px;
+  outline: none;
+  transition: all 0.4s ease;
+}
+
+input:focus {
+  box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+input::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.1);
+}
+
+label {
+  position: relative;
+  display: block;
+  margin-bottom: 15px;  
+}
+
+label:focus-within::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  margin-top: -4px;
+  margin-left: -20px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #74ead5;
+}
+
+
+a {
+  display: block;
+  text-decoration-line: underline;
+  font-size: 10px;
+  color: #c2bfde;
+  cursor: pointer;
+}
+
+
+.loginButton {
+  width: 90px;
+  height: 30px;
+  margin: 20px 0;
+  border-radius: 15px;
+  line-height: 30px;
+  font-size: 10px;  
+  /********************/
+  border: 1px solid #c2bfde;
+  color: #c2bfde;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: width 0.5s ease, height 0.5s ease, margin 0.5s ease;
+}
+
+.loginButton.right {
+  margin: 4px 0;  
+}
+
+.loginButton.nav {
+  width: 180px;
+  height: 40px;
+  margin: 20px auto 0 auto;
+  border-radius: 20px;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+.formWrapper.nav.enter .loginButton {
+  animation: fadeIn 0.5s ease 300ms backwards;
+}
+
+.formWrapper.register.enter .loginButton {
+  animation: fadeIn 0.2s ease backwards;
+}
+
+.formWrapper.register.leave .loginButton {
+  animation: fadeOut 0.5s ease;
+}
+
+.formWrapper.forget.leave .loginButton {
+  animation: fadeOut 0.5s ease;
+}
+
+.enter label:first-child {
+  animation: fadeIn 0.5s ease 150ms backwards;
+}
+
+.forget.enter label:first-child {
+  animation: fadeIn 0.5s ease backwards;
+}
+
+.forget.leave label:first-child {
+  animation: fadeOut 0.5s ease 300ms backwards;
+}
+
+.enter label:nth-child(2) {
+  animation: fadeIn 0.5s ease 200ms backwards;
+}
+
+.forget.leave label:nth-child(2) {
+  animation: fadeOut 0.5s ease 200ms backwards;
+}
+
+.enter label:nth-child(3) {
+  animation: fadeIn 0.5s ease 250ms backwards;
+}
+
+.enter label:nth-child(4) {
+  animation: fadeIn 0.5s ease 300ms backwards;
+}
+
+.enter label:nth-child(5) {
+  animation: fadeIn 0.5s ease 350ms backwards;
+}
+
+a.forget {
+  animation: fadeIn 0.5s ease 250ms backwards;
+}
+
+.leave a.forget {
+  animation: fadeOut 0.5s ease 100ms;
+}
+
+a.getCode {
+  animation: fadeIn 0.5s ease 350ms backwards;
+}
+
+.registerButton {
+  width: 100px;
+  height: 30px;
+  margin: 20px 0;
+  border-radius: 15px;
+  line-height: 30px;
+  font-size: 10px;  
+  /******************/
+  color: #c2bfde;
+  text-transform: uppercase;
+  text-align: center;
+  border: 1px solid #c2bfde;
+  cursor: pointer;
+}
+
+.registerButton.nav {
+  width: 120px;
+  height: 40px;
+  margin: 20px auto 0 auto;
+  border-radius: 20px;
+  line-height: 40px;
+  font-size: 16px;
+}
+
+.formWrapper.nav.enter .registerButton,
+.formWrapper.login.enter .registerButton {
+  animation: fadeIn 0.5s ease 400ms backwards;
+}
+
+.formWrapper.login.leave .registerButton {
+  animation: fadeOut 0.5s ease;
+}
+
+.resetButton {
+  width: 160px;
+  height: 30px;
+  margin: 20px 0;
+  border-radius: 15px;
+  line-height: 30px;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+}
+
+.enter .resetButton {
+  animation: fadeIn 0.5s ease backwards 100ms;
+}
+
+.active {
+  float: none;
+  color: #fff;
+  font-weight: bold;
+  background-image: -webkit-linear-gradient(30deg, #74ead5, #abb6e5);
+  border: none;
+  box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+label a {
+  float: right;
+  margin-right: -30px;
+  margin-top: 7px;
+}
+
+@keyframes wrapperEnter {
+  from  {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to  {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from  {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to  {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from  {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to  {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+}
+
+
