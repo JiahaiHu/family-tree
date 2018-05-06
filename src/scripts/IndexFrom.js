@@ -2,6 +2,7 @@ import React from 'react';
 import styles from '../styles/index.css';
 import classnames from 'classnames';
 // import Cookies from 'js-cookie';
+const HOST = 'http://fmt.fredliang.cn';
 
 class IndexFrom extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class IndexFrom extends React.Component {
       formData.email = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
 
-      fetch('/account/login', {
+      fetch(HOST + '/account/login', {
         method: 'POST',
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -92,7 +93,7 @@ class IndexFrom extends React.Component {
         return;
       }
       // register
-      fetch('/account/register', {
+      fetch(HOST + '/account/register', {
         method: 'POST',
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -136,7 +137,7 @@ class IndexFrom extends React.Component {
   resetClickHandler = () => {
     let formData = {};
     formData.email = document.getElementById('email').value;
-    fetch('/account/forgot', {
+    fetch(HOST + '/account/forgot', {
       method: 'POST',
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
