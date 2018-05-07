@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/index.css';
 import classnames from 'classnames';
 // import Cookies from 'js-cookie';
-const HOST = 'http://fmt.fredliang.cn';
+const MOCK_HOST = 'https://fmt.fredliang.cn';
 
 class IndexFrom extends React.Component {
   constructor(props) {
@@ -25,14 +25,6 @@ class IndexFrom extends React.Component {
     }
   }
 
-  transformRequest = (obj) => {
-    let str = [];
-    for (let p in obj) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-    }
-    return str.join("&");
-  }
-
   loginClickHandler = () => {
     if (this.state.next == 'nav') {
       this.setState({
@@ -47,17 +39,17 @@ class IndexFrom extends React.Component {
       formData.email = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
 
-      fetch(HOST + '/account/login', {
+      fetch(MOCK_HOST + '/account/login', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: this.transformRequest(formData),
+        body: JSON.stringify(formData),
       })
       .then(res => res.json())
       .then((data) => {
-        // console.log(data);
-        if (data.status) {
+        console.log(data);
+        if (data.code === 200) {
           // Cookies.set('Id', data.message.user_id);
         } else {
           console.log(data.error);
@@ -93,16 +85,16 @@ class IndexFrom extends React.Component {
         return;
       }
       // register
-      fetch(HOST + '/account/register', {
+      fetch(MOCK_HOST + '/account/register', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: this.transformRequest(formData),
+        body: JSON.stringify(formData),
       })
       .then(res => res.json())
       .then((data) => {
-        if (data.status) {
+        if (data.code == 200) {
           switch (data.state) {
             case 0: // success
               alert("注册成功，登录中!");
@@ -137,16 +129,16 @@ class IndexFrom extends React.Component {
   resetClickHandler = () => {
     let formData = {};
     formData.email = document.getElementById('email').value;
-    fetch(HOST + '/account/forgot', {
+    fetch(MOCK_HOST + '/account/forgot', {
       method: 'POST',
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body: this.transformRequest(formData),
+      body: JSON.stringify(formData),
     })
     .then(res => res.json())
     .then((data) => {
-      if (data.status) {
+      if (data.code === 200) {
         alert("邮件已经发送!");        
       } else {
         console.log(data.error);
