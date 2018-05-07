@@ -7,7 +7,8 @@
   "license": "ISC",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html --out-dir=./build --public-url=./"
+    "build": "parcel build index.html --out-dir=./build --public-url=./",
+    "clean": "shx rm -rf build"
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
@@ -19,7 +20,8 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "parcel-bundler": "1.7.0",
-    "postcss-modules": "^1.1.0"
+    "postcss-modules": "^1.1.0",
+    "shx": "^0.2.2"
   },
   "dependencies": {
     "classnames": "^2.2.5",

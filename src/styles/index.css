@@ -368,7 +368,6 @@ a.getCode {
 }
 
 .active {
-  float: none;
   color: #fff;
   font-weight: bold;
   background-image: -webkit-linear-gradient(30deg, #74ead5, #abb6e5);

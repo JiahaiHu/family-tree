@@ -228,12 +228,14 @@ class IndexFrom extends React.Component {
       [styles.nav]: this.state.next == 'nav' ||
       this.state.pre == 'nav' && !this.state.enter,
       [styles.right]: this.state.next == 'register' && this.state.enter,
+      [styles.left]: this.state.next == 'login' && this.state.enter,
     })
     let registerButtonClass = classnames({
       [styles.registerButton]: true,
       [styles.active]: this.state.next == 'register' && this.state.enter,
       [styles.nav]: this.state.next == 'nav' ||
       this.state.pre == 'nav' && !this.state.enter,
+      [styles.right]: this.state.next == 'login' && this.state.enter,
     })
     return (
       <div className={formWrapperClass}>
@@ -242,10 +244,10 @@ class IndexFrom extends React.Component {
           {header}
           {this.getList()}
         </div>
-        { this.state.next == 'nav' || this.state.next == 'login' || this.state.next == 'register' || this.state.next =='forget' && !this.state.enter ?
+        { this.state.next == 'nav' || this.state.next == 'login' || this.state.next == 'register' ||
+        this.state.next =='forget' && !this.state.enter ?
           (<div className={loginButtonClass} onClick={this.loginClickHandler}>log in</div>) : null }
-        { this.state.pre == 'nav' && (this.state.next != 'login' || !this.state.enter) ||
-        this.state.next == 'register' && this.state.enter ?
+        { this.state.pre == 'nav' || this.state.next == 'register' && this.state.enter ?
           (<div className={registerButtonClass} onClick={this.registerClickHandler}>register</div>) : null }
         { this.state.next == 'forget' && this.state.enter ?
           (<div className={classnames(styles.resetButton, styles.active)} onClick={this.resetClickHandler}>reset password</div>) : null }
