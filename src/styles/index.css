@@ -144,10 +144,11 @@
 .enter .formTitle {
   animation: fadeIn 0.5s ease 50ms backwards;
 }
-
+/*
 .forget.enter .formTitle {
   animation: none;
 }
+*/
 
 .register.leave .formTitle {
   animation: fadeOut 0.5s ease 200ms;
@@ -156,10 +157,11 @@
 .login.leave .formTitle {
   animation: fadeOut 0.5s ease 200ms;
 }
-
+/*
 .forget.leave .formTitle {
   animation: none;
 }
+*/
 
 .formText {
   color: #c2bfde;
@@ -169,18 +171,21 @@
 .enter .formText {
   animation: fadeIn 0.5s ease 100ms backwards;
 }
-
+/*
 .forget.enter .formText {
   animation: none;
 }
+*/
 
 .leave .formText {
   animation: fadeOut 0.5s ease 100ms;
 }
 
+/*
 .forget.leave .formText {
   animation: none;
 }
+*/
 
 input {
   width: 120px;

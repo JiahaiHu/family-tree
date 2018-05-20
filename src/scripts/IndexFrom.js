@@ -36,10 +36,10 @@ class IndexFrom extends React.Component {
     else if (this.state.next == 'login') {  // login
       // get formData
       let formData = {};
-      formData.email = document.getElementById('username').value;
+      formData.username = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
 
-      fetch(MOCK_HOST + '/account/login', {
+      fetch(MOCK_HOST + '/login', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -48,16 +48,16 @@ class IndexFrom extends React.Component {
       })
       .then(res => res.json())
       .then((data) => {
-        console.log(data);
         if (data.code === 200) {
+          alert("success!");
           // Cookies.set('Id', data.message.user_id);
         } else {
-          console.log(data.error);
+          alert(data.message);
         }
       })
       .catch((error) => {
         alert("服务器错误，请告知管理员!");
-        console.log(error);
+        console.error(error);
       })
     }
   }
@@ -70,14 +70,23 @@ class IndexFrom extends React.Component {
         enter: false,
       })
     }
+    else if (this.state.next == 'login') {
+      this.setState({
+        pre: 'login',
+        next: 'register',
+        enter: false,
+      })
+    }
     else if (this.state.next == 'register') {
       let formData = {};
-      formData.email = document.getElementById('email').value;
+      formData.phone = document.getElementById('phone').value;
       formData.username = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
       formData.re_password = document.getElementById('confirm').value;
-      formData.inv_code = document.getElementById('invite').value;
-
+      formData.inviteCode = document.getElementById('invite').value;
+      
+      // form confirm
+      // ...
       // confirm password
       if(formData.password !== formData.re_password) {
         // error
@@ -85,7 +94,7 @@ class IndexFrom extends React.Component {
         return;
       }
       // register
-      fetch(MOCK_HOST + '/account/register', {
+      fetch(MOCK_HOST + '/register', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -94,25 +103,24 @@ class IndexFrom extends React.Component {
       })
       .then(res => res.json())
       .then((data) => {
-        if (data.code == 200) {
-          switch (data.state) {
-            case 0: // success
-              alert("注册成功，登录中!");
-              // todo: login...
-              break;
-            case 1:
-              alert("注册邮件已发送, 未收到可再次发送!");
-              break;
-            case 2:
-              alert("注册邮件发送失败, 点击手动发送!");
-              break;
-          }
+        if (data.code === 200) {
+          // switch (data.state) {
+          //   case 0:
+          //     alert("注册成功，登录中!");
+          //     break;
+          //   case 1:
+          //     alert("注册邮件已发送, 未收到可再次发送!");
+          //     break;
+          //   case 2:
+          //     alert("注册邮件发送失败, 点击手动发送!");
+          //     break;
+          // }
         } else {
-          alert("服务器错误，请告知管理员!");
-          console.log(data.error);
+          alert(data.message);
         }
       })
       .catch((error) => {
+        alert("服务器错误，请告知管理员!");
         console.log(error);
       })
     }
@@ -128,8 +136,8 @@ class IndexFrom extends React.Component {
 
   resetClickHandler = () => {
     let formData = {};
-    formData.email = document.getElementById('email').value;
-    fetch(MOCK_HOST + '/account/forgot', {
+    formData.phone = document.getElementById('phone').value;
+    fetch(MOCK_HOST + '/forgot', {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -141,7 +149,7 @@ class IndexFrom extends React.Component {
       if (data.code === 200) {
         alert("邮件已经发送!");        
       } else {
-        console.log(data.error);
+        alert(data.message);
       }
     })
     .catch((error) => {
@@ -168,8 +176,8 @@ class IndexFrom extends React.Component {
     } else if (this.state.next == 'register' && this.state.enter) {
       return (
         <div className={styles.formList}>
-          <label htmlFor={'email'}>
-            <input id={'email'} placeholder={'email'} />
+          <label htmlFor={'phone'}>
+            <input id={'phone'} placeholder={'phone'} />
           </label>
           <label htmlFor={'username'}>
             <input id={'username'} placeholder={'username'} />
@@ -177,20 +185,20 @@ class IndexFrom extends React.Component {
           <label htmlFor={'password'}>
             <input id={'password'} placeholder={'password'} type={'password'} />
           </label>
-          <label htmlFor={'confirm'}>
-            <input id={'confirm'} placeholder={'confirm password'} type={'password'} />
+          <label htmlFor={'re_password'}>
+            <input id={'re_password'} placeholder={'confirm password'} type={'password'} />
           </label>
-          <label htmlFor={'invite'}>
-            <input id={'invite'} placeholder={'invite code'} />
-            <a className={styles.getCode}>How to get?</a>
+          <label htmlFor={'inviteCode'}>
+            <input id={'inviteCode'} placeholder={'invite code'} />
+            <a className={styles.getCode}>Send a code</a>
           </label>
         </div>
       )
     } else if (this.state.next == 'forget' && this.state.enter) {
       return (
         <div className={styles.formList}>
-          <label htmlFor={'email'}>
-            <input id={'email'} placeholder={'email'} />
+          <label htmlFor={'phone'}>
+            <input id={'phone'} placeholder={'phone'} />
           </label>
         </div>
       )
