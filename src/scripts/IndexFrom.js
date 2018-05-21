@@ -77,7 +77,7 @@ class IndexFrom extends React.Component {
       formData.username = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
       formData.re_password = document.getElementById('re_password').value;
-      formData.inviteCode = document.getElementById('inviteCode').value;
+      formData.captcha = document.getElementById('captcha').value;
       
       // form confirm
       // ...
@@ -205,9 +205,9 @@ class IndexFrom extends React.Component {
           <label htmlFor={'re_password'}>
             <input id={'re_password'} placeholder={'confirm password'} type={'password'} />
           </label>
-          <label htmlFor={'inviteCode'}>
-            <input id={'inviteCode'} placeholder={'captcha'} />
-            <a className={styles.getCode}>Send a captcha</a>
+          <label htmlFor={'captcha'}>
+            <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
+            <a className={styles.getCaptcha}>Send</a>
           </label>
         </div>
       )
