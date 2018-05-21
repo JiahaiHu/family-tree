@@ -65,8 +65,7 @@
   }
 }
 
-/*********************form************************/
-
+/****************form style****************/
 .left {
   float: left;
 }
@@ -95,20 +94,16 @@
   transition: width 0.5s ease;
 }
 
-.formWrapper.register.enter {
+.formWrapper.register {
   width: 220px;
   height: 360px;
   margin-top: -260px;
   margin-left: -200px;
 }
 
-.formWrapper.forget.enter {
+.formWrapper.reset {
   height: 200px;
   margin-top: -190px;
-}
-
-.formWrapper.nav.enter {
-  animation: wrapperEnter 1s ease backwards;
 }
 
 .formHeader {
@@ -131,61 +126,16 @@
   width: 110px;
 }
 
-.formWrapper.nav.enter .formBar {
-  animation: fadeIn 0.5s ease backwards;
-}
-
 .formTitle {
   font-size: 30px;
   font-weight: 500;
   color: #626471;
 }
 
-.enter .formTitle {
-  animation: fadeIn 0.5s ease 50ms backwards;
-}
-/*
-.forget.enter .formTitle {
-  animation: none;
-}
-*/
-
-.register.leave .formTitle {
-  animation: fadeOut 0.5s ease 200ms;
-}
-
-.login.leave .formTitle {
-  animation: fadeOut 0.5s ease 200ms;
-}
-/*
-.forget.leave .formTitle {
-  animation: none;
-}
-*/
-
 .formText {
   color: #c2bfde;
   font-size: 14px;
 }
-
-.enter .formText {
-  animation: fadeIn 0.5s ease 100ms backwards;
-}
-/*
-.forget.enter .formText {
-  animation: none;
-}
-*/
-
-.leave .formText {
-  animation: fadeOut 0.5s ease 100ms;
-}
-
-/*
-.forget.leave .formText {
-  animation: none;
-}
-*/
 
 input {
   width: 120px;
@@ -203,7 +153,7 @@ input:focus {
 }
 
 input::-webkit-input-placeholder {
-  color: rgba(0, 0, 0, 0.1);
+  color: rgb(172, 182, 229);
 }
 
 label {
@@ -224,7 +174,6 @@ label:focus-within::before {
   background: #74ead5;
 }
 
-
 a {
   display: block;
   text-decoration-line: underline;
@@ -232,7 +181,6 @@ a {
   color: #c2bfde;
   cursor: pointer;
 }
-
 
 .loginButton {
   width: 90px;
@@ -254,73 +202,13 @@ a {
   margin: 4px 0;  
 }
 
-.loginButton.nav {
+.nav .loginButton {
   width: 180px;
   height: 40px;
   margin: 20px auto 0 auto;
   border-radius: 20px;
   line-height: 40px;
   font-size: 16px;
-}
-
-.formWrapper.nav.enter .loginButton {
-  animation: fadeIn 0.5s ease 300ms backwards;
-}
-
-.formWrapper.register.enter .loginButton {
-  animation: fadeIn 0.2s ease backwards;
-}
-
-.formWrapper.register.leave .loginButton {
-  animation: fadeOut 0.5s ease;
-}
-
-.formWrapper.forget.leave .loginButton {
-  animation: fadeOut 0.5s ease;
-}
-
-.enter label:first-child {
-  animation: fadeIn 0.5s ease 150ms backwards;
-}
-
-.forget.enter label:first-child {
-  animation: fadeIn 0.5s ease backwards;
-}
-
-.forget.leave label:first-child {
-  animation: fadeOut 0.5s ease 300ms backwards;
-}
-
-.enter label:nth-child(2) {
-  animation: fadeIn 0.5s ease 200ms backwards;
-}
-
-.forget.leave label:nth-child(2) {
-  animation: fadeOut 0.5s ease 200ms backwards;
-}
-
-.enter label:nth-child(3) {
-  animation: fadeIn 0.5s ease 250ms backwards;
-}
-
-.enter label:nth-child(4) {
-  animation: fadeIn 0.5s ease 300ms backwards;
-}
-
-.enter label:nth-child(5) {
-  animation: fadeIn 0.5s ease 350ms backwards;
-}
-
-a.forget {
-  animation: fadeIn 0.5s ease 250ms backwards;
-}
-
-.leave a.forget {
-  animation: fadeOut 0.5s ease 100ms;
-}
-
-a.getCode {
-  animation: fadeIn 0.5s ease 350ms backwards;
 }
 
 .registerButton {
@@ -338,22 +226,13 @@ a.getCode {
   cursor: pointer;
 }
 
-.registerButton.nav {
+.nav .registerButton {
   width: 120px;
   height: 40px;
   margin: 20px auto 0 auto;
   border-radius: 20px;
   line-height: 40px;
   font-size: 16px;
-}
-
-.formWrapper.nav.enter .registerButton,
-.formWrapper.login.enter .registerButton {
-  animation: fadeIn 0.5s ease 400ms backwards;
-}
-
-.formWrapper.login.leave .registerButton {
-  animation: fadeOut 0.5s ease;
 }
 
 .resetButton {
@@ -366,10 +245,6 @@ a.getCode {
   text-transform: uppercase;
   text-align: center;
   cursor: pointer;
-}
-
-.enter .resetButton {
-  animation: fadeIn 0.5s ease backwards 100ms;
 }
 
 .active {
@@ -385,6 +260,153 @@ label a {
   margin-right: -30px;
   margin-top: 7px;
 }
+
+/***************fade animation***************/
+
+/*****nav enter*****/
+.formWrapper.nav.enter {
+  animation: wrapperEnter 1s ease backwards;
+}
+
+.nav.enter .formBar {
+  animation: fadeIn 0.5s ease backwards;
+}
+
+.nav.enter .loginButton {
+  animation: fadeIn 0.5s ease 300ms backwards;
+}
+
+.nav.enter .registerButton {
+  animation: fadeIn 0.5s ease 400ms backwards;
+}
+
+/*****nav leave*****/
+.nav.leave .formTitle {
+  animation: fadeOut 0.5s ease 200ms;
+}
+
+.nav.leave .formText {
+  animation: fadeOut 0.5s ease 100ms;
+}
+
+/*****login enter*****/
+a.reset {
+  animation: fadeIn 0.5s ease 250ms backwards;
+}
+
+.login.enter .registerButton {
+  animation: fadeIn 0.5s ease 350ms backwards;
+}
+
+/*****login leave*****/
+.login.leave .formTitle {
+  animation: fadeOut 0.5s ease 400ms backwards;
+}
+
+.login.leave .formText {
+  animation: fadeOut 0.5s ease 350ms backwards;
+}
+
+.login.leave label:first-child {
+  animation: fadeOut 0.5s ease 300ms backwards;
+}
+
+.login.leave label:nth-child(2) {
+  animation: fadeOut 0.5s ease 200ms backwards;
+}
+
+.leave a.reset {
+  animation: fadeOut 0.5s ease 100ms;
+}
+
+/*****register enter*****/
+a.getCode {
+  animation: fadeIn 0.5s ease 350ms backwards;
+}
+
+.register.enter .loginButton {
+  animation: fadeIn 0.2s ease 500ms backwards;
+}
+
+/*****register leave*****/
+.register.leave .formTitle {
+  animation: fadeOut 0.5s ease 400ms;
+}
+
+.register.leave .formText {
+  animation: fadeOut 0.5s ease 350ms;
+}
+
+.register.leave label:first-child {
+  animation: fadeOut 0.5s ease 300ms;
+}
+
+.register.leave label:nth-child(2) {
+  animation: fadeOut 0.5s ease 250ms;
+}
+
+.register.leave label:nth-child(3) {
+  animation: fadeOut 0.5s ease 200ms;
+}
+
+.register.leave label:nth-child(4) {
+  animation: fadeOut 0.5s ease 150ms;
+}
+
+.register.leave label:nth-child(5) {
+  animation: fadeOut 0.5s ease 100ms;
+}
+
+.leave a.getCode {
+  animation: fadeOut 0.5s ease 350ms;
+}
+
+/*****reset enter*****/
+.enter .resetButton {
+  animation: fadeIn 0.5s ease 200ms backwards;
+}
+
+/*****reset leave*****/
+
+
+/*****general enter*****/
+.enter .formTitle {
+  animation: fadeIn 0.5s ease 50ms backwards;
+}
+
+.enter .formText {
+  animation: fadeIn 0.5s ease 100ms backwards;
+}
+
+.enter label:first-child {
+  animation: fadeIn 0.5s ease 150ms backwards;
+}
+
+.enter label:nth-child(2) {
+  animation: fadeIn 0.5s ease 200ms backwards;
+}
+
+.enter label:nth-child(3) {
+  animation: fadeIn 0.5s ease 250ms backwards;
+}
+
+.enter label:nth-child(4) {
+  animation: fadeIn 0.5s ease 300ms backwards;
+}
+
+.enter label:nth-child(5) {
+  animation: fadeIn 0.5s ease 350ms backwards;
+}
+
+/*****general leave*****/
+.leave .loginButton {
+  animation: fadeOut 0.5s ease;
+}
+
+.leave .registerButton {
+  animation: fadeOut 0.5s ease;
+}
+
 
 @keyframes wrapperEnter {
   from  {
@@ -418,5 +440,3 @@ label a {
     opacity: 0;
   }
 }
-
-

@@ -8,32 +8,25 @@ class IndexFrom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pre: 'nav',
-      next: 'nav',
+      stage: 'nav',
       enter: true,
     };
   }
 
   componentDidUpdate() {
-    if (!this.state.enter) {
-      var that = this
-      setTimeout(() => {
-        that.setState({
-          enter: true,
-        })
-      }, 500);
-    }
+    // if (!this.state.enter) {
+    //   var that = this
+    //   setTimeout(() => {
+    //     that.setState({
+    //       enter: true,
+    //     })
+    //   }, 500);
+    // }
   }
 
+
   loginClickHandler = () => {
-    if (this.state.next == 'nav') {
-      this.setState({
-        pre: 'nav',
-        next: 'login',
-        enter: false,
-      })
-    }
-    else if (this.state.next == 'login') {  // login
+    if (this.state.stage === 'login') {
       // get formData
       let formData = {};
       formData.username = document.getElementById('username').value;
@@ -60,30 +53,31 @@ class IndexFrom extends React.Component {
         console.error(error);
       })
     }
+    else {
+      // leave
+      this.setState({
+        enter: false,
+      })
+      // enter
+      var leaveTime = 500 // TODO: different leave time 
+      var that = this
+      setTimeout(() => {
+        that.setState({
+          stage: 'login',
+          enter: true,
+        })
+      }, leaveTime);
+    }
   }
 
   registerClickHandler = () => {
-    if (this.state.next == 'nav') {
-      this.setState({
-        pre: 'nav',
-        next: 'register',
-        enter: false,
-      })
-    }
-    else if (this.state.next == 'login') {
-      this.setState({
-        pre: 'login',
-        next: 'register',
-        enter: false,
-      })
-    }
-    else if (this.state.next == 'register') {
+    if (this.state.stage === 'register') {
       let formData = {};
       formData.phone = document.getElementById('phone').value;
       formData.username = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
-      formData.re_password = document.getElementById('confirm').value;
-      formData.inviteCode = document.getElementById('invite').value;
+      formData.re_password = document.getElementById('re_password').value;
+      formData.inviteCode = document.getElementById('inviteCode').value;
       
       // form confirm
       // ...
@@ -124,14 +118,37 @@ class IndexFrom extends React.Component {
         console.log(error);
       })
     }
+    else {
+      // leave
+      this.setState({
+        enter: false,
+      })
+      // enter
+      var leaveTime = 500
+      var that = this
+      setTimeout(() => {
+        that.setState({
+          stage: 'register',
+          enter: true,
+        })
+      }, leaveTime);
+    }
   }
 
   forgetClickHandler = () => {
+    // leave
     this.setState({
-      pre: this.state.next,
-      next: 'forget',
       enter: false,
     })
+    // enter
+    var leaveTime = 500
+    var that = this
+    setTimeout(() => {
+      that.setState({
+        stage: 'reset',
+        enter: true,
+      })
+    }, leaveTime);
   }
 
   resetClickHandler = () => {
@@ -159,9 +176,9 @@ class IndexFrom extends React.Component {
   }
 
   getList = () => {
-    if (this.state.next == 'nav') {
+    if (this.state.stage === 'nav') {
       return null
-    } else if (this.state.next == 'login' && this.state.enter || this.state.next == 'forget' && !this.state.enter) {
+    } else if (this.state.stage === 'login') {
       return (
         <div className={styles.formList}>
           <label htmlFor={'username'}>
@@ -170,14 +187,14 @@ class IndexFrom extends React.Component {
           <label htmlFor={'password'}>
             <input id={'password'} placeholder={'password'} type={'password'} />
           </label>
-          <a className={styles.forget} onClick={this.forgetClickHandler}>Forgot password?</a>
+          <a className={styles.reset} onClick={this.forgetClickHandler}>Forgot password?</a>
         </div>
       )
-    } else if (this.state.next == 'register' && this.state.enter) {
+    } else if (this.state.stage === 'register') {
       return (
         <div className={styles.formList}>
           <label htmlFor={'phone'}>
-            <input id={'phone'} placeholder={'phone'} />
+            <input id={'phone'} placeholder={'phone number'} />
           </label>
           <label htmlFor={'username'}>
             <input id={'username'} placeholder={'username'} />
@@ -189,16 +206,16 @@ class IndexFrom extends React.Component {
             <input id={'re_password'} placeholder={'confirm password'} type={'password'} />
           </label>
           <label htmlFor={'inviteCode'}>
-            <input id={'inviteCode'} placeholder={'invite code'} />
-            <a className={styles.getCode}>Send a code</a>
+            <input id={'inviteCode'} placeholder={'captcha'} />
+            <a className={styles.getCode}>Send a captcha</a>
           </label>
         </div>
       )
-    } else if (this.state.next == 'forget' && this.state.enter) {
+    } else if (this.state.stage == 'reset') {
       return (
         <div className={styles.formList}>
           <label htmlFor={'phone'}>
-            <input id={'phone'} placeholder={'phone'} />
+            <input id={'phone'} placeholder={'phone number'} />
           </label>
         </div>
       )
@@ -209,55 +226,49 @@ class IndexFrom extends React.Component {
     let header = (
       <div className={classnames({
         [styles.formHeader]: true,
-        [styles.center]: this.state.next == 'nav' || this.state.pre == 'nav' && !this.state.enter,
+        [styles.center]: this.state.stage === 'nav',
       })}>
         <div className={styles.formTitle}>Family Tree</div>
         <div className={styles.formText}>connect with your teammates</div>
       </div>
     )
     let formWrapperClass = classnames({
-      [styles.formWrapper]: true,  
+      [styles.formWrapper]: true,
       [styles.enter]: this.state.enter,
       [styles.leave]: !this.state.enter,
-      [styles.nav]: this.state.next == 'nav',
-      [styles.register]: this.state.next == 'register',
-      [styles.login]: this.state.next == 'login',
-      [styles.forget]: this.state.next == 'forget',
+      [styles.nav]: this.state.stage === 'nav',
+      [styles.register]: this.state.stage === 'register',
+      [styles.login]: this.state.stage === 'login',
+      [styles.reset]: this.state.stage === 'reset',
     })
     let formBarClass = classnames({
       [styles.formBar]: true,
       [styles.gradBgColor]: true,
-      [styles.nav]: this.state.next == 'nav' ||
-        this.state.pre == 'nav' && !this.state.enter, // Leaving
+      [styles.nav]: this.state.stage === 'nav',
     })
     let loginButtonClass = classnames({
       [styles.loginButton]: true,
-      [styles.active]: this.state.next != 'register' || !this.state.enter,
-      [styles.nav]: this.state.next == 'nav' ||
-      this.state.pre == 'nav' && !this.state.enter,
-      [styles.right]: this.state.next == 'register' && this.state.enter,
-      [styles.left]: this.state.next == 'login' && this.state.enter,
+      [styles.active]: this.state.stage === 'nav' || this.state.stage === 'login',
+      [styles.right]: this.state.stage === 'register',
+      [styles.left]: this.state.stage === 'login',
     })
     let registerButtonClass = classnames({
       [styles.registerButton]: true,
-      [styles.active]: this.state.next == 'register' && this.state.enter,
-      [styles.nav]: this.state.next == 'nav' ||
-      this.state.pre == 'nav' && !this.state.enter,
-      [styles.right]: this.state.next == 'login' && this.state.enter,
+      [styles.active]: this.state.stage === 'register',
+      [styles.right]: this.state.stage === 'login',
     })
     return (
       <div className={formWrapperClass}>
         <div className={formBarClass} />
-        <div className={classnames({[styles.enter]: this.state.enter == true})}>
+        <div className={classnames({[styles.enter]: this.state.enter === true})}>
           {header}
           {this.getList()}
         </div>
-        { this.state.next == 'nav' || this.state.next == 'login' || this.state.next == 'register' ||
-        this.state.next =='forget' && !this.state.enter ?
+        { this.state.stage !== 'reset' ?
           (<div className={loginButtonClass} onClick={this.loginClickHandler}>log in</div>) : null }
-        { this.state.pre == 'nav' || this.state.next == 'register' && this.state.enter ?
+        { this.state.stage !== 'reset' ?
           (<div className={registerButtonClass} onClick={this.registerClickHandler}>register</div>) : null }
-        { this.state.next == 'forget' && this.state.enter ?
+        { this.state.stage === 'reset' ?
           (<div className={classnames(styles.resetButton, styles.active)} onClick={this.resetClickHandler}>reset password</div>) : null }
       </div>
     )
