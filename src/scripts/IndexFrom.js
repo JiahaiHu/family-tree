@@ -1,8 +1,8 @@
-import React from 'react';
-import styles from '../styles/index.css';
-import classnames from 'classnames';
-// import Cookies from 'js-cookie';
-const MOCK_HOST = 'https://fmt.fredliang.cn';
+import React from 'react'
+import styles from '../styles/index.css'
+import classnames from 'classnames'
+// import Cookies from 'js-cookie'
+const MOCK_HOST = 'https://fmt.fredliang.cn'
 
 class IndexFrom extends React.Component {
   constructor(props) {
@@ -24,34 +24,41 @@ class IndexFrom extends React.Component {
     // }
   }
 
+  myFetch = (cfg) => {
+    fetch(cfg.url, {
+      method: cfg.method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cfg.data),
+    })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.code >= 200 && data.code < 300) {
+        alert(cfg.successMsg)
+      } else {
+        alert(data.message)
+      }
+    })
+    .catch((error) => {
+      alert("服务器错误，请告知管理员!")
+      console.error(error)
+    })
+  }
 
   loginClickHandler = () => {
     if (this.state.stage === 'login') {
-      // get formData
-      let formData = {};
-      formData.username = document.getElementById('username').value;
-      formData.password = document.getElementById('password').value;
+      let formData = {}
+      formData.username = document.getElementById('username').value
+      formData.password = document.getElementById('password').value
 
-      fetch(MOCK_HOST + '/login', {
+      let config = {
+        url: MOCK_HOST + '/login',
         method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-      .then(res => res.json())
-      .then((data) => {
-        if (data.code === 200) {
-          alert("success!");
-          // Cookies.set('Id', data.message.user_id);
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch((error) => {
-        alert("服务器错误，请告知管理员!");
-        console.error(error);
-      })
+        data: formData,
+        successMsg: '登陆成功！',
+      }
+      this.myFetch(config)
     }
     else {
       // leave
@@ -76,47 +83,24 @@ class IndexFrom extends React.Component {
       formData.phone = document.getElementById('phone').value;
       formData.username = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
-      formData.re_password = document.getElementById('re_password').value;
-      formData.captcha = document.getElementById('captcha').value;
+      let re_password = document.getElementById('re_password').value;
+      formData.verifyCode = document.getElementById('captcha').value;
       
-      // form confirm
+      // TODO: form confirm
       // ...
       // confirm password
       if(formData.password !== formData.re_password) {
-        // error
-        alert("Password confirm failed!");
-        return;
+        alert("两次密码输入不一致!")
+        return
       }
       // register
-      fetch(MOCK_HOST + '/register', {
+      let config = {
+        url: MOCK_HOST + '/register',
         method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-      .then(res => res.json())
-      .then((data) => {
-        if (data.code === 200) {
-          // switch (data.state) {
-          //   case 0:
-          //     alert("注册成功，登录中!");
-          //     break;
-          //   case 1:
-          //     alert("注册邮件已发送, 未收到可再次发送!");
-          //     break;
-          //   case 2:
-          //     alert("注册邮件发送失败, 点击手动发送!");
-          //     break;
-          // }
-        } else {
-          alert(data.message);
-        }
-      })
-      .catch((error) => {
-        alert("服务器错误，请告知管理员!");
-        console.log(error);
-      })
+        data: formData,
+        successMsg: '注册成功!',
+      }
+      this.myFetch(config)
     }
     else {
       // leave
@@ -153,26 +137,39 @@ class IndexFrom extends React.Component {
 
   resetClickHandler = () => {
     let formData = {};
-    formData.phone = document.getElementById('phone').value;
-    fetch(MOCK_HOST + '/forgot', {
+    formData.phone = document.getElementById('phone').value
+    formData.password = document.getElementById('password').value
+    let re_password = document.getElementById('re_password').value;
+    formData.verifyCode = document.getElementById('captcha').value
+    if(formData.password !== re_password) {
+      alert("两次密码输入不一致!")
+      return
+    }
+
+    let config = {
+      url: MOCK_HOST + '/reset',
       method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-    .then(res => res.json())
-    .then((data) => {
-      if (data.code === 200) {
-        alert("邮件已经发送!");        
-      } else {
-        alert(data.message);
-      }
-    })
-    .catch((error) => {
-      alert("服务器错误，请告知管理员!");
-      console.log(error);
-    })
+      data: formData,
+      successMsg: '密码重置成功!',
+    }
+    this.myFetch(config)
+  }
+
+  sendClickHandler = () => {
+    let formData = {}
+    let config = {}
+    formData.username = document.getElementById('username').value
+    if (this.state.stage === 'register') {
+      formData.password = document.getElementById('password').value
+      formData.phone = document.getElementById('phone').value
+      config.url = MOCK_HOST + '/register_code'
+    } else if (this.state.stage === 'reset') {
+      config.url = MOCK_HOST + '/reset_password_code'
+    }
+    config.method = 'POST'
+    config.data = formData
+    config.successMsg = '验证码已经发送，请在手机上查看!'
+    this.myFetch(config)
   }
 
   getList = () => {
@@ -207,15 +204,25 @@ class IndexFrom extends React.Component {
           </label>
           <label htmlFor={'captcha'}>
             <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
-            <a className={styles.getCaptcha}>Send</a>
+            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>Send</a>
           </label>
         </div>
       )
-    } else if (this.state.stage == 'reset') {
+    } else if (this.state.stage === 'reset') {
       return (
         <div className={styles.formList}>
-          <label htmlFor={'phone'}>
-            <input id={'phone'} placeholder={'phone number'} />
+          <label htmlFor={'username'}>
+            <input id={'username'} placeholder={'username'} />
+          </label>
+          <label htmlFor={'password'}>
+            <input id={'password'} placeholder={'password'} type={'password'} />
+          </label>
+          <label htmlFor={'re_password'}>
+            <input id={'re_password'} placeholder={'confirm password'} type={'password'} />
+          </label>
+          <label htmlFor={'captcha'}>
+            <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
+            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>Send</a>
           </label>
         </div>
       )

@@ -101,10 +101,10 @@
   margin-left: -200px;
 }
 
-.formWrapper.reset {
+/* .formWrapper.reset {
   height: 200px;
   margin-top: -190px;
-}
+} */
 
 .formHeader {
   padding-bottom: 40px;
@@ -378,7 +378,7 @@ input.getCaptcha {
 
 /*****reset enter*****/
 .enter .resetButton {
-  animation: fadeIn 0.5s ease 200ms backwards;
+  animation: fadeIn 0.5s ease 400ms backwards;
 }
 
 /*****reset leave*****/
