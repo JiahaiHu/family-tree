@@ -335,50 +335,38 @@ a.reset {
 }
 
 /*****register enter*****/
-input.getCaptcha {
-  animation: fadeIn 0.5s ease 350ms backwards;
-}
-
 .register.enter .loginButton {
-  animation: fadeIn 0.2s ease 500ms backwards;
+  animation: fadeIn 0.2s ease 350ms backwards;
 }
 
 /*****register leave*****/
 .register.leave .formTitle {
-  animation: fadeOut 0.5s ease 400ms;
+  animation: fadeOut 0.5s ease 350ms;
 }
 
 .register.leave .formText {
-  animation: fadeOut 0.5s ease 350ms;
-}
-
-.register.leave label:first-child {
   animation: fadeOut 0.5s ease 300ms;
 }
 
-.register.leave label:nth-child(2) {
+.register.leave label:nth-child(1) {
   animation: fadeOut 0.5s ease 250ms;
 }
 
-.register.leave label:nth-child(3) {
+.register.leave label:nth-child(2) {
   animation: fadeOut 0.5s ease 200ms;
 }
 
-.register.leave label:nth-child(4) {
+.register.leave label:nth-child(3) {
   animation: fadeOut 0.5s ease 150ms;
 }
 
-.register.leave label:nth-child(5) {
+.register.leave label:nth-child(4) {
   animation: fadeOut 0.5s ease 100ms;
-}
-
-.leave input.getCaptcha {
-  animation: fadeOut 0.5s ease 350ms;
 }
 
 /*****reset enter*****/
 .enter .resetButton {
-  animation: fadeIn 0.5s ease 400ms backwards;
+  animation: fadeIn 0.5s ease 350ms backwards;
 }
 
 /*****reset leave*****/

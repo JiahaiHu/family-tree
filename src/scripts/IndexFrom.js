@@ -83,16 +83,11 @@ class IndexFrom extends React.Component {
       formData.phone = document.getElementById('phone').value;
       formData.username = document.getElementById('username').value;
       formData.password = document.getElementById('password').value;
-      let re_password = document.getElementById('re_password').value;
       formData.verifyCode = document.getElementById('captcha').value;
       
       // TODO: form confirm
       // ...
-      // confirm password
-      if(formData.password !== formData.re_password) {
-        alert("两次密码输入不一致!")
-        return
-      }
+
       // register
       let config = {
         url: MOCK_HOST + '/register',
@@ -139,12 +134,7 @@ class IndexFrom extends React.Component {
     let formData = {};
     formData.phone = document.getElementById('phone').value
     formData.password = document.getElementById('password').value
-    let re_password = document.getElementById('re_password').value;
     formData.verifyCode = document.getElementById('captcha').value
-    if(formData.password !== re_password) {
-      alert("两次密码输入不一致!")
-      return
-    }
 
     let config = {
       url: MOCK_HOST + '/reset',
@@ -190,17 +180,14 @@ class IndexFrom extends React.Component {
     } else if (this.state.stage === 'register') {
       return (
         <div className={styles.formList}>
-          <label htmlFor={'phone'}>
-            <input id={'phone'} placeholder={'phone number'} />
-          </label>
           <label htmlFor={'username'}>
             <input id={'username'} placeholder={'username'} />
           </label>
           <label htmlFor={'password'}>
             <input id={'password'} placeholder={'password'} type={'password'} />
           </label>
-          <label htmlFor={'re_password'}>
-            <input id={'re_password'} placeholder={'confirm password'} type={'password'} />
+          <label htmlFor={'phone'}>
+            <input id={'phone'} placeholder={'phone number'} />
           </label>
           <label htmlFor={'captcha'}>
             <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
@@ -216,9 +203,6 @@ class IndexFrom extends React.Component {
           </label>
           <label htmlFor={'password'}>
             <input id={'password'} placeholder={'password'} type={'password'} />
-          </label>
-          <label htmlFor={'re_password'}>
-            <input id={'re_password'} placeholder={'confirm password'} type={'password'} />
           </label>
           <label htmlFor={'captcha'}>
             <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
