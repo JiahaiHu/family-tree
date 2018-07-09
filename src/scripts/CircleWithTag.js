@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/index.css';
+import styles from '../styles/Login.css';
 import classnames from 'classnames';
 
 class CircleWithTag extends React.Component {

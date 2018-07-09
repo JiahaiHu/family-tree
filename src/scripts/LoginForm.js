@@ -1,10 +1,10 @@
 import React from 'react'
-import styles from '../styles/index.css'
+import styles from '../styles/Login.css'
 import classnames from 'classnames'
 // import Cookies from 'js-cookie'
 const MOCK_HOST = 'https://fmt.fredliang.cn'
 
-class IndexFrom extends React.Component {
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -190,8 +190,8 @@ class IndexFrom extends React.Component {
             <input id={'phone'} placeholder={'phone number'} />
           </label>
           <label htmlFor={'captcha'}>
-            <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
-            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>Send</a>
+            <input id={'captcha'} className={styles.captcha} placeholder={'验证码'} />
+            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>发送</a>
           </label>
         </div>
       )
@@ -205,8 +205,8 @@ class IndexFrom extends React.Component {
             <input id={'password'} placeholder={'password'} type={'password'} />
           </label>
           <label htmlFor={'captcha'}>
-            <input id={'captcha'} className={styles.captcha} placeholder={'captcha'} />
-            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>Send</a>
+            <input id={'captcha'} className={styles.captcha} placeholder={'验证码'} />
+            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>发送</a>
           </label>
         </div>
       )
@@ -266,4 +266,4 @@ class IndexFrom extends React.Component {
   }
 }
 
-export default IndexFrom
+export default LoginForm

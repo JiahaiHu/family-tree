@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import styles from '../styles/index.css';
+import styles from '../styles/Login.css';
 
 class Circles extends React.Component {
   static defaultProps = {

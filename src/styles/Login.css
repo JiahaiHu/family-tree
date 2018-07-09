@@ -84,8 +84,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 200px;
-  height: 300px;
+  width: 380px;
+  height: 480px;
   padding: 90px 90px;
   margin-top: -240px;
   margin-left: -190px;
@@ -95,8 +95,8 @@
 }
 
 .formWrapper.register {
-  width: 220px;
-  height: 360px;
+  width: 400px;
+  height: 540px;
   margin-top: -260px;
   margin-left: -200px;
 }
@@ -138,8 +138,8 @@
 }
 
 input{
-  width: 120px;
-  height: 14px;
+  width: 150px;
+  height: 30px;
   padding: 8px 15px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -149,7 +149,7 @@ input{
 }
 
 input.captcha {
-  width: 50px;
+  width: 80px;
 }
 
 input:focus {
@@ -189,7 +189,7 @@ a {
 a.getCaptcha {
   display: inline-block;
   width: 58px;
-  height: 14px;
+  height: 30px;
   padding: 8px 0;
   border: 1px solid #c2bfde;
   border-radius: 10px;
