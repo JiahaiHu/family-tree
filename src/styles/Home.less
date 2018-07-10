@@ -3,6 +3,44 @@
   height: 100%;
 }
 
+.homeHeader {
+  border-bottom: #1de9b6 1px solid;
+}
+
+.filter {
+  overflow: hidden;
+  padding: 45px 15px 25px 30px;
+}
+
+.filterHeader {
+  line-height: 30px;
+  i {
+    font-size: 20px;
+  }
+}
+
+.filterContent {
+  position: absolute;
+  top: 91px;
+  width: 150px;
+  :global {
+    .ant-checkbox-group {
+      font-size: 20px;
+    }
+  }
+}
+
+.extendedFilter {
+  position: absolute;
+  width: 100px;
+  top: 0;
+  left: 150px;
+}
+
+.trigger {
+  float: right;
+}
+
 .home {
   label:focus-within::before {
     content: none;
