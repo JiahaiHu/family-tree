@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Checkbox, Row, Col, Icon } from 'antd';
+import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd';
 import styles from '../styles/Home.less';
 import classnames from 'classnames';
 const { Header, Content, Footer, Sider } = Layout
@@ -12,6 +12,7 @@ class Home extends React.Component {
       checkedGroups: [],
       checkedYears: [],
       checkedGenders: [],
+      focusedYear: null,
     };
   }
 
@@ -45,12 +46,19 @@ class Home extends React.Component {
     })
   }
 
+  mainYearCheckHandler = (e) => {
+    this.setState({
+      focusedYear: e.target.value,
+    })
+  }
+
   render() {
     const collapsedWidth = 160;
     return (
       <Layout className={classnames(styles.wrapper, styles.home)}>
         <Header className={styles.homeHeader}>
-          Family Tree
+          <span>Family Tree</span>
+          <div className={styles.avatar}></div>
         </Header>
         <Layout>
           <Sider
@@ -60,11 +68,10 @@ class Home extends React.Component {
             collapsible
             collapsed={this.state.collapsed}
             collapsedWidth={collapsedWidth}
-            trigger={null}
-          >
+            trigger={null}>
             <div className={styles.filterHeader}>
-              <span>Group</span>
-              <div className={styles.trigger}>
+              <span className={styles.checkGroupHeader}>Group</span>
+              <div className={styles.trigger} style={{ paddingRight: this.state.collapsed ? 0 : 20 }}>
                 <Icon type="left" onClick={this.leftHandler} style={{ opacity: this.state.collapsed ? 0.2 : 0.8 }} />
                 <Icon type="right" onClick={this.rightHandler} style={{ opacity: this.state.collapsed ? 0.8 : 0.2 }} />
               </div>
@@ -99,7 +106,7 @@ class Home extends React.Component {
                 </Checkbox.Group>
               </div>
               <div className={styles.extendedFilter}>
-                <div>
+                <div className={styles.checkGroupHeader}>
                   Generation Year
                 </div>
                 <Checkbox.Group onChange={this.yearCheckHandler}>
@@ -128,7 +135,7 @@ class Home extends React.Component {
                     <Checkbox value="2018">2018</Checkbox>
                   </Row>
                 </Checkbox.Group>
-                <div>
+                <div className={styles.checkGroupHeader}>
                   Gender
                 </div>
                 <Checkbox.Group onChange={this.genderCheckHandler}>
@@ -142,8 +149,47 @@ class Home extends React.Component {
               </div>
             </div>
           </Sider>
-          <Content>main content</Content>
-          <Sider>right sidebar</Sider>
+          <Content className={styles.homeContent}>main content</Content>
+          <Sider className={styles.rightSider} width={160}>
+            <Radio.Group onChange={this.mainYearCheckHandler}>
+              <Row>
+                <Radio value="2018">2018</Radio>
+              </Row>
+              <Row>
+                <Radio value="2017">2017</Radio>
+              </Row>
+              <Row>
+                <Radio value="2016">2016</Radio>
+              </Row>
+              <Row>
+                <Radio value="2015">2015</Radio>
+              </Row>
+              <Row>
+                <Radio value="2014">2014</Radio>
+              </Row>
+              <Row>
+                <Radio value="2013">2013</Radio>
+              </Row>
+              <Row>
+                <Radio value="2012">2012</Radio>
+              </Row>
+              <Row>
+                <Radio value="2011">2011</Radio>
+              </Row>
+              <Row>
+                <Radio value="2010">2010</Radio>
+              </Row>
+              <Row>
+                <Radio value="2009">2009</Radio>
+              </Row>
+              <Row>
+                <Radio value="2008">2008</Radio>
+              </Row>
+              <Row>
+                <Radio value="2007">2007</Radio>
+              </Row>
+            </Radio.Group>
+          </Sider>
         </Layout>
       </Layout>
     )
