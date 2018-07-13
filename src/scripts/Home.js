@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd';
 import styles from '../styles/Home.less';
 import classnames from 'classnames';
+import Picker from './Picker';
 const { Header, Content, Footer, Sider } = Layout
 
 class Home extends React.Component {
@@ -12,7 +13,10 @@ class Home extends React.Component {
       checkedGroups: [],
       checkedYears: [],
       checkedGenders: [],
-      focusedYear: null,
+      focusedYear: 2017,
+      activeYear: 2017,  // for activeItem
+      activeIndex: 1,  // for activeItem
+      // minVisibleIndex: [], // for line's visibility
     };
   }
 
@@ -52,8 +56,18 @@ class Home extends React.Component {
     })
   }
 
+  onclick = (year, index) => {
+    this.setState({
+      activeYear: year,
+      activeIndex: index,
+    })
+  }
+
   render() {
     const collapsedWidth = 160;
+    const db = {
+      2017: ['a', 'b', 'c']
+    }
     return (
       <Layout className={classnames(styles.wrapper, styles.home)}>
         <Header className={styles.homeHeader}>
@@ -68,7 +82,8 @@ class Home extends React.Component {
             collapsible
             collapsed={this.state.collapsed}
             collapsedWidth={collapsedWidth}
-            trigger={null}>
+            trigger={null}
+          >
             <div className={styles.filterHeader}>
               <span className={styles.checkGroupHeader}>Group</span>
               <div className={styles.trigger} style={{ paddingRight: this.state.collapsed ? 0 : 20 }}>
@@ -149,7 +164,14 @@ class Home extends React.Component {
               </div>
             </div>
           </Sider>
-          <Content className={styles.homeContent}>main content</Content>
+          <Content className={styles.homeContent}>
+            <Picker
+              year={2017}
+              items={db[2017]}
+              focusedIndex={this.state.activeIndex}
+              onclick={this.onclick}
+            />
+          </Content>
           <Sider className={styles.rightSider} width={160}>
             <Radio.Group onChange={this.mainYearCheckHandler}>
               <Row>
