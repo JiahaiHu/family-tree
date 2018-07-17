@@ -1,6 +1,183 @@
-.picker {
-  width: 200px;
-}
-.pickerActive {
+@AILab: #8c9eff;
+@Android: #1de9b6;
+@Design: #ff7773;
+@Game: #ff9940;
+@iOS: #9ccc65;
+@Lab: #b388ff;
+@PM: #e2bc91;
+@Web: #4dd0e1;
 
+li {
+  list-style: none;
 }
+
+/* for hidding scrollbar */
+.pickerContainer {
+  position: relative;
+  overflow: hidden;
+  width: 166px;
+  height: 500px;
+}
+
+.picker {
+  position: absolute;  // for hidding scrollbar
+  overflow-x: hidden;
+  overflow-y: scroll;
+  ul {
+    width: 166px;
+    height: 500px;
+    margin-bottom: 0;
+  }
+  li {
+    position: relative;
+    width: 126px;
+    height: 34px;
+    margin: 20px;
+    line-height: 34px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+    &.selectedItem {
+      color: red;
+    }
+    &.AILab {
+      &::before, &:after {
+        background-color: @AILab;
+      }
+      i {
+        background-color: @AILab;
+      }
+      .itemTag {
+        color: @AILab;
+      }
+    }
+    &.Android {
+      &::before, &:after {
+        background-color: @Android;
+      }
+      i {
+        background-color: @Android;
+      }
+      .itemTag {
+        color: @Android;
+      }
+    }
+    &.Design {
+      &::before, &:after {
+        background-color: @Design;
+      }
+      i {
+        background-color: @Design;
+      }
+      .itemTag {
+        color: @Design;
+      }
+    }
+    &.Game {
+      &::before, &:after {
+        background-color: @Game;
+      }
+      i {
+        background-color: @Game;
+      }
+      .itemTag {
+        color: @Game;
+      }
+    }
+    &.iOS {
+      &::before, &:after {
+        background-color: @iOS;
+      }
+      i {
+        background-color: @iOS;
+      }
+      .itemTag {
+        color: @iOS;
+      }
+    }
+    &.Lab {
+      &::before, &:after {
+        background-color: @Lab;
+      }
+      i {
+        background-color: @Lab;
+      }
+      .itemTag {
+        color: @Lab;
+      }
+    }
+    &.PM {
+      &::before, &:after {
+        background-color: @PM;
+      }
+      i {
+        background-color: @PM;
+      }
+      .itemTag {
+        color: @PM;
+      }
+    }
+    &.Web {
+      &::before, &:after {
+        background-color: @Web;
+      }
+      i {
+        background-color: @Web;
+      }
+      .itemTag {
+        color: @Web;
+      }
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      margin-top: -2px;
+      margin-left: -20px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      right: 0;
+      margin-top: -2px;
+      margin-right: -20px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+    }
+    i {
+      display: inline-block;
+      width: 34px;
+      height: 34px;
+      vertical-align: bottom;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    span {
+      &.itemText {
+        display: inline-block;
+        margin-left: 15px;
+      }
+      &.itemTag {
+        position: absolute;
+        right: 5px;
+        bottom: 5px;
+        line-height: 12px;
+        font-size: 12px;
+        font-weight: bold;
+        transform: scale(0.9);
+      }
+    }
+  }
+  &.pickerActive {
+    background-color: aliceblue;
+  }
+  /* for Chrome */
+  // &::-webkit-scrollbar {
+  //   display: none;
+  // }
+}
+

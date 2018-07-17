@@ -28,7 +28,7 @@ class Picker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: false,
+      active: false,  // mouseover
     };
   }
 
@@ -39,29 +39,35 @@ class Picker extends React.Component {
     }
   }
 
-  onclick = (index) => {
-    const { onclick, year } = this.props;
-    onclick(year, index);
+  onclick = (userId) => {
+    const { onclick } = this.props;
+    onclick(userId);
   }
 
   getItems() {
-    const { items } = this.props;
+    const { items, selected, focusedIndex } = this.props;
     return items.map((item, index) => {
+      const cls= classnames({
+        [styles[`${item.group}`]]: true,
+        [styles.selectedItem]: focusedIndex === index && selected,
+      });
       return (
         <li
-          className={styles.pickerListItem}
+          className={cls}
           key={index}
-          onClick={this.onclick.bind(this, item)}
+          onClick={this.onclick.bind(this, index)}
         >
-          {item}
+          <i></i>
+          <span className={styles.itemText}>{item.name}</span>
+          <span className={styles.itemTag}>[17]</span>
         </li>
       )
     })
   }
 
-  scrollToFocused() {
+  scrollToFocused(duration) {
     // move to focused item
-    const picker = ReactDom.findDOMNode(this);
+    const picker = ReactDom.findDOMNode(this.refs.picker);
     const list = ReactDom.findDOMNode(this.refs.list);
     if (!list) {
       return;
@@ -93,12 +99,15 @@ class Picker extends React.Component {
       [styles.pickerActive]: this.state.active,
     });
     return (
-      <div
-        className={cls}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-      >
-        <ul rel={'list'}>{this.getItems()}</ul>
+      <div className={styles.pickerContainer}>
+        <div
+          ref={'picker'}
+          className={cls}
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+        >
+          <ul ref={'list'}>{this.getItems()}</ul>
+        </div>
       </div>
     )
   }

@@ -1,3 +1,12 @@
+@AILab: #8c9eff;
+@Android: #1de9b6;
+@Design: #ff7773;
+@Game: #ff9940;
+@iOS: #9ccc65;
+@Lab: #b388ff;
+@PM: #e2bc91;
+@Web: #4dd0e1;
+
 .wrapper {
   position: relative;
   height: 100%;
@@ -91,8 +100,16 @@
 }
 
 .homeContent {
-  padding: 30px 20px;
+  overflow: hidden;
+  padding: 0 20px;
   background: #ffffff;
+}
+
+.homeContentCol {
+  float: left;
+  overflow: hidden;
+  width: 166px;
+  height: 80%;
 }
 
 .rightSider {
@@ -170,186 +187,191 @@
   }
 }
 
-.Android:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #1de9b6;
-}
-.Android:global(.ant-checkbox-wrapper):hover span {
-  color: #1de9b6;
-}
-.Android {
-  :global {
-    .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #1de9b6;
-      border-color: #1de9b6;
-    }
-    .ant-checkbox:hover .ant-checkbox-inner,
-    .ant-checkbox-input:focus + .ant-checkbox-inner,
-    .ant-checkbox-checked:after {
-      border-color: #1de9b6;
-    }
-    .ant-checkbox-checked + span {
-      color: #1de9b6;
-    }
-  }
-}
-
 .AILab:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #8c9eff;
+  border-color: @AILab;
 }
 .AILab:global(.ant-checkbox-wrapper):hover span {
-  color: #8c9eff;
+  color: @AILab;
 }
 .AILab {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #8c9eff;
-      border-color: #8c9eff;
+      background-color: @AILab;
+      border-color: @AILab;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #8c9eff;
+      border-color: @AILab;
     }
     .ant-checkbox-checked + span {
-      color: #8c9eff;
+      color: @AILab;
     }
   }
 }
 
-.Design:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #ff7773;
+.Android:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
+  border-color: @Android;
 }
-.Design:global(.ant-checkbox-wrapper):hover span {
-  color: #ff7773;
+.Android:global(.ant-checkbox-wrapper):hover span {
+  color: @Android;
 }
-.Design {
+.Android {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #ff7773;
-      border-color: #ff7773;
+      background-color: @Android;
+      border-color: @Android;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #ff7773;
+      border-color: @Android;
     }
     .ant-checkbox-checked + span {
-      color: #ff7773;
+      color: @Android;
+    }
+  }
+}
+
+
+.Design:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
+  border-color: @Design;
+}
+.Design:global(.ant-checkbox-wrapper):hover span {
+  color: @Design;
+}
+.Design {
+  :global {
+    .ant-checkbox-checked .ant-checkbox-inner {
+      background-color: @Design;
+      border-color: @Design;
+    }
+    .ant-checkbox:hover .ant-checkbox-inner,
+    .ant-checkbox-input:focus + .ant-checkbox-inner,
+    .ant-checkbox-checked:after {
+      border-color: @Design;
+    }
+    .ant-checkbox-checked + span {
+      color: @Design;
     }
   }
 }
 
 .Game:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #8c9eff;
+  border-color: @Game;
 }
 .Game:global(.ant-checkbox-wrapper):hover span {
-  color: #8c9eff;
+  color: @Game;
 }
 .Game {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #8c9eff;
-      border-color: #8c9eff;
+      background-color: @Game;
+      border-color: @Game;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #8c9eff;
+      border-color: @Game;
     }
     .ant-checkbox-checked + span {
-      color: #8c9eff;
+      color: @Game;
     }
   }
 }
 
 .iOS:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #8c9eff;
+  border-color: @iOS;
 }
 .iOS:global(.ant-checkbox-wrapper):hover span {
-  color: #8c9eff;
+  color: @iOS;
 }
 .iOS {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #8c9eff;
-      border-color: #8c9eff;
+      background-color: @iOS;
+      border-color: @iOS;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #8c9eff;
+      border-color: @iOS;
     }
     .ant-checkbox-checked + span {
-      color: #8c9eff;
+      color: @iOS;
     }
   }
 }
 
 .Lab:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #52f282;
+  border-color: @Lab;
 }
 .Lab:global(.ant-checkbox-wrapper):hover span {
-  color: #52f282;
+  color: @Lab;
 }
 .Lab {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #52f282;
-      border-color: #52f282;
+      background-color: @Lab;
+      border-color: @Lab;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #52f282;
+      border-color: @Lab;
     }
     .ant-checkbox-checked + span {
-      color: #52f282;
+      color: @Lab;
     }
   }
 }
 
 .PM:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #ff9940;
+  border-color: @PM;
 }
 .PM:global(.ant-checkbox-wrapper):hover span {
-  color: #ff9940;
+  color: @PM;
 }
 .PM {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #ff9940;
-      border-color: #ff9940;
+      background-color: @PM;
+      border-color: @PM;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #ff9940;
+      border-color: @PM;
     }
     .ant-checkbox-checked + span {
-      color: #ff9940;
+      color: @PM;
     }
   }
 }
 
-.Design:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
-  border-color: #ff7773;
+.Web:global(.ant-checkbox-wrapper):hover :global(.ant-checkbox-inner) {
+  border-color: @Web;
 }
-.Design:global(.ant-checkbox-wrapper):hover span {
-  color: #ff7773;
+.Web:global(.ant-checkbox-wrapper):hover span {
+  color: @Web;
 }
-.Design {
+.Web {
   :global {
     .ant-checkbox-checked .ant-checkbox-inner {
-      background-color: #ff7773;
-      border-color: #ff7773;
+      background-color: @Web;
+      border-color: @Web;
     }
     .ant-checkbox:hover .ant-checkbox-inner,
     .ant-checkbox-input:focus + .ant-checkbox-inner,
     .ant-checkbox-checked:after {
-      border-color: #ff7773;
+      border-color: @Web;
     }
     .ant-checkbox-checked + span {
-      color: #ff7773;
+      color: @Web;
     }
   }
+}
+
+.timelineContainer {
+  height: 18%;
 }

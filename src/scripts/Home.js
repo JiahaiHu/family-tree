@@ -14,8 +14,6 @@ class Home extends React.Component {
       checkedYears: [],
       checkedGenders: [],
       focusedYear: 2017,
-      activeYear: 2017,  // for activeItem
-      activeIndex: 1,  // for activeItem
       // minVisibleIndex: [], // for line's visibility
     };
   }
@@ -56,18 +54,89 @@ class Home extends React.Component {
     })
   }
 
-  onclick = (year, index) => {
+  selectedYear = null;
+
+  onclick = (userId) => {
     this.setState({
-      activeYear: year,
-      activeIndex: index,
-    })
+      selectedUserId: userId,
+    });
+    this.selectedYear = 2017;
   }
 
   render() {
     const collapsedWidth = 160;
+    // Todo: filter and sort data
     const db = {
-      2017: ['a', 'b', 'c']
-    }
+      2017: [
+        {
+          name: '赵某某',
+          group: 'AILab',
+        },
+        {
+          name: '钱某某',
+          group: 'Android',
+        },
+        {
+          name: '孙某某',
+          group: 'Design',
+        },
+        {
+          name: '李某某',
+          group: 'Game',
+        },
+        {
+          name: '周某某',
+          group: 'iOS',
+        },
+        {
+          name: '吴某某',
+          group: 'Lab',
+        },
+        {
+          name: '郑某某',
+          group: 'PM',
+        },
+        {
+          name: '王某某',
+          group: 'Web',
+        },
+        {
+          name: '赵某某',
+          group: 'Design',
+        },
+        {
+          name: '钱某某',
+          group: 'Game',
+        },
+        {
+          name: '孙某某',
+          group: 'AILab',
+        },
+        {
+          name: '李某某',
+          group: 'PM',
+        },
+        {
+          name: '周某某',
+          group: 'Web',
+        },
+        {
+          name: '吴某某',
+          group: 'Design',
+        },
+        {
+          name: '郑某某',
+          group: 'Web',
+        },
+        {
+          name: '王某某',
+          group: 'AILab',
+        },
+      ],
+    };
+    const focusedIndex = {};
+    focusedIndex[2017] = this.state.selectedUserId; // to fix
+    const selectedYear = this.selectedYear;
     return (
       <Layout className={classnames(styles.wrapper, styles.home)}>
         <Header className={styles.homeHeader}>
@@ -165,12 +234,40 @@ class Home extends React.Component {
             </div>
           </Sider>
           <Content className={styles.homeContent}>
-            <Picker
-              year={2017}
-              items={db[2017]}
-              focusedIndex={this.state.activeIndex}
-              onclick={this.onclick}
-            />
+            <div className={styles.timelineContainer}></div>
+            <div className={styles.homeContentCol}>
+              <Picker
+                year={2017}
+                items={db[2017]}
+                selected={selectedYear === 2017}
+                focusedIndex={focusedIndex[2017]}
+                onclick={this.onclick}
+              />
+            </div>
+            <div className={styles.homeContentCol}>
+              match line
+            </div>
+            <div className={styles.homeContentCol}>
+              <Picker
+                year={2017}
+                items={db[2017]}
+                selected={selectedYear === 2017}
+                focusedIndex={focusedIndex[2017]}
+                onclick={this.onclick}
+              />
+            </div>
+            <div className={styles.homeContentCol}>
+              match line
+            </div>
+            <div className={styles.homeContentCol}>
+              <Picker
+                year={2017}
+                items={db[2017]}
+                selected={selectedYear === 2017}
+                focusedIndex={focusedIndex[2017]}
+                onclick={this.onclick}
+              />
+            </div>
           </Content>
           <Sider className={styles.rightSider} width={160}>
             <Radio.Group onChange={this.mainYearCheckHandler}>
