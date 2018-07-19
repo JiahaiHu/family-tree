@@ -1,0 +1,47 @@
+.card {
+  background-color: #fff;
+  padding: 8%;
+  border-radius: 7px;
+}
+
+.cardItem {
+  position: relative;
+  padding-left: 45%;
+  &.abilities {
+    margin-top: 10px;
+    span {
+      display: inline-block;
+      min-width: 50px;
+      height: 24px;
+      padding: 0 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 25px;
+      color: #fff;
+      background-color: #8c9eff;
+    }
+  }
+}
+
+.cardItemLable {
+  position: absolute;
+  margin-left: -38%;
+  color: #8c9eff;
+  text-transform: capitalize;
+}
+
+.avatar {
+  .cardItemLable {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  img {
+    width: 30%;
+    border-radius: 50%;
+  }
+}
+
+.avatarName {
+  font-size: 30px;
+  font-weight: bold;
+}
