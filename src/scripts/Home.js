@@ -18,6 +18,19 @@ class Home extends React.Component {
     };
   }
 
+  getTimeLine() {
+    return (
+      <div className={styles.timeline}>
+        <ul>
+          <li style={{ left: '30px' }}>...<span></span></li>
+          <li style={{ left: '20%' }}>2016<span></span></li>
+          <li style={{ left: '60%' }}>2017<span></span></li>
+          <li style={{ left: '100%' }}>2018<span></span></li>
+        </ul>
+      </div>
+    )
+  }
+
   leftHandler = () => {
     this.setState({
       collapsed: true,
@@ -138,12 +151,12 @@ class Home extends React.Component {
     focusedIndex[2017] = this.state.selectedUserId; // to fix
     const selectedYear = this.selectedYear;
     return (
-      <Layout className={classnames(styles.wrapper, styles.home)}>
-        <Header className={styles.homeHeader}>
+      <Layout className={classnames(styles.wrapper, styles.home)} >
+        <Header className={styles.homeHeader} >
           <span>Family Tree</span>
           <div className={styles.avatar}></div>
         </Header>
-        <Layout>
+        <Layout style={{ backgroundColor: '#fff' }} >
           <Sider
             theme={'light'}
             className={styles.filter}
@@ -233,9 +246,11 @@ class Home extends React.Component {
               </div>
             </div>
           </Sider>
-          <Content className={styles.homeContent}>
-            <div className={styles.timelineContainer}></div>
-            <div className={styles.homeContentCol}>
+          <Content className={styles.homeContent} >
+            <div className={styles.timelineContainer} >
+              {this.getTimeLine()}
+            </div>
+            <div className={styles.homeContentCol} style={{ left: '18%' }} >
               <Picker
                 year={2017}
                 items={db[2017]}
@@ -244,10 +259,10 @@ class Home extends React.Component {
                 onclick={this.onclick}
               />
             </div>
-            <div className={styles.homeContentCol}>
+            <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} >
               match line
             </div>
-            <div className={styles.homeContentCol}>
+            <div className={styles.homeContentCol} style={{ left: '54%' }} >
               <Picker
                 year={2017}
                 items={db[2017]}
@@ -256,10 +271,10 @@ class Home extends React.Component {
                 onclick={this.onclick}
               />
             </div>
-            <div className={styles.homeContentCol}>
+            <div className={styles.homeContentCol} style={{ left: '72%', width: 'calc(36% - 166px)' }} >
               match line
             </div>
-            <div className={styles.homeContentCol}>
+            <div className={styles.homeContentCol} style={{ left: '90%' }} >
               <Picker
                 year={2017}
                 items={db[2017]}
