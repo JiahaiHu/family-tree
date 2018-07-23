@@ -3,7 +3,6 @@ import ReactDom from 'react-dom';
 import classnames from 'classnames';
 import styles from '../styles/Picker.less';
 
-
 const scrollTo = (element, to, duration) => {
   const requestAnimationFrame = window.requestAnimationFrame ||
     function requestAnimationFrameTimeout() {
@@ -67,8 +66,8 @@ class Picker extends React.Component {
 
   scrollToFocused(duration) {
     // move to focused item
-    const picker = ReactDom.findDOMNode(this.refs.picker);
-    const list = ReactDom.findDOMNode(this.refs.list);
+    const picker = this.pickerRef;
+    const list = this.listRef;
     if (!list) {
       return;
     }
@@ -89,10 +88,6 @@ class Picker extends React.Component {
     this.setState({ active: false });
   }
 
-  saveList = (node) => {
-    this.list = node;
-  }
-
   render() {
     const cls = classnames({
       [styles.picker]: 1,
@@ -101,12 +96,12 @@ class Picker extends React.Component {
     return (
       <div className={styles.pickerContainer}>
         <div
-          ref={'picker'}
+          ref={ el => this.pickerRef = el }
           className={cls}
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
         >
-          <ul ref={'list'}>{this.getItems()}</ul>
+          <ul ref={ el => this.listRef = el }>{this.getItems()}</ul>
         </div>
       </div>
     )
