@@ -2,15 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { ApolloProvider } from 'react-apollo'
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import Login from './Login'
 import Home from './Home'
 import User from './User'
-import { ApolloProvider, createNetworkInterface, ApolloClient } from 'react-apollo'
 
 const endpoint = 'https://fmt.fredliang.cn'
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: endpoint }),
+  link: createHttpLink({ uri: endpoint }),
+  cache: new InMemoryCache(),
 })
 
 class App extends React.Component {

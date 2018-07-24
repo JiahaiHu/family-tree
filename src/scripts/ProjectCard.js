@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../styles/ProjectCard.less';
-import imgURL from '../assets/avatar.jpg';
 
 class ProjectCard extends React.Component {
   constructor(props) {
@@ -20,10 +19,10 @@ class ProjectCard extends React.Component {
           <span className={styles.content}>Lu ziye, xxx, xxx</span>
         </div>
         <div className={styles.images}>
-          <img src={imgURL} />
-          <img src={imgURL} />
-          <img src={imgURL} />
-          <img src={imgURL} />
+          <img />
+          <img />
+          <img />
+          <img />
         </div>
         <p>项目介绍</p>
         <div className={styles.tag}>

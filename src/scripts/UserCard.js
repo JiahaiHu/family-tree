@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../styles/UserCard.less';
-import imgURL from '../assets/avatar.jpg';
 import classnames from 'classnames';
 
 class UserCard extends React.Component {
@@ -13,7 +12,7 @@ class UserCard extends React.Component {
       <div className={classnames(styles.card, styles.avatar)}>
         <div className={styles.cardItem}>
           <div className={styles.cardItemLable}>
-            <img src={imgURL} />
+            <img />
           </div>
           <div className={styles.cardItemContent}>
             <div className={styles.avatarName}>陆子叶</div>
