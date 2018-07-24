@@ -31,6 +31,15 @@ class Picker extends React.Component {
     };
   }
 
+  onscroll = (e) => {
+    // when scrolltop changes, update y of path
+  }
+
+  componentDidMount() {
+    let onScroll = e => this.props.onScroll(e);
+    this.pickerRef.addEventListener('scroll', onScroll);
+  }
+
   componentDidUpdate(prevProps) {
     // smooth scroll to selected option
     if (prevProps.focusedIndex !== this.props.focusedIndex) {

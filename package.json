@@ -13,7 +13,6 @@
   "devDependencies": {
     "autoprefixer": "^8.4.1",
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.4",
     "babel-plugin-import": "^1.8.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
@@ -26,8 +25,11 @@
   },
   "dependencies": {
     "antd": "^3.6.5",
+    "apollo-client": "^2.2.3",
     "classnames": "^2.2.5",
+    "graphql": "^0.13.2",
     "react": "^16.2.0",
+    "react-apollo": "^2.1.9",
     "react-dom": "^16.2.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1"
