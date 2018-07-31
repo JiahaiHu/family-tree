@@ -1,10 +1,11 @@
-import React from 'react';
-import { Layout, Row, Col, Icon } from 'antd';
-import styles from '../styles/User.less';
-import classnames from 'classnames';
-import UserCard from './UserCard';
-import ProjectCard from './ProjectCard';
-const { Header, Content, Footer, Sider } = Layout;
+import React from 'react'
+import { Layout, Row, Col, Icon } from 'antd'
+import styles from '../styles/User.less'
+import classnames from 'classnames'
+import UserCard from './UserCard'
+import ProjectCard from './ProjectCard'
+
+const { Header, Content, Footer, Sider } = Layout
 
 class User extends React.Component {
   constructor(props) {

@@ -1,9 +1,47 @@
-import React from 'react';
-import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd';
-import styles from '../styles/Home.less';
-import classnames from 'classnames';
-import Picker from './Picker';
+import React from 'react'
+import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd'
+import styles from '../styles/Home.less'
+import classnames from 'classnames'
+import Picker from './Picker'
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
+
 const { Header, Content, Footer, Sider } = Layout
+
+const GET_USERS = gql`
+  {
+    user {
+      id
+      realname
+      mentorIDs
+      menteeIDs
+      groupIDs
+      # for user popover
+      phone
+      email
+      projectIDs
+    }
+  }
+`
+
+// test
+const users = (
+  <Query query={GET_USERS}>
+    {({ loading, error, data }) => {
+      if (loading) return 'loading...'
+      if (error) {
+        console.log(error)
+        return 'Error!'
+      }
+
+      console.log(data)
+      return 'Get!'
+    }
+
+    }
+  </Query>
+)
+
 
 class Home extends React.Component {
   constructor(props) {
@@ -260,7 +298,7 @@ class Home extends React.Component {
               />
             </div>
             <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} >
-              match line
+              {users}
             </div>
             <div className={styles.homeContentCol} style={{ left: '54%' }} >
               <Picker
