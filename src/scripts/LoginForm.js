@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from '../styles/Login.css'
 import classnames from 'classnames'
-// import Cookies from 'js-cookie'
 const MOCK_HOST = 'https://fmt.fredliang.cn'
 
 class LoginForm extends React.Component {
@@ -36,6 +35,9 @@ class LoginForm extends React.Component {
     .then((data) => {
       if (data.code >= 200 && data.code < 300) {
         alert(cfg.successMsg)
+        if (cfg.callback) {
+          cfg.callback(data.token)
+        }
       } else {
         alert(data.message)
       }
@@ -57,6 +59,9 @@ class LoginForm extends React.Component {
         method: 'POST',
         data: formData,
         successMsg: '登陆成功！',
+        callback: function(token) {
+          localStorage.setItem('token', token)
+        },
       }
       this.myFetch(config)
     }

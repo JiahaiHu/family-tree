@@ -27,6 +27,7 @@
     "antd": "^3.6.5",
     "apollo-cache-inmemory": "^1.2.5",
     "apollo-client": "^2.2.3",
+    "apollo-link-context": "^1.0.8",
     "apollo-link-http": "^1.5.4",
     "classnames": "^2.2.5",
     "graphql": "^0.13.2",

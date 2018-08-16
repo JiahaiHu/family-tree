@@ -11,7 +11,7 @@ import Login from './Login'
 import Home from './Home'
 import User from './User'
 
-const endpoint = 'https://fmt.fredliang.cn'
+const endpoint = 'https://fmt.fredliang.cn/graphql'
 
 const httpLink = createHttpLink({
   uri: endpoint,
