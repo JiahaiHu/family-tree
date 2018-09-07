@@ -1,6 +1,8 @@
 import React from 'react'
+import {withRouter} from "react-router-dom";
 import styles from '../styles/Login.css'
 import classnames from 'classnames'
+import MessageBox from './MessageBox'
 const MOCK_HOST = 'https://fmt.fredliang.cn'
 
 class LoginForm extends React.Component {
@@ -9,6 +11,7 @@ class LoginForm extends React.Component {
     this.state = {
       stage: 'nav',
       enter: true,
+      message: {},
     };
   }
 
@@ -34,16 +37,31 @@ class LoginForm extends React.Component {
     .then(res => res.json())
     .then((data) => {
       if (data.code >= 200 && data.code < 300) {
-        alert(cfg.successMsg)
+        this.setState({
+          message: {
+            type: 'success',
+            content: cfg.successMsg
+          }
+        })
         if (cfg.callback) {
           cfg.callback(data.token)
         }
       } else {
-        alert(data.message)
+        this.setState({
+          message: {
+            type: 'error',
+            content: data.message // error message
+          }
+        })
       }
     })
     .catch((error) => {
-      alert("服务器错误，请告知管理员!")
+      this.setState({
+        message: {
+          type: 'success',
+          content: "服务器错误，请告知管理员!"
+        }
+      })
       console.error(error)
     })
   }
@@ -61,6 +79,7 @@ class LoginForm extends React.Component {
         successMsg: '登陆成功！',
         callback: function(token) {
           localStorage.setItem('token', token)
+          this.props.history.push('/home')
         },
       }
       this.myFetch(config)
@@ -255,6 +274,7 @@ class LoginForm extends React.Component {
     })
     return (
       <div className={formWrapperClass}>
+        { this.state.message == {} ? <MessageBox message={this.state.message} /> : null }
         <div className={formBarClass} />
         <div className={classnames({[styles.enter]: this.state.enter === true})}>
           {header}
@@ -271,4 +291,4 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm
+export default withRouter(LoginForm)
