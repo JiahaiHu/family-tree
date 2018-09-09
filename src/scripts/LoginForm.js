@@ -231,6 +231,12 @@ class LoginForm extends React.Component {
     }
   }
 
+  onClose = () => {
+    this.setState({
+      message: {},
+    })
+  }
+
   render() {
     let header = (
       <div className={classnames({
@@ -268,7 +274,7 @@ class LoginForm extends React.Component {
     })
     return (
       <div className={formWrapperClass}>
-        <MessageBox message={this.state.message} />
+        <MessageBox message={this.state.message} onClose={this.onClose} />
         <div className={formBarClass} />
         <div className={classnames({[styles.enter]: this.state.enter === true})}>
           {header}

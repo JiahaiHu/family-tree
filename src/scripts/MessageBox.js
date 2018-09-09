@@ -16,9 +16,15 @@ class MessageBox extends React.Component {
         clearTimeout(this.timeoutID)
       }
       this.timeoutID = setTimeout(() => {
-        this.setState({
+        this.setState({ // leaving
           close: true,
         })
+        setTimeout(() => {
+          this.props.onClose()
+          this.setState({
+            close: false,
+          })
+        }, 500)
       }, 2000)
     }
   }
