@@ -276,7 +276,8 @@ class LoginForm extends React.Component {
     })
     return (
       <div className={formWrapperClass}>
-        { !this.isEmpty(this.state.message) ? <MessageBox message={this.state.message} /> : null }
+        {/* { !this.isEmpty(this.state.message) ? <MessageBox message={this.state.message} /> : null } */}
+        <MessageBox message={this.state.message} />
         <div className={formBarClass} />
         <div className={classnames({[styles.enter]: this.state.enter === true})}>
           {header}

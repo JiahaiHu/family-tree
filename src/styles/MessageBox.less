@@ -1,6 +1,48 @@
 .MessageBoxContainer {
   position: absolute;
+  overflow: hidden;
   left: 50%;
   top: 0;
-  transform: translate(-50%, -100%);
+  width: 340px;
+  transform: translate(-50%, -60%);
+  background-color: #fff;
+  border-radius: 10px;
+  &.error {
+    .MessageBoxContent::before {
+      background-color: #ff7773;
+    }
+    .MessageBoxBar {
+      background-color: #ff7773;
+    }
+  }
+  &.success {
+    .MessageBoxContent::before {
+      background-color: #1de9b6;
+    }
+    .MessageBoxBar {
+      background-color: #1de9b6;
+    }
+  }
+}
+
+.MessageBoxContent {
+  padding-left: 80px;
+  height: 60px;
+  line-height: 60px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 30px;
+    margin-top: -3px;
+    margin-left: -43px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #4dd0e1;
+  }
+}
+
+.MessageBoxBar {
+  height: 3px;
+  background-color:#4dd0e1;
 }
