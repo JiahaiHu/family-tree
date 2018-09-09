@@ -6,7 +6,29 @@ class MessageBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      close: false,
     };
+  }
+
+  componentDidUpdate() {
+    if (!this.isEmpty(this.props.message)) {
+      if (this.timeoutID) {
+        clearTimeout(this.timeoutID)
+      }
+      this.timeoutID = setTimeout(() => {
+        this.setState({
+          close: true,
+        })
+      }, 2000)
+    }
+  }
+
+  isEmpty(obj) {
+    for(let key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false
+    }
+    return true
   }
 
   getBar() {
@@ -19,11 +41,13 @@ class MessageBox extends React.Component {
   }
 
   render() {
-    const type = this.props.message.type
+    const { message } = this.props
+    if (this.isEmpty(message)) return null
     let containerClass = classnames({
       [styles.MessageBoxContainer]: true,
-      [styles.success]: type === 'success',
-      [styles.error]: type === 'error',
+      [styles.success]: message.type === 'success',
+      [styles.error]: message.type === 'error',
+      [styles.leave]: this.state.close,
     })
     return (
       <div className={containerClass}>

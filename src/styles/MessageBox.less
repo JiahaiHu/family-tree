@@ -7,6 +7,10 @@
   transform: translate(-50%, -60%);
   background-color: #fff;
   border-radius: 10px;
+  transition: opacity 0.5s ease-out;
+  &.leave {
+    opacity: 0;
+  }
   &.error {
     .MessageBoxContent::before {
       background-color: #ff7773;

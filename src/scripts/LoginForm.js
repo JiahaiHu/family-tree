@@ -231,14 +231,6 @@ class LoginForm extends React.Component {
     }
   }
 
-  isEmpty(obj) {
-    for(let key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false
-    }
-    return true
-  }
-
   render() {
     let header = (
       <div className={classnames({
@@ -276,7 +268,6 @@ class LoginForm extends React.Component {
     })
     return (
       <div className={formWrapperClass}>
-        {/* { !this.isEmpty(this.state.message) ? <MessageBox message={this.state.message} /> : null } */}
         <MessageBox message={this.state.message} />
         <div className={formBarClass} />
         <div className={classnames({[styles.enter]: this.state.enter === true})}>
