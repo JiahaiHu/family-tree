@@ -71,9 +71,9 @@ class LoginForm extends React.Component {
         method: 'POST',
         data: formData,
         successMsg: '登陆成功！',
-        callback: function(data) {
+        callback: (data) => {
           localStorage.setItem('token', data.token)
-          // this.props.history.push('/home')
+          this.props.history.push('/home')
         },
       }
       this.myFetch(config)
