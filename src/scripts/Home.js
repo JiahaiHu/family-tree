@@ -9,24 +9,6 @@ import { Query } from 'react-apollo'
 
 const { Header, Content, Footer, Sider } = Layout
 
-const GET_USERS = gql`
-  {
-    user {
-      id
-      realname
-      mentorIDs
-      menteeIDs
-      groupIDs
-      joinedYear
-      enrollmentYear
-      # for user popover
-      phone
-      email
-      projectIDs
-    }
-  }
-`
-
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -58,45 +40,6 @@ class Home extends React.Component {
 
   componentDidUpdate() {
     this.svgWidth = this.nextWidth
-  }
-
-  getSvgWidth() {
-    this.nextWidth = this.svgContainerRef.clientWidth
-    return this.svgWidth || this.nextWidth
-  }
-
-  // test
-  getCurves() {
-    return (
-      <Query query={GET_USERS}>
-        {({ loading, error, data }) => {
-          if (loading) return 'loading...'
-          if (error) {
-            console.log(error)
-            return 'Error!'
-          }
-    
-          console.log(data)
-
-          return (
-            <Curves originYL={this.state.originY1} originYR={this.state.originY2} width={this.getSvgWidth()} />
-          )
-        }}
-      </Query>
-    )
-  }
-
-  getTimeLine() {
-    return (
-      <div className={styles.timeline}>
-        <ul>
-          <li style={{ left: '30px' }}>...<span></span></li>
-          <li style={{ left: '20%' }}>2016<span></span></li>
-          <li style={{ left: '60%' }}>2017<span></span></li>
-          <li style={{ left: '100%' }}>2018<span></span></li>
-        </ul>
-      </div>
-    )
   }
 
   leftHandler = () => {
@@ -154,6 +97,137 @@ class Home extends React.Component {
         originY2: -scrollTop,
       })
     }
+  }
+
+  getSvgWidth() {
+    this.nextWidth = this.svgContainerRef.clientWidth
+    return this.svgWidth || this.nextWidth
+  }
+
+  getPicker(year, nth) {
+    const GET_USERS = gql`
+    {
+      user(joinedYear: ${year}) {
+        id
+        realname
+        mentorIDs
+        menteeIDs
+        groupIDs
+        enrollmentYear
+        # TODO: for user popover
+        # phone
+        # email
+        # projectIDs
+      }
+    }
+    `
+
+    const selectedYear = this.selectedYear
+    const focusedIndex = {}
+    focusedIndex[2017] = this.state.selectedUserId // TODO:
+
+    return (
+      <Query query={GET_USERS}>
+        {({ loading, error, data }) => {
+          if (loading) return 'loading...'
+          if (error) {
+            console.log(error)
+            return 'Error!'
+          }
+    
+          return (
+            <Picker
+              year={year}
+              items={data.user}
+              selected={selectedYear === year}
+              focusedIndex={focusedIndex[year]}
+              onclick={this.onclick}
+              onScroll={this.onScroll.bind(this, nth)}
+            />            
+          )
+        }}
+      </Query>
+    )
+  }
+
+  getCurves(y1, y2) {
+    const GET_USERS = gql`
+    {
+      mentors: user(joinedYear: ${y1}) {
+        id
+        realname
+        mentorIDs
+        menteeIDs
+        groupIDs
+        joinedYear
+        enrollmentYear
+      }
+      mentees: user(joinedYear: ${y2}) {
+        id
+        realname
+        mentorIDs
+        menteeIDs
+        groupIDs
+        joinedYear
+        enrollmentYear
+      }
+    }
+    `
+
+    return (
+      <Query query={GET_USERS}>
+        {({ loading, error, data }) => {
+          if (loading) return 'loading...'
+          if (error) {
+            console.log(error)
+            return 'Error!'
+          }
+
+          const mentors = data.mentors.filter(user => user.menteeIDs.length !== 0)
+          const mentees = data.mentees.filter(user => user.mentorIDs.length !== 0)
+          console.log(mentors)
+          console.log(mentees)
+
+          const pairsOfIndex = mentors.map(mentor => {
+            const mentorIndex = data.mentors.findIndex(user => user.id === mentor.id)
+            const menteeIndexs = mentor.menteeIDs.map(id => {
+              return data.mentees.findIndex(user => user.id === id)
+            })
+
+            const pairsOfIndex = menteeIndexs.map(index => {
+              return {
+                mentorIndex,
+                menteeIndex: index,
+              }
+            })
+            console.log(pairsOfIndex)
+            return pairsOfIndex
+          }).reduce((preArray, curArray) => preArray.concat(curArray))
+    
+          return (
+            <Curves
+              pairsOfIndex={pairsOfIndex}
+              originYL={this.state.originY1}
+              originYR={this.state.originY2}
+              width={this.getSvgWidth()}
+            />            
+          )
+        }}
+      </Query>
+    )
+  }
+
+  getTimeLine() {
+    return (
+      <div className={styles.timeline}>
+        <ul>
+          <li style={{ left: '30px' }}>...<span></span></li>
+          <li style={{ left: '20%' }}>2016<span></span></li>
+          <li style={{ left: '60%' }}>2017<span></span></li>
+          <li style={{ left: '100%' }}>2018<span></span></li>
+        </ul>
+      </div>
+    )
   }
 
   render() {
@@ -227,9 +301,7 @@ class Home extends React.Component {
         },
       ],
     };
-    const focusedIndex = {};
-    focusedIndex[2017] = this.state.selectedUserId; // TODO:
-    const selectedYear = this.selectedYear;
+    
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
         <Header className={styles.homeHeader} >
@@ -331,39 +403,19 @@ class Home extends React.Component {
               {this.getTimeLine()}
             </div>
             <div className={styles.homeContentCol} style={{ left: '18%' }} >
-              <Picker
-                year={2017}
-                items={db[2017]}
-                selected={selectedYear === 2017}
-                focusedIndex={focusedIndex[2017]}
-                onclick={this.onclick}
-                onScroll={this.onScroll.bind(this, 1)}
-              />
+              {this.getPicker(2017, 1)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} ref={this.setSvgContainerRef}>
-              {this.getCurves()}
+              {this.getCurves(2017, 2018)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '54%' }} >
-              <Picker
-                year={2017}
-                items={db[2017]}
-                selected={selectedYear === 2017}
-                focusedIndex={focusedIndex[2017]}
-                onclick={this.onclick}
-                onScroll={this.onScroll.bind(this, 2)}
-              />
+              {this.getPicker(2018, 2)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '72%', width: 'calc(36% - 166px)' }} >
               match line
             </div>
             <div className={styles.homeContentCol} style={{ left: '90%' }} >
-              <Picker
-                year={2017}
-                items={db[2017]}
-                selected={selectedYear === 2017}
-                focusedIndex={focusedIndex[2017]}
-                onclick={this.onclick}
-              />
+              {this.getPicker(2018, 3)}
             </div>
           </Content>
           <Sider className={styles.rightSider} width={160}>

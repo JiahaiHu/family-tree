@@ -59,8 +59,9 @@ class Picker extends React.Component {
   getItems() {
     const { items, selected, focusedIndex } = this.props;
     return items.map((item, index) => {
+      const group = 'Web' // TODO: item.gourpIDs[0]
       const cls= classnames({
-        [styles[`${item.group}`]]: true,
+        [styles[`${group}`]]: true,
         [styles.selectedItem]: focusedIndex === index && selected,
       });
       return (
@@ -70,8 +71,8 @@ class Picker extends React.Component {
           onClick={this.onclick.bind(this, index)}
         >
           <i></i>
-          <span className={styles.itemText}>{item.name}</span>
-          <span className={styles.itemTag}>[17]</span>
+          <span className={styles.itemText}>{item.realname}</span>
+          <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
         </li>
       )
     })
