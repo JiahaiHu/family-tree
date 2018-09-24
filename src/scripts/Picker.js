@@ -68,7 +68,7 @@ class Picker extends React.Component {
         <li
           className={cls}
           key={index}
-          onClick={this.onclick.bind(this, index)}
+          onClick={this.onclick.bind(this, item.id)}
         >
           <i></i>
           <span className={styles.itemText}>{item.realname}</span>

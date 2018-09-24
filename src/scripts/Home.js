@@ -22,6 +22,7 @@ class Home extends React.Component {
       // minVisibleIndex: [], // for line's visibility
       originY1: 0,
       originY2: 0,
+      originY3: 0,
     };
 
     this.svgWidth = null
@@ -33,6 +34,10 @@ class Home extends React.Component {
     }
 
   }
+
+  data = {}
+  focusedIndex = {}
+  selectedYear = null;
 
   componentDidMount() {
     // window.addEventListener('resize', this.getSvgWidth)
@@ -78,13 +83,11 @@ class Home extends React.Component {
     })
   }
 
-  selectedYear = null;
-
-  onclick = (userId) => {
+  onclick = (year, userId) => {
     this.setState({
       selectedUserId: userId,
     });
-    this.selectedYear = 2017;
+    this.selectedYear = year
   }
 
   onScroll = (n, scrollTop) => {
@@ -95,6 +98,10 @@ class Home extends React.Component {
     } else if (n == 2) {
       this.setState({
         originY2: -scrollTop,
+      })
+    } else if (n == 3) {
+      this.setState({
+        originY3: -scrollTop,
       })
     }
   }
@@ -122,10 +129,6 @@ class Home extends React.Component {
     }
     `
 
-    const selectedYear = this.selectedYear
-    const focusedIndex = {}
-    focusedIndex[2017] = this.state.selectedUserId // TODO:
-
     return (
       <Query query={GET_USERS}>
         {({ loading, error, data }) => {
@@ -134,14 +137,35 @@ class Home extends React.Component {
             console.log(error)
             return 'Error!'
           }
-    
+      
+          // TODO: filter and sort data
+          this.data[year] = data.user
+
+          const selectedYear = this.selectedYear
+          const selectedUserId = this.state.selectedUserId
+
+          if (selectedYear && selectedUserId) {
+            // TODO: create near years' focusedIndex
+            this.focusedIndex[selectedYear] = this.data[selectedYear].findIndex(user => user.id === selectedUserId)
+            
+            if (this.data[selectedYear+1])
+              this.focusedIndex[selectedYear+1] = this.data[selectedYear+1].findIndex(user => {
+                return user.mentorIDs.includes(selectedUserId)
+              })
+            
+            if (this.data[selectedYear-1])
+              this.focusedIndex[selectedYear-1] = this.data[selectedYear-1].findIndex(user => {
+                return user.menteeIDs.includes(selectedUserId)
+              })
+          }
+          
           return (
             <Picker
               year={year}
               items={data.user}
               selected={selectedYear === year}
-              focusedIndex={focusedIndex[year]}
-              onclick={this.onclick}
+              focusedIndex={this.focusedIndex[year]}
+              onclick={this.onclick.bind(this, year)}
               onScroll={this.onScroll.bind(this, nth)}
             />            
           )
@@ -185,6 +209,7 @@ class Home extends React.Component {
 
           const mentors = data.mentors.filter(user => user.menteeIDs.length !== 0)
           const mentees = data.mentees.filter(user => user.mentorIDs.length !== 0)
+          if (!mentors.length || !mentees.length) return ''
 
           const pairsOfIndex = mentors.map(mentor => {
             const mentorIndex = data.mentors.findIndex(user => user.id === mentor.id)
@@ -200,12 +225,15 @@ class Home extends React.Component {
             })
             return pairsOfIndex
           }).reduce((preArray, curArray) => preArray.concat(curArray))
+
+          const n1 = 2 + y1 - this.state.focusedYear
+          const n2 = 2 + y2 - this.state.focusedYear
     
           return (
             <Curves
               pairsOfIndex={pairsOfIndex}
-              originYL={this.state.originY1}
-              originYR={this.state.originY2}
+              originYL={this.state[`originY${n1}`]}
+              originYR={this.state[`originY${n2}`]}
               width={this.getSvgWidth()}
             />            
           )
@@ -215,13 +243,14 @@ class Home extends React.Component {
   }
 
   getTimeLine() {
+    const focusedYear = this.state.focusedYear
     return (
       <div className={styles.timeline}>
         <ul>
           <li style={{ left: '30px' }}>...<span></span></li>
-          <li style={{ left: '20%' }}>2016<span></span></li>
-          <li style={{ left: '60%' }}>2017<span></span></li>
-          <li style={{ left: '100%' }}>2018<span></span></li>
+          <li style={{ left: '20%' }}>{focusedYear-1}<span></span></li>
+          <li style={{ left: '60%' }}>{focusedYear}<span></span></li>
+          <li style={{ left: '100%' }}>{focusedYear+1}<span></span></li>
         </ul>
       </div>
     )
@@ -229,75 +258,7 @@ class Home extends React.Component {
 
   render() {
     const collapsedWidth = 160;
-    // TODO: filter and sort data
-    const db = {
-      2017: [
-        {
-          name: '赵某某',
-          group: 'AILab',
-        },
-        {
-          name: '钱某某',
-          group: 'Android',
-        },
-        {
-          name: '孙某某',
-          group: 'Design',
-        },
-        {
-          name: '李某某',
-          group: 'Game',
-        },
-        {
-          name: '周某某',
-          group: 'iOS',
-        },
-        {
-          name: '吴某某',
-          group: 'Lab',
-        },
-        {
-          name: '郑某某',
-          group: 'PM',
-        },
-        {
-          name: '王某某',
-          group: 'Web',
-        },
-        {
-          name: '赵某某',
-          group: 'Design',
-        },
-        {
-          name: '钱某某',
-          group: 'Game',
-        },
-        {
-          name: '孙某某',
-          group: 'AILab',
-        },
-        {
-          name: '李某某',
-          group: 'PM',
-        },
-        {
-          name: '周某某',
-          group: 'Web',
-        },
-        {
-          name: '吴某某',
-          group: 'Design',
-        },
-        {
-          name: '郑某某',
-          group: 'Web',
-        },
-        {
-          name: '王某某',
-          group: 'AILab',
-        },
-      ],
-    };
+    const focusedYear = this.state.focusedYear
     
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
@@ -400,19 +361,19 @@ class Home extends React.Component {
               {this.getTimeLine()}
             </div>
             <div className={styles.homeContentCol} style={{ left: '18%' }} >
-              {this.getPicker(2017, 1)}
+              {this.getPicker(focusedYear-1, 1)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} ref={this.setSvgContainerRef}>
-              {this.getCurves(2017, 2018)}
+              {this.getCurves(focusedYear-1, focusedYear)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '54%' }} >
-              {this.getPicker(2018, 2)}
+              {this.getPicker(focusedYear, 2)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '72%', width: 'calc(36% - 166px)' }} >
-              match line
+            {this.getCurves(focusedYear, focusedYear+1)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '90%' }} >
-              {this.getPicker(2018, 3)}
+              {this.getPicker(focusedYear, 3)}
             </div>
           </Content>
           <Sider className={styles.rightSider} width={160}>

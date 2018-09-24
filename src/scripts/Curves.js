@@ -5,16 +5,10 @@ class Curves extends Component {
     super(props)
   }
 
-  getPath(p) {
-    return (
-      <path d={`M ${p.x1},${p.y1} C ${p.x2},${p.y2} ${p.x3},${p.y3} ${p.x4},${p.y4}`} stroke="#8c9eff" fill="none"></path>
-    )
-  }
-
   render() {
     const { width, originYL, originYR, pairsOfIndex } = this.props
     
-    const paths = pairsOfIndex.map(pair => {
+    const paths = pairsOfIndex.map((pair, index) => {
       const p = {
         x1: 0,
         y1: 37 + 54 * pair.mentorIndex + originYL,
@@ -26,7 +20,7 @@ class Curves extends Component {
         y4: 37 + 54 * pair.menteeIndex + originYR,
       }
 
-      return this.getPath(p)
+      return <path key={index} d={`M ${p.x1},${p.y1} C ${p.x2},${p.y2} ${p.x3},${p.y3} ${p.x4},${p.y4}`} stroke="#8c9eff" fill="none"></path>
     })
     
 
