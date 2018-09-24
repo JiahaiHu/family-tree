@@ -185,8 +185,6 @@ class Home extends React.Component {
 
           const mentors = data.mentors.filter(user => user.menteeIDs.length !== 0)
           const mentees = data.mentees.filter(user => user.mentorIDs.length !== 0)
-          console.log(mentors)
-          console.log(mentees)
 
           const pairsOfIndex = mentors.map(mentor => {
             const mentorIndex = data.mentors.findIndex(user => user.id === mentor.id)
@@ -200,7 +198,6 @@ class Home extends React.Component {
                 menteeIndex: index,
               }
             })
-            console.log(pairsOfIndex)
             return pairsOfIndex
           }).reduce((preArray, curArray) => preArray.concat(curArray))
     

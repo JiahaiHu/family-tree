@@ -15,8 +15,6 @@ class Curves extends Component {
     const { width, originYL, originYR, pairsOfIndex } = this.props
     
     const paths = pairsOfIndex.map(pair => {
-      console.log(pair)
-      console.log(37 + 54 * pair.mentorIndex + originYL)
       const p = {
         x1: 0,
         y1: 37 + 54 * pair.mentorIndex + originYL,
