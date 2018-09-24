@@ -3,6 +3,7 @@ import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd'
 import styles from '../styles/Home.less'
 import classnames from 'classnames'
 import Picker from './Picker'
+import Curves from './Curves'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 
@@ -16,6 +17,8 @@ const GET_USERS = gql`
       mentorIDs
       menteeIDs
       groupIDs
+      joinedYear
+      enrollmentYear
       # for user popover
       phone
       email
@@ -24,28 +27,10 @@ const GET_USERS = gql`
   }
 `
 
-// test
-const users = (
-  <Query query={GET_USERS}>
-    {({ loading, error, data }) => {
-      if (loading) return 'loading...'
-      if (error) {
-        console.log(error)
-        return 'Error!'
-      }
-
-      console.log(data)
-      return 'Get!'
-    }
-
-    }
-  </Query>
-)
-
-
 class Home extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       collapsed: false,
       checkedGroups: [],
@@ -53,7 +38,52 @@ class Home extends React.Component {
       checkedGenders: [],
       focusedYear: 2017,
       // minVisibleIndex: [], // for line's visibility
+      originY1: 0,
+      originY2: 0,
     };
+
+    this.svgWidth = null
+    this.nextWidth = null
+    this.svgContainerRef = null
+
+    this.setSvgContainerRef = el => {
+      this.svgContainerRef = el
+    }
+
+  }
+
+  componentDidMount() {
+    // window.addEventListener('resize', this.getSvgWidth)
+  }
+
+  componentDidUpdate() {
+    this.svgWidth = this.nextWidth
+  }
+
+  getSvgWidth() {
+    this.nextWidth = this.svgContainerRef.clientWidth
+    return this.svgWidth || this.nextWidth
+  }
+
+  // test
+  getCurves() {
+    return (
+      <Query query={GET_USERS}>
+        {({ loading, error, data }) => {
+          if (loading) return 'loading...'
+          if (error) {
+            console.log(error)
+            return 'Error!'
+          }
+    
+          console.log(data)
+
+          return (
+            <Curves originYL={this.state.originY1} originYR={this.state.originY2} width={this.getSvgWidth()} />
+          )
+        }}
+      </Query>
+    )
   }
 
   getTimeLine() {
@@ -114,9 +144,21 @@ class Home extends React.Component {
     this.selectedYear = 2017;
   }
 
+  onScroll = (n, scrollTop) => {
+    if (n == 1) {
+      this.setState({
+        originY1: -scrollTop,
+      })
+    } else if (n == 2) {
+      this.setState({
+        originY2: -scrollTop,
+      })
+    }
+  }
+
   render() {
     const collapsedWidth = 160;
-    // Todo: filter and sort data
+    // TODO: filter and sort data
     const db = {
       2017: [
         {
@@ -186,7 +228,7 @@ class Home extends React.Component {
       ],
     };
     const focusedIndex = {};
-    focusedIndex[2017] = this.state.selectedUserId; // to fix
+    focusedIndex[2017] = this.state.selectedUserId; // TODO:
     const selectedYear = this.selectedYear;
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
@@ -295,10 +337,11 @@ class Home extends React.Component {
                 selected={selectedYear === 2017}
                 focusedIndex={focusedIndex[2017]}
                 onclick={this.onclick}
+                onScroll={this.onScroll.bind(this, 1)}
               />
             </div>
-            <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} >
-              {users}
+            <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} ref={this.setSvgContainerRef}>
+              {this.getCurves()}
             </div>
             <div className={styles.homeContentCol} style={{ left: '54%' }} >
               <Picker
@@ -307,6 +350,7 @@ class Home extends React.Component {
                 selected={selectedYear === 2017}
                 focusedIndex={focusedIndex[2017]}
                 onclick={this.onclick}
+                onScroll={this.onScroll.bind(this, 2)}
               />
             </div>
             <div className={styles.homeContentCol} style={{ left: '72%', width: 'calc(36% - 166px)' }} >

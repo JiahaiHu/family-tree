@@ -31,12 +31,16 @@ class Picker extends React.Component {
     };
   }
 
-  onscroll = (e) => {
-    // when scrolltop changes, update y of path
+  onScroll = () => {
+    // TODO: when scrolltop changes, update y of path
+    if (this.props.onScroll) {
+      const picker = this.pickerRef
+      this.props.onScroll(picker.scrollTop)
+    }
   }
 
   componentDidMount() {
-    let onScroll = e => this.props.onScroll(e);
+    let onScroll = e => this.onScroll(e);
     this.pickerRef.addEventListener('scroll', onScroll);
   }
 
