@@ -59,25 +59,25 @@ class Home extends React.Component {
     });
   }
 
-  groupCheckHandler = (checkedValue) => {
+  groupCheckHandler = (checkedGroups) => {
     this.setState({
-      checkedGroups: checkedValue,
+      checkedGroups,
     })
   }
 
-  yearCheckHandler = (checkedValue) => {
+  yearCheckHandler = (checkedYears) => {
     this.setState({
-      checkedYears: checkedValue,
+      checkedYears,
     })
   }
 
-  genderCheckHandler = (checkedValue) => {
+  genderCheckHandler = (checkedGenders) => {
     this.setState({
-      checkedGenders: checkedValue,
+      checkedGenders,
     })
   }
 
-  mainYearCheckHandler = (e) => {
+  focusedYearCheckHandler = (e) => {
     this.setState({
       focusedYear: e.target.value,
     })
@@ -243,7 +243,7 @@ class Home extends React.Component {
   }
 
   getTimeLine() {
-    const focusedYear = this.state.focusedYear
+    const focusedYear = parseInt(this.state.focusedYear)
     return (
       <div className={styles.timeline}>
         <ul>
@@ -257,8 +257,8 @@ class Home extends React.Component {
   }
 
   render() {
-    const collapsedWidth = 160;
-    const focusedYear = this.state.focusedYear
+    const collapsedWidth = 160
+    const focusedYear = parseInt(this.state.focusedYear)
     
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
@@ -373,11 +373,11 @@ class Home extends React.Component {
             {this.getCurves(focusedYear, focusedYear+1)}
             </div>
             <div className={styles.homeContentCol} style={{ left: '90%' }} >
-              {this.getPicker(focusedYear, 3)}
+              {this.getPicker(focusedYear+1, 3)}
             </div>
           </Content>
           <Sider className={styles.rightSider} width={160}>
-            <Radio.Group onChange={this.mainYearCheckHandler}>
+            <Radio.Group onChange={this.focusedYearCheckHandler}>
               <Row>
                 <Radio value="2018">2018</Radio>
               </Row>

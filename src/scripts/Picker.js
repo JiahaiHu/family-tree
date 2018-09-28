@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import classnames from 'classnames';
 import styles from '../styles/Picker.less';
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 
 const scrollTo = (element, to, duration) => {
   const requestAnimationFrame = window.requestAnimationFrame ||
@@ -59,22 +61,62 @@ class Picker extends React.Component {
   getItems() {
     const { items, selected, focusedIndex } = this.props;
     return items.map((item, index) => {
-      const group = 'Web' // TODO: item.gourpIDs[0]
-      const cls= classnames({
-        [styles[`${group}`]]: true,
-        [styles.selectedItem]: focusedIndex === index && selected,
-      });
-      return (
-        <li
-          className={cls}
-          key={index}
-          onClick={this.onclick.bind(this, item.id)}
-        >
-          <i></i>
-          <span className={styles.itemText}>{item.realname}</span>
-          <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
-        </li>
-      )
+      if (item.groupIDs.length) {
+        const groupID = item.groupIDs[0]
+
+        const GET_GROUP_NAME = gql`
+        {
+          group(id: ${groupID}){
+            groupName
+          }
+        }
+        `
+
+        return (<Query query={GET_GROUP_NAME}>
+          {({ loading, error, data }) => {
+            if (loading) return 'loading...'
+            if (error) {
+              console.log(error)
+              return 'Error!'
+            }
+
+            
+            const cls= classnames({
+              [styles[`${data.group.groupName}`]]: true,
+              [styles.selectedItem]: focusedIndex === index && selected,
+            })
+
+            return (
+              <li
+                className={cls}
+                key={index}
+                onClick={this.onclick.bind(this, item.id)}
+              >
+                <i></i>
+                <span className={styles.itemText}>{item.realname}</span>
+                <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
+              </li>
+            )
+          }}
+        </Query>)
+      } else {
+        const cls= classnames({
+          [styles.selectedItem]: focusedIndex === index && selected,
+        })
+        return (
+          <li
+            className={cls}
+            key={index}
+            onClick={this.onclick.bind(this, item.id)}
+          >
+            <i></i>
+            <span className={styles.itemText}>{item.realname}</span>
+            <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
+          </li>
+        )
+      }
+      
+      
     })
   }
 

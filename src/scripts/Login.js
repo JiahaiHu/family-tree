@@ -8,6 +8,18 @@ import styles from '../styles/Login.css';
 
 class Login extends React.Component {
   render() {
+    // redirect to '/home' if token is not expired
+    fetch('https://fmt.fredliang.cn/refresh_token', {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+      }
+    }).then(res => {
+      if (res.status == 200) {
+        this.props.history.push('/home')
+      }
+    })
+    
     return (
       <div className={classnames(styles.wrapper, styles.gradBgColor)}>
         <div className={styles.circlesContainer}>
