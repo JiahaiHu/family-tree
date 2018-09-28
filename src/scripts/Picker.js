@@ -61,62 +61,29 @@ class Picker extends React.Component {
   getItems() {
     const { items, selected, focusedIndex } = this.props;
     return items.map((item, index) => {
-      if (item.groupIDs.length) {
-        const groupID = item.groupIDs[0]
-
-        const GET_GROUP_NAME = gql`
-        {
-          group(id: ${groupID}){
-            groupName
-          }
-        }
-        `
-
-        return (<Query query={GET_GROUP_NAME}>
-          {({ loading, error, data }) => {
-            if (loading) return 'loading...'
-            if (error) {
-              console.log(error)
-              return 'Error!'
-            }
-
-            
-            const cls= classnames({
-              [styles[`${data.group.groupName}`]]: true,
-              [styles.selectedItem]: focusedIndex === index && selected,
-            })
-
-            return (
-              <li
-                className={cls}
-                key={index}
-                onClick={this.onclick.bind(this, item.id)}
-              >
-                <i></i>
-                <span className={styles.itemText}>{item.realname}</span>
-                <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
-              </li>
-            )
-          }}
-        </Query>)
-      } else {
-        const cls= classnames({
+      let cls
+      if (item.groupNames.length) {
+        cls= classnames({
+          [styles[`${item.groupNames[0]}`]]: true,
           [styles.selectedItem]: focusedIndex === index && selected,
         })
-        return (
-          <li
-            className={cls}
-            key={index}
-            onClick={this.onclick.bind(this, item.id)}
-          >
-            <i></i>
-            <span className={styles.itemText}>{item.realname}</span>
-            <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
-          </li>
-        )
+      } else {
+        cls= classnames({
+          [styles.selectedItem]: focusedIndex === index && selected,
+        })
       }
-      
-      
+
+      return (
+        <li
+          className={cls}
+          key={index}
+          onClick={this.onclick.bind(this, item.id)}
+        >
+          <i></i>
+          <span className={styles.itemText}>{item.realname}</span>
+          <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
+        </li>
+      )
     })
   }
 

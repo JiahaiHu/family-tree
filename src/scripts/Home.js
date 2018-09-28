@@ -19,7 +19,7 @@ class Home extends React.Component {
       checkedYears: [],
       checkedGenders: [],
       focusedYear: 2017,
-      // minVisibleIndex: [], // for line's visibility
+      // TODO: minVisibleIndex: [], // for line's visibility
       originY1: 0,
       originY2: 0,
       originY3: 0,
@@ -106,6 +106,83 @@ class Home extends React.Component {
     }
   }
 
+  groups = [];
+
+  getGroupName() {
+    const GET_GROUPS = gql`
+      {
+        group {
+          id
+          groupName
+        }
+      }
+    `
+
+    return (
+      <Query query={GET_GROUPS}>
+        {({ loading, error, data }) => {
+          if (loading) return ''
+          if (error) {
+            console.log(error)
+            return 'Error!'
+          }
+          this.groups = data.group
+          return ''
+        }}
+      </Query>
+    )
+  }
+
+  addGroupNames(users) {
+    const groups = this.groups
+
+    return users.map(user => {
+      let groupNames
+      if (user.groupIDs.length) {
+        groupNames = user.groupIDs.map(groupID => {
+          return groups.find(group => groupID === group.id).groupName
+        })
+      } else {
+        groupNames = []
+      }
+
+      return Object.assign({groupNames}, user)
+    })
+  }
+
+  filterUsers(users) {
+    const checkedGroups = this.state.checkedGroups
+    const checkedYears = this.state.checkedYears
+    const checkedGenders = this.state.checkedGenders
+    
+    let filteredUsers = users
+    if (checkedGroups.length) {
+      filteredUsers = filteredUsers.filter(user => {
+        let willBeFiltered = true
+        checkedGroups.find(group => {
+          if (user.groupNames.includes(group)) {
+            willBeFiltered = false
+            return true
+          } else {
+            return false
+          }
+        })
+        return !willBeFiltered
+      })
+    }
+    if (checkedYears.length) {
+      filteredUsers = filteredUsers.filter(user => {
+        return checkedYears.includes(user.enrollmentYear.toString())
+      })
+    }
+    if (checkedGenders.length) {
+      filteredUsers = filteredUsers.filter(user => {
+        return checkedGenders.includes(user.gender.toString())
+      })
+    }
+    return filteredUsers
+  }
+
   getSvgWidth() {
     this.nextWidth = this.svgContainerRef.clientWidth
     return this.svgWidth || this.nextWidth
@@ -121,6 +198,7 @@ class Home extends React.Component {
         menteeIDs
         groupIDs
         enrollmentYear
+        gender
         # TODO: for user popover
         # phone
         # email
@@ -137,9 +215,9 @@ class Home extends React.Component {
             console.log(error)
             return 'Error!'
           }
-      
-          // TODO: filter and sort data
-          this.data[year] = data.user
+
+          const users = this.filterUsers(this.addGroupNames(data.user))
+          this.data[year] = users
 
           const selectedYear = this.selectedYear
           const selectedUserId = this.state.selectedUserId
@@ -162,7 +240,7 @@ class Home extends React.Component {
           return (
             <Picker
               year={year}
-              items={data.user}
+              items={users}
               selected={selectedYear === year}
               focusedIndex={this.focusedIndex[year]}
               onclick={this.onclick.bind(this, year)}
@@ -185,6 +263,7 @@ class Home extends React.Component {
         groupIDs
         joinedYear
         enrollmentYear
+        gender
       }
       mentees: user(joinedYear: ${y2}) {
         id
@@ -194,6 +273,7 @@ class Home extends React.Component {
         groupIDs
         joinedYear
         enrollmentYear
+        gender
       }
     }
     `
@@ -206,15 +286,17 @@ class Home extends React.Component {
             console.log(error)
             return 'Error!'
           }
-
-          const mentors = data.mentors.filter(user => user.menteeIDs.length !== 0)
-          const mentees = data.mentees.filter(user => user.mentorIDs.length !== 0)
+          
+          const filteredMentors = this.filterUsers(this.addGroupNames(data.mentors))
+          const filteredMentees = this.filterUsers(this.addGroupNames(data.mentees))
+          const mentors = filteredMentors.filter(user => user.menteeIDs.length !== 0)
+          const mentees = filteredMentees.filter(user => user.mentorIDs.length !== 0)
           if (!mentors.length || !mentees.length) return ''
 
           const pairsOfIndex = mentors.map(mentor => {
-            const mentorIndex = data.mentors.findIndex(user => user.id === mentor.id)
+            const mentorIndex = filteredMentors.findIndex(user => user.id === mentor.id)
             const menteeIndexs = mentor.menteeIDs.map(id => {
-              return data.mentees.findIndex(user => user.id === id)
+              return filteredMentees.findIndex(user => user.id === id)
             })
 
             const pairsOfIndex = menteeIndexs.map(index => {
@@ -259,6 +341,8 @@ class Home extends React.Component {
   render() {
     const collapsedWidth = 160
     const focusedYear = parseInt(this.state.focusedYear)
+
+    
     
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
@@ -290,7 +374,7 @@ class Home extends React.Component {
                     <Checkbox value="Android" className={styles.Android}>Android</Checkbox>
                   </Row>
                   <Row>
-                    <Checkbox value="AILab" className={styles.AILab}>AI Lab</Checkbox>
+                    <Checkbox value="AI" className={styles.AILab}>AI</Checkbox>
                   </Row>
                   <Row>
                     <Checkbox value="Design" className={styles.Design}>Design</Checkbox>
@@ -347,10 +431,10 @@ class Home extends React.Component {
                 </div>
                 <Checkbox.Group onChange={this.genderCheckHandler}>
                   <Row>
-                    <Checkbox value="Male">Male</Checkbox>
+                    <Checkbox value="true">Male</Checkbox>
                   </Row>
                   <Row>
-                    <Checkbox value="Female">Female</Checkbox>
+                    <Checkbox value="false">Female</Checkbox>
                   </Row>
                 </Checkbox.Group>
               </div>
@@ -358,6 +442,7 @@ class Home extends React.Component {
           </Sider>
           <Content className={styles.homeContent} >
             <div className={styles.timelineContainer} >
+              {this.getGroupName()}
               {this.getTimeLine()}
             </div>
             <div className={styles.homeContentCol} style={{ left: '18%' }} >
