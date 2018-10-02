@@ -3,6 +3,7 @@ import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd'
 import styles from '../styles/Home.less'
 import classnames from 'classnames'
 import Picker from './Picker'
+import Popover from './Popover'
 import Curves from './Curves'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -317,7 +318,7 @@ class Home extends React.Component {
               originYL={this.state[`originY${n1}`]}
               originYR={this.state[`originY${n2}`]}
               width={this.getSvgWidth()}
-            />            
+            />
           )
         }}
       </Query>
@@ -338,6 +339,16 @@ class Home extends React.Component {
     )
   }
 
+  getGroupPopover(groupName) {
+    return (
+      <div>
+        <div>{groupName}</div>
+        <p>简介</p>
+        <a>more...</a>
+      </div>
+    )
+  }
+
   render() {
     const collapsedWidth = 160
     const focusedYear = parseInt(this.state.focusedYear)
@@ -346,6 +357,7 @@ class Home extends React.Component {
     
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
+        {this.getGroupName()}
         <Header className={styles.homeHeader} >
           <span>Family Tree</span>
           <div className={styles.avatar}></div>
@@ -371,7 +383,9 @@ class Home extends React.Component {
               <div>
                 <Checkbox.Group onChange={this.groupCheckHandler}>
                   <Row>
+                    <Popover content={this.getGroupPopover('Android')}>
                     <Checkbox value="Android" className={styles.Android}>Android</Checkbox>
+                    </Popover>
                   </Row>
                   <Row>
                     <Checkbox value="AI" className={styles.AILab}>AI</Checkbox>
@@ -442,7 +456,6 @@ class Home extends React.Component {
           </Sider>
           <Content className={styles.homeContent} >
             <div className={styles.timelineContainer} >
-              {this.getGroupName()}
               {this.getTimeLine()}
             </div>
             <div className={styles.homeContentCol} style={{ left: '18%' }} >

@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDom from 'react-dom';
 import classnames from 'classnames';
 import styles from '../styles/Picker.less';
-import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
 
 const scrollTo = (element, to, duration) => {
   const requestAnimationFrame = window.requestAnimationFrame ||
