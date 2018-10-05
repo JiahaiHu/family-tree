@@ -1,6 +1,10 @@
 import React from 'react';
 import classnames from 'classnames';
+import popStyles from '../styles/Popover.less'
 import styles from '../styles/Picker.less';
+import { Popover } from 'antd'
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 
 const scrollTo = (element, to, duration) => {
   const requestAnimationFrame = window.requestAnimationFrame ||
@@ -31,7 +35,6 @@ class Picker extends React.Component {
   }
 
   onScroll = () => {
-    // TODO: when scrolltop changes, update y of path
     if (this.props.onScroll) {
       const picker = this.pickerRef
       this.props.onScroll(picker.scrollTop)
@@ -71,6 +74,7 @@ class Picker extends React.Component {
       }
 
       return (
+        <Popover placement="rightTop" content={this.getUserPopover(item)}>
         <li
           className={cls}
           key={index}
@@ -80,6 +84,7 @@ class Picker extends React.Component {
           <span className={styles.itemText}>{item.realname}</span>
           <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
         </li>
+        </Popover>
       )
     })
   }
@@ -106,6 +111,49 @@ class Picker extends React.Component {
 
   handleMouseLeave = () => {
     this.setState({ active: false });
+  }
+
+  getUserPopover(user) {
+    return (
+      <div className={popStyles.card}>
+        <div className={classnames(popStyles.cardItem, popStyles.avatar)}>
+          <div className={popStyles.cardItemLabel}>
+            <div></div>
+          </div>
+          <div>
+            <div>{user.groupNames[0] || 'undefined'}</div>
+            <div>
+              <span className={popStyles.avatarName}>{user.realname}</span>({this.props.year} - {parseInt(user.enrollmentYear) + 4})
+            </div>
+          </div>
+        </div>
+        <div className={popStyles.cardItem}>
+          <div className={popStyles.cardItemLabel}>TEL</div>
+          <div>{user.phone || 'xxxxxxxxxxx'}</div>
+        </div>
+        <div className={popStyles.cardItem}>
+          <div className={popStyles.cardItemLabel}>EMAIL</div>
+          <div>{user.email || 'xxx@email'}</div>
+        </div>
+        <div className={popStyles.line}></div>
+        {/* TODO: query project by id */}
+        <div className={popStyles.projectItem}>
+          <div className={popStyles.projectTitle}>
+            <div className={popStyles.projectLabel}>project1</div>
+            <div className={popStyles.projectName}>xxxxxx</div>
+          </div>
+          <div className={popStyles.projectContent}>xxxxxxxxx</div>
+        </div>
+        <div className={popStyles.projectItem}>
+          <div className={popStyles.projectTitle}>
+            <div className={popStyles.projectLabel}>project2</div>
+            <div className={popStyles.projectName}>xxxxxx</div>
+          </div>
+          <div className={popStyles.projectContent}>xxxxxxxxx</div>
+        </div>
+        <a>more...</a>
+      </div>
+    )
   }
 
   render() {

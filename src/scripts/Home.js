@@ -1,9 +1,8 @@
 import React from 'react'
-import { Layout, Checkbox, Radio, Row, Col, Icon } from 'antd'
+import { Layout, Checkbox, Radio, Row, Col, Icon, Popover } from 'antd'
 import styles from '../styles/Home.less'
 import classnames from 'classnames'
 import Picker from './Picker'
-import Popover from './Popover'
 import Curves from './Curves'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -15,7 +14,7 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      collapsed: false,
+      collapsed: true,
       checkedGroups: [],
       checkedYears: [],
       checkedGenders: [],
@@ -107,32 +106,40 @@ class Home extends React.Component {
     }
   }
 
-  groups = [];
-
-  getGroupName() {
-    const GET_GROUPS = gql`
-      {
-        group {
-          id
-          groupName
-        }
-      }
-    `
-
-    return (
-      <Query query={GET_GROUPS}>
-        {({ loading, error, data }) => {
-          if (loading) return ''
-          if (error) {
-            console.log(error)
-            return 'Error!'
-          }
-          this.groups = data.group
-          return ''
-        }}
-      </Query>
-    )
-  }
+  groups = [
+    {
+      "groupName": "AI",
+      "id": 1
+    },
+    {
+      "groupName": "Android",
+      "id": 2
+    },
+    {
+      "groupName": "Design",
+      "id": 3
+    },
+    {
+      "groupName": "iOS",
+      "id": 4
+    },
+    {
+      "groupName": "Lab",
+      "id": 5
+    },
+    {
+      "groupName": "Game",
+      "id": 6
+    },
+    {
+      "groupName": "PM",
+      "id": 7
+    },
+    {
+      "groupName": "Web",
+      "id": 8
+    }
+  ]
 
   addGroupNames(users) {
     const groups = this.groups
@@ -200,10 +207,10 @@ class Home extends React.Component {
         groupIDs
         enrollmentYear
         gender
-        # TODO: for user popover
-        # phone
-        # email
-        # projectIDs
+        # for user popover
+        email
+        phone
+        projectIDs
       }
     }
     `
@@ -224,7 +231,7 @@ class Home extends React.Component {
           const selectedUserId = this.state.selectedUserId
 
           if (selectedYear && selectedUserId) {
-            // TODO: create near years' focusedIndex
+            // create near years' focusedIndex
             this.focusedIndex[selectedYear] = this.data[selectedYear].findIndex(user => user.id === selectedUserId)
             
             if (this.data[selectedYear+1])
@@ -246,7 +253,7 @@ class Home extends React.Component {
               focusedIndex={this.focusedIndex[year]}
               onclick={this.onclick.bind(this, year)}
               onScroll={this.onScroll.bind(this, nth)}
-            />            
+            />
           )
         }}
       </Query>
@@ -349,15 +356,26 @@ class Home extends React.Component {
     )
   }
 
+  getGroupFilterList = () => {
+    console.log(this.groups)
+    return this.groups.map(group => {
+      const name = group.groupName
+      return (
+        <Row>
+          <Popover placement="rightTop" content={this.getGroupPopover(name)}>
+            <Checkbox value={name} className={styles[name]}>{name}</Checkbox>
+          </Popover>
+        </Row>
+      )
+    })
+  }
+
   render() {
     const collapsedWidth = 160
     const focusedYear = parseInt(this.state.focusedYear)
 
-    
-    
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
-        {this.getGroupName()}
         <Header className={styles.homeHeader} >
           <span>Family Tree</span>
           <div className={styles.avatar}></div>
@@ -382,32 +400,7 @@ class Home extends React.Component {
             <div className={styles.filterContent}>
               <div>
                 <Checkbox.Group onChange={this.groupCheckHandler}>
-                  <Row>
-                    <Popover content={this.getGroupPopover('Android')}>
-                    <Checkbox value="Android" className={styles.Android}>Android</Checkbox>
-                    </Popover>
-                  </Row>
-                  <Row>
-                    <Checkbox value="AI" className={styles.AILab}>AI</Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="Design" className={styles.Design}>Design</Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="Game" className={styles.Game}>Game</Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="iOS" className={styles.iOS}>iOS</Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="Lab" className={styles.Lab}>Lab</Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="PM" className={styles.PM}>PM</Checkbox>
-                  </Row>
-                  <Row>
-                    <Checkbox value="Web" className={styles.Web}>Web</Checkbox>
-                  </Row>
+                  {this.getGroupFilterList()}
                 </Checkbox.Group>
               </div>
               <div className={styles.extendedFilter}>
