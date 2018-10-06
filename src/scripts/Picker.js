@@ -74,7 +74,7 @@ class Picker extends React.Component {
       }
 
       return (
-        <Popover placement="rightTop" content={this.getUserPopover(item)}>
+        <Popover placement="rightTop" content={this.getUserPopover(item)} mouseEnterDelay={0.5}>
         <li
           className={cls}
           key={index}
