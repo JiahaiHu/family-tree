@@ -9,6 +9,28 @@ import { Query } from 'react-apollo'
 
 const { Header, Content, Footer, Sider } = Layout
 
+const scrollTo = (element, to, duration) => {
+  const requestAnimationFrame = window.requestAnimationFrame ||
+    function requestAnimationFrameTimeout() {
+      return setTimeout(arguments[0], 10);
+    };
+    
+  // jump to target if duration zero
+  if (duration <= 0) {
+    element.scrollLeft = to;
+    return;
+  }
+  
+  const difference = to - element.scrollLeft;
+  const perTick = difference / duration * 10;
+
+  requestAnimationFrame(() => {
+    element.scrollLeft = element.scrollLeft + perTick;
+    if (element.scrollLeft === to) return;
+    scrollTo(element, to, duration - 10);
+  });
+}
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -20,31 +42,43 @@ class Home extends React.Component {
       checkedGenders: [],
       focusedYear: 2017,
       // TODO: minVisibleIndex: [], // for line's visibility
+      // TODO: origin: {}
       originY1: 0,
       originY2: 0,
       originY3: 0,
     };
 
-    this.svgWidth = null
-    this.nextWidth = null
-    this.svgContainerRef = null
-
-    this.setSvgContainerRef = el => {
-      this.svgContainerRef = el
-    }
-
   }
 
   data = {}
   focusedIndex = {}
-  selectedYear = null;
+  focusedYear = null
+  selectedYear = null
 
   componentDidMount() {
     // window.addEventListener('resize', this.getSvgWidth)
   }
 
   componentDidUpdate() {
-    this.svgWidth = this.nextWidth
+    this.scrollToFocused(120)
+  }
+
+  scrollToFocused(duration) {
+    // move to focused item
+    const container = this.containerRef
+    const timeline = this.timelineRef
+    if (!timeline) return
+    
+    // TODO: 2016->2007
+    let index = this.state.focusedYear - 2016
+    index = index - 1
+    if (index < 0) {
+      index = 0
+    }
+
+    const topOption = timeline.children[index]
+    const to = topOption.offsetLeft - 166
+    scrollTo(container, to, duration)
   }
 
   leftHandler = () => {
@@ -78,9 +112,11 @@ class Home extends React.Component {
   }
 
   focusedYearCheckHandler = (e) => {
+    const focusedYear = e.target.value
     this.setState({
-      focusedYear: e.target.value,
+      focusedYear,
     })
+    this.scrollToFocused(120)
   }
 
   onclick = (year, userId) => {
@@ -91,6 +127,7 @@ class Home extends React.Component {
   }
 
   onScroll = (n, scrollTop) => {
+    // TODO:
     if (n == 1) {
       this.setState({
         originY1: -scrollTop,
@@ -189,11 +226,6 @@ class Home extends React.Component {
       })
     }
     return filteredUsers
-  }
-
-  getSvgWidth() {
-    this.nextWidth = this.svgContainerRef.clientWidth
-    return this.svgWidth || this.nextWidth
   }
 
   getPicker(year, nth) {
@@ -316,15 +348,16 @@ class Home extends React.Component {
             return pairsOfIndex
           }).reduce((preArray, curArray) => preArray.concat(curArray))
 
-          const n1 = 2 + y1 - this.state.focusedYear
-          const n2 = 2 + y2 - this.state.focusedYear
+          // TODO:
+          const n1 = 2 + y1 - 2017
+          const n2 = 2 + y2 - 2017
     
           return (
             <Curves
               pairsOfIndex={pairsOfIndex}
               originYL={this.state[`originY${n1}`]}
               originYR={this.state[`originY${n2}`]}
-              width={this.getSvgWidth()}
+              width={150}
             />
           )
         }}
@@ -333,14 +366,16 @@ class Home extends React.Component {
   }
 
   getTimeLine() {
-    const focusedYear = parseInt(this.state.focusedYear)
+    const width = 166 + 150 // PickerWidth + CurvesWidth
+    const firstPos = 100 + 166/2
     return (
       <div className={styles.timeline}>
-        <ul>
-          <li style={{ left: '30px' }}>...<span></span></li>
-          <li style={{ left: '20%' }}>{focusedYear-1}<span></span></li>
-          <li style={{ left: '60%' }}>{focusedYear}<span></span></li>
-          <li style={{ left: '100%' }}>{focusedYear+1}<span></span></li>
+        <ul ref={ el => this.timelineRef = el }>
+          <li style={{ left: firstPos+'px' }}>{2016}<span></span></li>
+          <li style={{ left: firstPos+width+'px' }}>{2017}<span></span></li>
+          <li style={{ left: firstPos+width*2+'px' }}>{2018}<span></span></li>
+          <li style={{ left: firstPos+width*3+'px' }}>{2019}<span></span></li>
+          <li style={{ left: firstPos+width*4+'px' }}>{2020}<span></span></li>
         </ul>
       </div>
     )
@@ -357,7 +392,6 @@ class Home extends React.Component {
   }
 
   getGroupFilterList = () => {
-    console.log(this.groups)
     return this.groups.map(group => {
       const name = group.groupName
       return (
@@ -372,7 +406,7 @@ class Home extends React.Component {
 
   render() {
     const collapsedWidth = 160
-    const focusedYear = parseInt(this.state.focusedYear)
+    const focusedYear = this.state.focusedYear
 
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
@@ -447,63 +481,67 @@ class Home extends React.Component {
               </div>
             </div>
           </Sider>
-          <Content className={styles.homeContent} >
-            <div className={styles.timelineContainer} >
-              {this.getTimeLine()}
+          <Content>
+          <div className={styles.homeContentContainer} ref={ el => this.containerRef = el } >
+            <div className={styles.homeContent} style={{ width: '2000px' }} >
+              <div className={styles.timelineContainer} >
+                {this.getTimeLine()}
+              </div>
+              <div className={styles.homeContentCol} >
+                {this.getPicker(2016, 1)}
+              </div>
+              <div className={styles.homeContentCol}>
+                {this.getCurves(2016, 2017)}
+              </div>
+              <div className={styles.homeContentCol} >
+                {this.getPicker(2017, 2)}
+              </div>
+              <div className={styles.homeContentCol}>
+                {this.getCurves(2017, 2018)}
+              </div>
+              <div className={styles.homeContentCol} >
+                {this.getPicker(2018, 3)}
+              </div>
             </div>
-            <div className={styles.homeContentCol} style={{ left: '18%' }} >
-              {this.getPicker(focusedYear-1, 1)}
-            </div>
-            <div className={styles.homeContentCol} style={{ left: '36%', width: 'calc(36% - 166px)' }} ref={this.setSvgContainerRef}>
-              {this.getCurves(focusedYear-1, focusedYear)}
-            </div>
-            <div className={styles.homeContentCol} style={{ left: '54%' }} >
-              {this.getPicker(focusedYear, 2)}
-            </div>
-            <div className={styles.homeContentCol} style={{ left: '72%', width: 'calc(36% - 166px)' }} >
-            {this.getCurves(focusedYear, focusedYear+1)}
-            </div>
-            <div className={styles.homeContentCol} style={{ left: '90%' }} >
-              {this.getPicker(focusedYear+1, 3)}
             </div>
           </Content>
           <Sider className={styles.rightSider} width={160}>
             <Radio.Group onChange={this.focusedYearCheckHandler}>
               <Row>
-                <Radio value="2018">2018</Radio>
+                <Radio value={2018}>2018</Radio>
               </Row>
               <Row>
-                <Radio value="2017">2017</Radio>
+                <Radio value={2017}>2017</Radio>
               </Row>
               <Row>
-                <Radio value="2016">2016</Radio>
+                <Radio value={2016}>2016</Radio>
               </Row>
               <Row>
-                <Radio value="2015">2015</Radio>
+                <Radio value={2015}>2015</Radio>
               </Row>
               <Row>
-                <Radio value="2014">2014</Radio>
+                <Radio value={2014}>2014</Radio>
               </Row>
               <Row>
-                <Radio value="2013">2013</Radio>
+                <Radio value={2013}>2013</Radio>
               </Row>
               <Row>
-                <Radio value="2012">2012</Radio>
+                <Radio value={2012}>2012</Radio>
               </Row>
               <Row>
-                <Radio value="2011">2011</Radio>
+                <Radio value={2011}>2011</Radio>
               </Row>
               <Row>
-                <Radio value="2010">2010</Radio>
+                <Radio value={2010}>2010</Radio>
               </Row>
               <Row>
-                <Radio value="2009">2009</Radio>
+                <Radio value={2009}>2009</Radio>
               </Row>
               <Row>
-                <Radio value="2008">2008</Radio>
+                <Radio value={2008}>2008</Radio>
               </Row>
               <Row>
-                <Radio value="2007">2007</Radio>
+                <Radio value={2007}>2007</Radio>
               </Row>
             </Radio.Group>
           </Sider>
