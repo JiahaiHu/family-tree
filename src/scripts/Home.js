@@ -52,15 +52,16 @@ class Home extends React.Component {
 
   data = {}
   focusedIndex = {}
-  focusedYear = null
   selectedYear = null
 
   componentDidMount() {
     // window.addEventListener('resize', this.getSvgWidth)
   }
 
-  componentDidUpdate() {
-    this.scrollToFocused(120)
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.focusedYear !== this.state.focusedYear) {
+      this.scrollToFocused(120)
+    }
   }
 
   scrollToFocused(duration) {
@@ -116,7 +117,6 @@ class Home extends React.Component {
     this.setState({
       focusedYear,
     })
-    this.scrollToFocused(120)
   }
 
   onclick = (year, userId) => {
