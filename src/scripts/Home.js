@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Checkbox, Radio, Row, Col, Icon, Popover } from 'antd'
+import { Layout, Checkbox, Radio, Row, Col, Icon, Popover, Dropdown } from 'antd'
 import styles from '../styles/Home.less'
 import classnames from 'classnames'
 import Picker from './Picker'
@@ -407,12 +407,21 @@ class Home extends React.Component {
   render() {
     const collapsedWidth = 160
     const focusedYear = this.state.focusedYear
-
+    const userMenu = (
+      <div className={styles.userMenu}>
+        <a href="/user">Profile</a>
+        <a href="/project">Projects</a>
+        <a href="/company">Company</a>
+        <a>Log out</a>
+      </div>
+    )
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
         <Header className={styles.homeHeader} >
           <span>Family Tree</span>
-          <div className={styles.avatar}></div>
+          <Dropdown overlay={userMenu} trigger={['click']} >
+            <div className={styles.avatar} ></div>
+          </Dropdown>
         </Header>
         <Layout style={{ backgroundColor: '#fff' }} >
           <Sider

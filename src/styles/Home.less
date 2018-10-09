@@ -43,12 +43,40 @@
 }
 
 .avatar {
+  position: relative;
   float: right;
   right: 0;
   height: 40px;
   width: 40px;
   border-radius: 50%;
   border: #8c9eff 1px solid;
+}
+
+.userMenu {
+  position: absolute;
+  top: 100%;
+  right: 50%;
+  width: 110px;
+  padding: 20px;
+  box-shadow: 0 1px 10px #dee2f5;
+  background-color: #fff;
+  a {
+    color: #8d91a0;
+    padding: 10px 0;
+    border-top: #eee 1px solid;
+    font-size: 14px;
+    text-align: center;
+    &:hover {
+      color: #4dd0e1;
+    }
+    &:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
 }
 
 .filter {

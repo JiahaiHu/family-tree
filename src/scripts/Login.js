@@ -13,9 +13,11 @@ class Login extends React.Component {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
-      }
+      },
+      credentials: 'include'
     }).then(res => {
       if (res.status == 200) {
+        // TODO: update token
         this.props.history.push('/home')
       }
     })

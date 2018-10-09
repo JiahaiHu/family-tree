@@ -73,6 +73,8 @@ class LoginForm extends React.Component {
         successMsg: '登陆成功！',
         callback: (data) => {
           localStorage.setItem('token', data.token)
+          localStorage.setItem('username', formData.username)
+          document.cookie = 'token='+data.token
           this.props.history.push('/home')
         },
       }
@@ -151,7 +153,7 @@ class LoginForm extends React.Component {
   resetClickHandler = () => {
     let formData = {};
     formData.phone = document.getElementById('phone').value
-    formData.password = document.getElementById('password').value
+    formData.newPassword = document.getElementById('newPassword').value
     formData.verifyCode = document.getElementById('captcha').value
 
     let config = {
@@ -209,7 +211,7 @@ class LoginForm extends React.Component {
           </label>
           <label htmlFor={'captcha'}>
             <input id={'captcha'} className={styles.captcha} placeholder={'验证码'} />
-            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>发送</a>
+            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>获取</a>
           </label>
         </div>
       )
@@ -219,12 +221,12 @@ class LoginForm extends React.Component {
           <label htmlFor={'username'}>
             <input id={'username'} placeholder={'username'} />
           </label>
-          <label htmlFor={'password'}>
-            <input id={'password'} placeholder={'password'} type={'password'} />
-          </label>
           <label htmlFor={'captcha'}>
             <input id={'captcha'} className={styles.captcha} placeholder={'验证码'} />
-            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>发送</a>
+            <a className={styles.getCaptcha} onClick={this.sendClickHandler}>获取</a>
+          </label>
+          <label htmlFor={'newPassword'}>
+            <input id={'newPassword'} placeholder={'new password'} type={'password'} />
           </label>
         </div>
       )
