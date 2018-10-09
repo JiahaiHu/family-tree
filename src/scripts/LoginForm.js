@@ -74,7 +74,6 @@ class LoginForm extends React.Component {
         callback: (data) => {
           localStorage.setItem('token', data.token)
           localStorage.setItem('username', formData.username)
-          document.cookie = 'token='+data.token
           this.props.history.push('/home')
         },
       }

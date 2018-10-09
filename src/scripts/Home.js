@@ -404,7 +404,6 @@ class Home extends React.Component {
 
   logOut = () => {
     localStorage.clear()
-    // TODO: clear cookie
     this.props.history.push('/')
   }
 
