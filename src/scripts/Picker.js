@@ -114,6 +114,38 @@ class Picker extends React.Component {
   }
 
   getUserPopover(user) {
+    const projectItems = user.projectIDs.map((id, index) => {
+      const GET_PROJECTS = gql`
+      {
+        project(id: ${id}) {
+          title
+          description
+        }
+      }
+      `
+      return (
+        <Query query={GET_PROJECTS}>
+          {({ loading, error, data }) => {
+            if (loading) return 'loading...'
+            if (error) {
+              console.log(error)
+              return 'Error!'
+            }
+            return (
+              <div className={popStyles.projectItem}>
+                <div className={popStyles.projectTitle}>
+                  <div className={popStyles.projectLabel}>{index+1}</div>
+                  <div className={popStyles.projectName}>{data.project[0].title}</div>
+                </div>
+                <div className={popStyles.projectContent}>{data.project[0].description}</div>
+              </div>
+            )
+          }}
+        </Query>
+      )
+    })
+    
+
     return (
       <div className={popStyles.card}>
         <div className={classnames(popStyles.cardItem, popStyles.avatar)}>
@@ -121,7 +153,7 @@ class Picker extends React.Component {
             <div></div>
           </div>
           <div>
-            <div>{user.groupNames[0] || 'undefined'}</div>
+            <div>{user.groupNames[0] || 'Undefined'}</div>
             <div>
               <span className={popStyles.avatarName}>{user.realname}</span>({this.props.year} - {parseInt(user.enrollmentYear) + 4})
             </div>
@@ -129,28 +161,14 @@ class Picker extends React.Component {
         </div>
         <div className={popStyles.cardItem}>
           <div className={popStyles.cardItemLabel}>TEL</div>
-          <div>{user.phone || 'xxxxxxxxxxx'}</div>
+          <div>{user.phone || 'un-de-fined'}</div>
         </div>
         <div className={popStyles.cardItem}>
           <div className={popStyles.cardItemLabel}>EMAIL</div>
-          <div>{user.email || 'xxx@email'}</div>
+          <div>{user.email || 'un@de.fined'}</div>
         </div>
         <div className={popStyles.line}></div>
-        {/* TODO: query project by id */}
-        <div className={popStyles.projectItem}>
-          <div className={popStyles.projectTitle}>
-            <div className={popStyles.projectLabel}>project1</div>
-            <div className={popStyles.projectName}>xxxxxx</div>
-          </div>
-          <div className={popStyles.projectContent}>xxxxxxxxx</div>
-        </div>
-        <div className={popStyles.projectItem}>
-          <div className={popStyles.projectTitle}>
-            <div className={popStyles.projectLabel}>project2</div>
-            <div className={popStyles.projectName}>xxxxxx</div>
-          </div>
-          <div className={popStyles.projectContent}>xxxxxxxxx</div>
-        </div>
+        {projectItems}
         <a>more...</a>
       </div>
     )

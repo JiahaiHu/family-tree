@@ -9,15 +9,15 @@ import styles from '../styles/Login.css';
 class Login extends React.Component {
   render() {
     // redirect to '/home' if token is not expired
-    fetch('https://fmt.fredliang.cn/refresh_token', {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: 'include'
+    const token = localStorage.getItem('token')
+    fetch('https://fmt.fredliang.cn/refresh_token'+'?token='+token, {
+      method: 'GET'
     }).then(res => {
       if (res.status == 200) {
         // TODO: update token
+        res.json().then((r) => {
+          localStorage.setItem('token', r.token)
+        })
         this.props.history.push('/home')
       }
     })

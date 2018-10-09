@@ -301,7 +301,6 @@ class Home extends React.Component {
         mentorIDs
         menteeIDs
         groupIDs
-        joinedYear
         enrollmentYear
         gender
       }
@@ -311,7 +310,6 @@ class Home extends React.Component {
         mentorIDs
         menteeIDs
         groupIDs
-        joinedYear
         enrollmentYear
         gender
       }
@@ -404,6 +402,12 @@ class Home extends React.Component {
     })
   }
 
+  logOut = () => {
+    localStorage.clear()
+    // TODO: clear cookie
+    this.props.history.push('/')
+  }
+
   render() {
     const collapsedWidth = 160
     const focusedYear = this.state.focusedYear
@@ -412,7 +416,7 @@ class Home extends React.Component {
         <a href="/user">Profile</a>
         <a href="/project">Projects</a>
         <a href="/company">Company</a>
-        <a>Log out</a>
+        <a onClick={this.logOut}>Log out</a>
       </div>
     )
     return (
