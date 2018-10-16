@@ -25,12 +25,12 @@ class Upld extends React.Component {
           }
           
           formData.append(file.filename, file)
-          fetch('https://fmt.hustunique.com', {
+          fetch(data.host, {
             method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
             },
-            body: Object.assign({}, formData, data),
+            body: formData
           }).then()
         })
 
@@ -47,9 +47,6 @@ class Upld extends React.Component {
         onSuccess,
         withCredentials,
       }) => {
-        
-
-        
       },
     }
     return (
