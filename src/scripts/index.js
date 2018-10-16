@@ -10,6 +10,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory'
 import Login from './Login'
 import Home from './Home'
 import User from './User'
+import Upld from './Upld'
 
 const endpoint = 'https://fmt.fredliang.cn/graphql'
 
@@ -40,6 +41,7 @@ class App extends React.Component {
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Switch>
+            <Route path="/upload" component={Upld} />
             <Route path="/user" component={User} />
             <Route path="/home" component={Home} />
             <Route path="/" component={Login} />
