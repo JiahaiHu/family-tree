@@ -25,7 +25,7 @@ class Upld extends React.Component {
           }
           
           formData.append(file.filename, file)
-          fetch(data.host, {
+          fetch('https://fmt.hustunique.com', {
             method: 'POST',
             headers: {
               "Content-Type": "multipart/form-data",
