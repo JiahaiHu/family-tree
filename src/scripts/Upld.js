@@ -17,14 +17,18 @@ class Upld extends React.Component {
         .then(res => res.json())
         .then(data => {
           // upload to oss
+          const { accessid, callback, dir, signature, policy, expire, host } = data
           const formData = new FormData()
-          if (data) {
-            Object.keys(data).map(key => {
-              formData.append(key, data[key])
-            })
-          }
-          
-          formData.append(file.filename, file)
+
+          formData.append('name', file.name)
+          formData.append('key', dir + `${file.name}`)
+          formData.append('policy', policy)
+          formData.append('OSSAccessKeyId', accessid)
+          formData.append('success_action_status', '200')
+          formData.append('callback', callback)
+          formData.append('signature', signature)
+          formData.append('file', file)
+
           fetch('https://fmt.hustunique.com', {
             method: 'POST',
             headers: {
@@ -35,18 +39,6 @@ class Upld extends React.Component {
         })
 
         return false  // cancel uploading
-      },
-      customRequest: ({
-        action,
-        data,
-        file,
-        filename,
-        headers,
-        onError,
-        onProgress,
-        onSuccess,
-        withCredentials,
-      }) => {
       },
     }
     return (
