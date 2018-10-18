@@ -18,7 +18,7 @@ var g_object_name_type = ''
 var timestamp = Date.parse(new Date()) / 1000; 
 var now = timestamp
 
-function send_request()
+function send_request(filename)
 {
     var xmlhttp = null;
     if (window.XMLHttpRequest) {
@@ -28,7 +28,7 @@ function send_request()
     }
   
     if (xmlhttp!=null) {
-        var serverUrl = 'https://fmt.fredliang.cn/files/token?table=user&table_id=1&field=avatar&action=add'
+        var serverUrl = `https://fmt.fredliang.cn/files/token?table=user&table_id=200&field=avatar&action=add&file_name=${filename}`
         xmlhttp.open( "GET", serverUrl, false );
         xmlhttp.send( null );
         return xmlhttp.responseText
@@ -37,12 +37,12 @@ function send_request()
     }
 };
 
-function get_signature() {
+function get_signature(filename) {
   //可以判断当前expire是否超过了当前时间,如果超过了当前时间,就重新取一下.3s 做为缓冲
   now = timestamp = Date.parse(new Date()) / 1000; 
-  if (expire < now + 3)
-  {
-    var body = send_request()
+  //if (expire < now + 3)
+  //{
+    var body = send_request(filename)
     var obj = eval ("(" + body + ")");
     host = obj['host']
     policyBase64 = obj['policy']
@@ -52,42 +52,42 @@ function get_signature() {
     callbackbody = obj['callback'] 
     key = obj['dir']
     return true;
-  }
-  return false;
+  //}
+  //return false;
 };
 
-function set_upload_param(up, filename, ret) {
-  const param = 'table=user&table_id=1&field=avatar&action=add'
-        fetch(`https://fmt.fredliang.cn/files/token?${param}`, {
-          method: 'GET',
-        })
-        .then(res => res.json())
-        .then(data => {
-          // upload to oss
-          const { accessid, callback, dir, signature, policy, expire, host } = data
-         
-          var new_multipart_params = {
-            'key' : dir,
-            'policy': policy,
-            'OSSAccessKeyId': accessid, 
-            'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
-            'callback' : callback,
-            'signature': signature,
-          };
-        
-          up.setOption({
-            'url': host,
-            'multipart_params': new_multipart_params
-          });
-        
-          up.start();
-        })
+function set_upload_paramm(up, filename, ret) {
+  const param = `table=user&table_id=200&field=avatar&action=add&file_name=${filename}`
+  fetch(`https://fmt.fredliang.cn/files/token?${param}`, {
+    method: 'GET',
+  })
+  .then(res => res.json())
+  .then(data => {
+    // upload to oss
+    const { accessid, callback, dir, signature, policy, expire, host } = data
+    
+    var new_multipart_params = {
+      'key' : dir,
+      'policy': policy,
+      'OSSAccessKeyId': accessid, 
+      'success_action_status' : '200', //让服务端返回200,不然，默认会返回204
+      'callback' : callback,
+      'signature': signature,
+    };
+  
+    up.setOption({
+      'url': host,
+      'multipart_params': new_multipart_params
+    });
+  
+    up.start();
+  })
 }
 
-function set_upload_paramm(up, filename, ret) {
-  if (ret == false) {
-    ret = get_signature()
-  }
+function set_upload_param(up, filename, ret) {
+  //if (ret == false) {
+    ret = get_signature(filename)
+  //}
   g_object_name = key;
   var new_multipart_params = {
     'key' : g_object_name,
@@ -102,7 +102,7 @@ function set_upload_paramm(up, filename, ret) {
     'url': host,
     'multipart_params': new_multipart_params
   });
-
+  console.log('?')
   up.start();
 }
 
