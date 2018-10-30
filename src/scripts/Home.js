@@ -329,7 +329,15 @@ class Home extends React.Component {
           const filteredMentees = this.filterUsers(this.addGroupNames(data.mentees))
           const mentors = filteredMentors.filter(user => user.menteeIDs.length !== 0)
           const mentees = filteredMentees.filter(user => user.mentorIDs.length !== 0)
-          if (!mentors.length || !mentees.length) return ''
+          if (!mentors.length || !mentees.length)
+            return (
+              <Curves
+                pairsOfIndex={[]}
+                originYL={this.state[`originY${n1}`]}
+                originYR={this.state[`originY${n2}`]}
+                width={150}
+              />
+            )
 
           const pairsOfIndex = mentors.map(mentor => {
             const mentorIndex = filteredMentors.findIndex(user => user.id === mentor.id)
@@ -349,7 +357,7 @@ class Home extends React.Component {
           // TODO:
           const n1 = 2 + y1 - 2017
           const n2 = 2 + y2 - 2017
-    
+
           return (
             <Curves
               pairsOfIndex={pairsOfIndex}
