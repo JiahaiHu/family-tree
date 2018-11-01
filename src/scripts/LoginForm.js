@@ -26,6 +26,12 @@ class LoginForm extends React.Component {
     // }
   }
 
+  onKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.loginClickHandler()
+    }
+  }
+
   myFetch = (cfg) => {
     fetch(cfg.url, {
       method: cfg.method,
@@ -274,7 +280,7 @@ class LoginForm extends React.Component {
       [styles.right]: this.state.stage === 'login',
     })
     return (
-      <div className={formWrapperClass}>
+      <div className={formWrapperClass} onKeyDown={this.onKeyDown} >
         <MessageBox message={this.state.message} onClose={this.onClose} />
         <div className={formBarClass} />
         <div className={classnames({[styles.enter]: this.state.enter === true})}>
