@@ -4,6 +4,7 @@ import styles from '../styles/User.less'
 import classnames from 'classnames'
 import UserCard from './UserCard'
 import ProjectCard from './ProjectCard'
+import HeaderBar from './HeaderBar'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -12,6 +13,11 @@ class User extends React.Component {
     super(props);
   }
 
+  logOut = () => {
+    localStorage.clear()
+    this.props.history.push('/')
+  }
+  
   render() {
     const userinfo = {  // TODO: get from query
       group : 'Design',
@@ -26,10 +32,7 @@ class User extends React.Component {
     }
     return (
       <Layout className={classnames(styles.wrapper, styles.user)}>
-        <Header className={styles.headerBar}>
-          <span>Family Tree</span>
-          <div className={styles.avatar}></div>
-        </Header>
+        <HeaderBar onlogOut={this.logOut} />        
         <Content className={styles.container}>
           <div className={styles.userCardWrapper}>
             <UserCard userinfo={userinfo} />

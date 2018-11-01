@@ -1,0 +1,69 @@
+.headerBar {
+  position: relative;
+  height: 90px;
+  padding: 25px 70px 25px 100px;
+  line-height: 40px;
+  font-size: 23px;
+  font-weight: bold;
+  z-index: 1;
+  &.hasShadow {
+    box-shadow: 0 1px 10px #dee2f5;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    margin-left: -40px;
+    width: 24px;
+    height: 6px;
+    background-image: -webkit-linear-gradient(0deg, #74ead5, #abb6e5);
+  }
+  &.hasBar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 320px;
+    height: 6px;
+    background-image: -webkit-linear-gradient(0deg, #74ead5, #abb6e5);
+  }
+}
+
+.avatar {
+  position: relative;
+  overflow: hidden;
+  float: right;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: #8c9eff 1px solid;
+}
+
+.userMenu {
+  position: absolute;
+  top: 100%;
+  right: 50%;
+  width: 110px;
+  padding: 20px;
+  box-shadow: 0 1px 10px #dee2f5;
+  background-color: #fff;
+  a {
+    color: #8d91a0;
+    padding: 10px 0;
+    border-top: #eee 1px solid;
+    font-size: 14px;
+    text-align: center;
+    &:hover {
+      color: #4dd0e1;
+    }
+    &:first-child {
+      padding-top: 0;
+      border-top: none;
+    }
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+}

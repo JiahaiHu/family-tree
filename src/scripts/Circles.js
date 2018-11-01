@@ -48,7 +48,7 @@ class Circles extends React.Component {
               marginTop: `calc((-1) * ${item.radius})`,
               border: 'solid 1px rgba(255, 255, 255, .3)',
             };
-            return <div className={styles.circle} style={circleStyle} />
+            return <div key={index} className={styles.circle} style={circleStyle} />
           })}
         </div>
     );

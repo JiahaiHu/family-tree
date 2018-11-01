@@ -4,6 +4,7 @@ import styles from '../styles/Project.less'
 import classnames from 'classnames'
 import ProjectInfo from './ProjectInfo'
 import UserPopover from './UserPopover'
+import HeaderBar from './HeaderBar'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -12,6 +13,11 @@ class Project extends React.Component {
     super(props);
   }
 
+  logOut = () => {
+    localStorage.clear()
+    this.props.history.push('/')
+  }
+  
   render() {
     const userinfo = {  // TODO: get from query
       realname: '陆子叶',
@@ -24,10 +30,7 @@ class Project extends React.Component {
     }
     return (
       <Layout className={classnames(styles.wrapper, styles.user)}>
-        <Header className={styles.headerBar}>
-          <span>Family Tree</span>
-          <div className={styles.avatar}></div>
-        </Header>
+        <HeaderBar onlogOut={this.logOut} />
         <Layout className={styles.container}>
           <Sider width={300} className={styles.memberListWrapper}>
             <div className={styles.memberList} >

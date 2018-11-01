@@ -6,7 +6,7 @@ import Picker from './Picker'
 import Curves from './Curves'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import defaultAvatar from '../assets/avatar.png'
+import HeaderBar from './HeaderBar'
 
 const { Header, Content, Footer, Sider } = Layout
 
@@ -412,31 +412,6 @@ class Home extends React.Component {
     })
   }
 
-  getAvatar = () => {
-    const username = localStorage.getItem('username')
-    const GET_AVATAR_URL = gql`
-    {
-      user(username: ${username}) {
-        avatar
-      }
-    }
-    `
-    return (
-      <Query query={GET_AVATAR_URL}>
-        {({ loading, error, data }) => {
-          if (loading) return ''
-          if (error) {
-            console.log(error)
-            return <img width={40} src={defaultAvatar} />
-          }
-
-          const avatarUrl = data.user[0].avatar
-          return <img width={40} src={avatarUrl} />
-        }}
-      </Query>
-    )
-  }
-
   logOut = () => {
     localStorage.clear()
     this.props.history.push('/')
@@ -445,21 +420,10 @@ class Home extends React.Component {
   render() {
     const collapsedWidth = 160
     const focusedYear = this.state.focusedYear
-    const userMenu = (
-      <div className={styles.userMenu}>
-        <a href="/user">Profile</a>
-        <a href="/company">Company</a>
-        <a onClick={this.logOut}>Log out</a>
-      </div>
-    )
+    
     return (
       <Layout className={classnames(styles.wrapper, styles.home)} >
-        <Header className={styles.homeHeader} >
-          <span>Family Tree</span>
-          <Dropdown overlay={userMenu} trigger={['click']} >
-            <div className={styles.avatar} >{this.getAvatar()}</div>
-          </Dropdown>
-        </Header>
+        <HeaderBar onlogOut={this.logOut} hasBar={true} hasShadow={true} />
         <Layout style={{ backgroundColor: '#fff' }} >
           <Sider
             theme={'light'}
