@@ -68,6 +68,11 @@ class LoginForm extends React.Component {
 
   loginClickHandler = () => {
     if (this.state.stage === 'login') {
+      const message = {
+        type: 'success',
+        content: '登录中...',
+      }
+      this.setState({ message })      
       let formData = {}
       formData.username = document.getElementById('username').value
       formData.password = document.getElementById('password').value
