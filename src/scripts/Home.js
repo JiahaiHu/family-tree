@@ -237,6 +237,7 @@ class Home extends React.Component {
         mentorIDs
         menteeIDs
         groupIDs
+        joinedYear
         enrollmentYear
         gender
         # for user popover
@@ -398,10 +399,10 @@ class Home extends React.Component {
   }
 
   getGroupFilterList = () => {
-    return this.groups.map(group => {
+    return this.groups.map((group, index) => {
       const name = group.groupName
       return (
-        <Row>
+        <Row key={index}>
           <Popover placement="rightTop" content={this.getGroupPopover(name)}>
             <Checkbox value={name} className={styles[name]}>{name}</Checkbox>
           </Popover>
@@ -421,7 +422,6 @@ class Home extends React.Component {
     const userMenu = (
       <div className={styles.userMenu}>
         <a href="/user">Profile</a>
-        <a href="/project">Projects</a>
         <a href="/company">Company</a>
         <a onClick={this.logOut}>Log out</a>
       </div>

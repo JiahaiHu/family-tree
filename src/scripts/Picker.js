@@ -1,8 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
-import popStyles from '../styles/Popover.less'
 import styles from '../styles/Picker.less';
 import { Popover } from 'antd'
+import UserPopover from './UserPopover'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 
@@ -73,17 +73,18 @@ class Picker extends React.Component {
         })
       }
 
+      const overlay = <UserPopover user={item} containerStyle={{ width: 200+'px' }} />;
       return (
-        <Popover placement="rightTop" content={this.getUserPopover(item)} mouseEnterDelay={0.5}>
-        <li
-          className={cls}
-          key={index}
-          onClick={this.onclick.bind(this, item.id)}
-        >
-          <i></i>
-          <span className={styles.itemText}>{item.realname}</span>
-          <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
-        </li>
+        <Popover key={index} width={200} placement="rightTop" content={overlay} mouseEnterDelay={0.5}>
+          <li
+            className={cls}
+            key={index}
+            onClick={this.onclick.bind(this, item.id)}
+          >
+            <i></i>
+            <span className={styles.itemText}>{item.realname}</span>
+            <span className={styles.itemTag}>[{item.enrollmentYear-2000}]</span>
+          </li>
         </Popover>
       )
     })
@@ -111,67 +112,6 @@ class Picker extends React.Component {
 
   handleMouseLeave = () => {
     this.setState({ active: false });
-  }
-
-  getUserPopover(user) {
-    const projectItems = user.projectIDs.map((id, index) => {
-      const GET_PROJECTS = gql`
-      {
-        project(id: ${id}) {
-          title
-          description
-        }
-      }
-      `
-      return (
-        <Query query={GET_PROJECTS}>
-          {({ loading, error, data }) => {
-            if (loading) return 'loading...'
-            if (error) {
-              console.log(error)
-              return 'Error!'
-            }
-            return (
-              <div className={popStyles.projectItem}>
-                <div className={popStyles.projectTitle}>
-                  <div className={popStyles.projectLabel}>{index+1}</div>
-                  <div className={popStyles.projectName}>{data.project[0].title}</div>
-                </div>
-                <div className={popStyles.projectContent}>{data.project[0].description}</div>
-              </div>
-            )
-          }}
-        </Query>
-      )
-    })
-    
-
-    return (
-      <div className={popStyles.card}>
-        <div className={classnames(popStyles.cardItem, popStyles.avatar)}>
-          <div className={popStyles.cardItemLabel}>
-            <div></div>
-          </div>
-          <div>
-            <div>{user.groupNames[0] || 'Undefined'}</div>
-            <div>
-              <span className={popStyles.avatarName}>{user.realname}</span>({this.props.year} - {parseInt(user.enrollmentYear) + 4})
-            </div>
-          </div>
-        </div>
-        <div className={popStyles.cardItem}>
-          <div className={popStyles.cardItemLabel}>TEL</div>
-          <div>{user.phone || 'un-de-fined'}</div>
-        </div>
-        <div className={popStyles.cardItem}>
-          <div className={popStyles.cardItemLabel}>EMAIL</div>
-          <div>{user.email || 'un@de.fined'}</div>
-        </div>
-        <div className={popStyles.line}></div>
-        {projectItems}
-        <a>more...</a>
-      </div>
-    )
   }
 
   render() {

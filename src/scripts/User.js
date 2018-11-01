@@ -13,7 +13,7 @@ class User extends React.Component {
   }
 
   render() {
-    const userinfo = {  // Todo: get from props
+    const userinfo = {  // TODO: get from query
       group : 'Design',
       abilities : 'UI/UX',
       tel : '180-0000-0000',

@@ -1,0 +1,85 @@
+.wrapper {
+  position: relative;
+  height: 100%;
+  background: -webkit-linear-gradient(30deg, #74ead5, #abb6e5);
+}
+
+.headerBar {
+  position: relative;
+  height: 90px;
+  padding: 25px 70px 25px 100px;
+  line-height: 40px;
+  font-size: 23px;
+  font-weight: bold;
+  z-index: 1;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    margin-top: -3px;
+    margin-left: -40px;
+    width: 24px;
+    height: 6px;
+    background-image: -webkit-linear-gradient(0deg, #74ead5, #abb6e5);
+  }
+}
+
+.avatar {
+  float: right;
+  right: 0;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: #8c9eff 1px solid;
+}
+
+.user {
+  :global {
+    .ant-layout-header {
+      background: #ffffff ;
+    }
+  }
+}
+
+.container {
+  min-width: 1300px;
+  padding: 0 5%;
+  background: transparent;
+}
+
+.memberListWrapper {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-top: 40px;
+  font-size: 16px;
+  background: transparent;
+  &::-webkit-scrollbar {  /* Chrome and Safari */
+    display: none;
+  }
+}
+
+.memberList {
+  position: relative;
+}
+
+.projectInfoWrapper {
+  padding-top: 40px;
+  margin-left: 40px;
+}
+
+.projectInfo {
+  overflow: hidden;  
+  background-color: #fff;
+  border-radius: 7px;
+}
+
+.projectHeader {
+  position: absolute;
+  width: 100%;
+  margin: 40px;
+}
+
+.projectContent {
+  margin: 40px;
+  padding-top: 80px;
+}
