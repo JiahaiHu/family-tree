@@ -61,6 +61,9 @@ class Picker extends React.Component {
   getItems() {
     const { items, selected, focusedIndex } = this.props;
     return items.map((item, index) => {
+      // TODO:
+      // The opacity of li::before/li::after is active
+      // only when item has mentor/mentee in visual tree.
       let cls
       if (item.groupNames.length) {
         cls= classnames({
